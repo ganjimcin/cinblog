@@ -2,8 +2,8 @@
 
 backend:
   name: github
-  repo: ganjimcin/cinblog
-  
+  repo: ganjimcin/cinblog # <--- ¡IMPORTANTE! Reemplaza esto con tu usuario y nombre de repositorio de GitHub.
+
 media_folder: /static/media
 public_folder: /media
 
