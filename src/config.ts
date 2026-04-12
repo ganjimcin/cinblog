@@ -15,7 +15,7 @@ import type {
     PioConfig,
 } from "./types/config";
 import { LinkPreset } from "./types/config";
-import rawConfig from "../twilight.config.yaml?raw";
+import rawConfig from "./twilight.config.yaml?raw";
 
 
 type ConfigFile = {
