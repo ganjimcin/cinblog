@@ -18,9 +18,10 @@ import remarkDirective from "remark-directive"; /* Handle directives */
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
-import yaml from "@rollup/plugin-yaml";
+import yamlPlugin from "@rollup/plugin-yaml";
+import fs from "node:fs";
+import yaml from "js-yaml";
 
-import { siteConfig } from "./src/config.ts";
 import { pluginCollapseButton } from "./src/plugins/expressive-code/collapse-button.ts";
 import { pluginCopyButton } from "./src/plugins/expressive-code/copy-button.js";
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
@@ -34,6 +35,9 @@ import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkMermaid } from "./src/plugins/remark-mermaid.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 
+// Leer la configuración directamente para evitar problemas de carga de módulos en la fase de config
+const twilightConfig = yaml.load(fs.readFileSync("./src/twilight.config.yaml", "utf8"));
+const siteURL = twilightConfig.site.siteURL;
 
 // Choose adapter depending on deployment environment
 const adapter = process.env.GITHUB_ACTIONS
@@ -46,7 +50,7 @@ const adapter = process.env.GITHUB_ACTIONS
 
 // Ref: https://astro.build/config
 export default defineConfig({
-    site: siteConfig.siteURL,
+    site: siteURL,
     base: "/",
     trailingSlash: "always",
     adapter: adapter,
@@ -195,7 +199,7 @@ export default defineConfig({
         ],
     },
     vite: {
-        plugins: [tailwindcss(), yaml()],
+        plugins: [tailwindcss(), yamlPlugin()],
         build: {
             cssCodeSplit: true,
             cssMinify: "esbuild",
