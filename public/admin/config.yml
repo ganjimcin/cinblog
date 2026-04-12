@@ -5,22 +5,26 @@ backend:
   repo: ganjimcin/cinblog
   branch: main
 
-media_folder: "cin-blog/public/assets/images"
+# Rutas corregidas: relativas a la raíz del repositorio (donde está package.json)
+media_folder: "public/assets/images"
 public_folder: "/assets/images"
 
 collections:
   - name: posts
     label: "Entradas (Posts)"
     label_singular: "Post"
-    folder: "cin-blog/src/content/posts"
+    folder: "src/content/posts" # <-- Ruta corregida
+    extension: "md"
+    format: "frontmatter"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    nested: true # Para que encuentre archivos dentro de subcarpetas como 'guide/'
+    slug: "{{slug}}"
     fields:
       - { label: "Título", name: "title", widget: "string" }
       - { label: "Fecha de Publicación", name: "published", widget: "datetime" }
       - { label: "Fecha de Actualización", name: "updated", widget: "datetime", required: false }
       - { label: "Descripción", name: "description", widget: "string", required: false }
-      - { label: "Categoría", name: "category", widget: "select", options: ["General", "Tecnología", "Cine", "Proyectos", "Diario"], default: "General" }
+      - { label: "Categoría", name: "category", widget: "select", options: ["General", "Raices", "Sendas", "Brotes", "Mariposas"], default: "General" }
       - { label: "Etiquetas", name: "tags", widget: "list", required: false }
       - { label: "Imagen de Portada", name: "cover", widget: "image", required: false }
       - { label: "Mostrar Portada en Contenido", name: "coverInContent", widget: "boolean", default: false }
@@ -28,7 +32,6 @@ collections:
       - { label: "Borrador", name: "draft", widget: "boolean", default: false }
       - { label: "Idioma", name: "lang", widget: "string", required: false, placeholder: "es" }
       - { label: "Autor", name: "author", widget: "string", required: false }
-      - { label: "Enlace de Fuente", name: "sourceLink", widget: "string", required: false }
       - { label: "Comentarios Habilitados", name: "comment", widget: "boolean", default: true }
       - { label: "🔒 Encriptado", name: "encrypted", widget: "boolean", default: false }
       - { label: "🔒 Contraseña", name: "password", widget: "string", required: false }
@@ -39,27 +42,27 @@ collections:
     files:
       - label: "Sobre mí (About)"
         name: "about"
-        file: "cin-blog/src/content/about.md"
+        file: "src/content/about.md"
         fields:
           - { label: "Título", name: "title", widget: "string" }
           - { label: "Cuerpo", name: "body", widget: "markdown" }
       - label: "Amigos (Friends)"
         name: "friends"
-        file: "cin-blog/src/content/friends.md"
+        file: "src/content/friends.md"
         fields:
           - { label: "Título", name: "title", widget: "string" }
           - { label: "Cuerpo", name: "body", widget: "markdown" }
 
-  - name: other_content
-    label: "Otros Contenidos (JSON)"
+  - name: settings
+    label: "Configuraciones del Sitio (JSON)"
     files:
       - label: "Proyectos"
         name: "projects"
-        file: "cin-blog/src/content/projects/Twilight/intro.json"
+        file: "src/content/projects/Twilight/intro.json"
         fields:
           - { label: "Contenido JSON", name: "json", widget: "code", default_language: "json" }
       - label: "Habilidades (Skills)"
         name: "skills"
-        file: "cin-blog/src/content/skills/astro.json"
+        file: "src/content/skills/astro.json"
         fields:
           - { label: "Contenido JSON", name: "json", widget: "code", default_language: "json" }
