@@ -5,7 +5,7 @@ backend:
   repo: ganjimcin/cinblog
   branch: main
 
-# Rutas corregidas: relativas a la raíz del repositorio (donde está package.json)
+# Rutas relativas a la raíz del repositorio
 media_folder: "public/assets/images"
 public_folder: "/assets/images"
 
@@ -13,29 +13,33 @@ collections:
   - name: posts
     label: "Entradas (Posts)"
     label_singular: "Post"
-    folder: "src/content/posts" # <-- Ruta corregida
+    folder: "src/content/posts"
     extension: "md"
     format: "frontmatter"
     create: true
-    nested: true # Para que encuentre archivos dentro de subcarpetas como 'guide/'
+    nested: true
     slug: "{{slug}}"
     fields:
       - { label: "Título", name: "title", widget: "string" }
       - { label: "Fecha de Publicación", name: "published", widget: "datetime" }
       - { label: "Fecha de Actualización", name: "updated", widget: "datetime", required: false }
       - { label: "Descripción", name: "description", widget: "string", required: false }
-      - { label: "Categoría", name: "category", widget: "select", options: ["General", "Raices", "Sendas", "Brotes", "Mariposas"], default: "General" }
+      - {
+          label: "Categoría",
+          name: "category",
+          widget: "select",
+          options: ["General", "Tecnología", "Cine", "Proyectos", "Diario", "Examples"],
+          default: "General",
+        }
       - { label: "Etiquetas", name: "tags", widget: "list", required: false }
       - { label: "Imagen de Portada", name: "cover", widget: "image", required: false }
       - { label: "Mostrar Portada en Contenido", name: "coverInContent", widget: "boolean", default: false }
       - { label: "Fijado (Pinned)", name: "pinned", widget: "boolean", default: false }
       - { label: "Borrador", name: "draft", widget: "boolean", default: false }
-      - { label: "Idioma", name: "lang", widget: "string", required: false, placeholder: "es" }
       - { label: "Autor", name: "author", widget: "string", required: false }
-      - { label: "Comentarios Habilitados", name: "comment", widget: "boolean", default: true }
-      - { label: "🔒 Encriptado", name: "encrypted", widget: "boolean", default: false }
-      - { label: "🔒 Contraseña", name: "password", widget: "string", required: false }
       - { label: "Cuerpo del Post", name: "body", widget: "markdown" }
+      - { label: "Idioma", name: "lang", widget: "string", required: false, placeholder: "es" }
+      - { label: "Comentarios Habilitados", name: "comment", widget: "boolean", default: true }
 
   - name: pages
     label: "Páginas Estáticas"
@@ -52,17 +56,3 @@ collections:
         fields:
           - { label: "Título", name: "title", widget: "string" }
           - { label: "Cuerpo", name: "body", widget: "markdown" }
-
-  - name: settings
-    label: "Configuraciones del Sitio (JSON)"
-    files:
-      - label: "Proyectos"
-        name: "projects"
-        file: "src/content/projects/Twilight/intro.json"
-        fields:
-          - { label: "Contenido JSON", name: "json", widget: "code", default_language: "json" }
-      - label: "Habilidades (Skills)"
-        name: "skills"
-        file: "src/content/skills/astro.json"
-        fields:
-          - { label: "Contenido JSON", name: "json", widget: "code", default_language: "json" }
