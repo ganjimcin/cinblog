@@ -8,7 +8,6 @@ import sitemap from "@astrojs/sitemap";
 import cloudflarePages from "@astrojs/cloudflare";
 import edgeone from "@edgeone/astro";
 import vercel from "@astrojs/vercel";
-import decapCmsOauth from "decap-cms-oauth-astro";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
@@ -51,11 +50,6 @@ export default defineConfig({
     trailingSlash: "always",
     adapter: adapter,
     integrations: [
-        decapCmsOauth({
-            configPath: "./.decap.yml", // Path to the Decap CMS configuration file
-            decapCMSVersion: "3.9.0",
-            enable: false, // Set to true to use oauth (Requires .env configuration)
-        }),
         swup({
             theme: false,
             animationClass: "transition-swup-", // see https://swup.js.org/options/#animationselector
