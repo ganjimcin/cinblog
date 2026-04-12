@@ -8,9 +8,25 @@ media_folder: /static/media
 public_folder: /media
 
 collections:
-  - name: posts
-    label: Posts
-    folder: /content/posts
+  - name: blog
+    label: Blog
+    folder: src/content/blog
+    create: true
+    slug: "{{slug}}"
     fields:
       - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: string }
+      - { label: Publication Date, name: pubDate, widget: datetime }
+      - { label: Hero Image, name: heroImage, widget: image, required: false }
+      - { label: Category, name: category, widget: select, options: [Cine, Tecnologia, Estilo de Vida, Noticias], default: Noticias }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: pages
+    label: Páginas
+    folder: src/content/pages
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: string }
       - { label: Body, name: body, widget: markdown }
