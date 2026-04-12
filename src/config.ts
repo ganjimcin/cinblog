@@ -1,5 +1,3 @@
-import yaml from "js-yaml";
-
 import type {
     SiteConfig,
     AnalyticsConfig,
@@ -15,7 +13,7 @@ import type {
     PioConfig,
 } from "./types/config";
 import { LinkPreset } from "./types/config";
-import rawConfig from "./twilight.config.yaml?raw";
+import config from "./twilight.config.yaml";
 
 
 type ConfigFile = {
@@ -33,8 +31,6 @@ type ConfigFile = {
     musicPlayer: MusicPlayerConfig;
     pio: PioConfig;
 };
-
-const config = yaml.load(rawConfig) as ConfigFile;
 
 const linkPresetNameMap: Record<string, LinkPreset> = {
     Home: LinkPreset.Home,

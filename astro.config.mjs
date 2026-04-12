@@ -18,6 +18,7 @@ import remarkDirective from "remark-directive"; /* Handle directives */
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
+import yaml from "@rollup/plugin-yaml";
 
 import { siteConfig } from "./src/config.ts";
 import { pluginCollapseButton } from "./src/plugins/expressive-code/collapse-button.ts";
@@ -194,7 +195,7 @@ export default defineConfig({
         ],
     },
     vite: {
-        plugins: [tailwindcss()],
+        plugins: [tailwindcss(), yaml()],
         build: {
             cssCodeSplit: true,
             cssMinify: "esbuild",
