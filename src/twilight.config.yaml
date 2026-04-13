@@ -177,8 +177,7 @@ navbar:
                     "Diary"
                 - # Enlace de segundo nivel - Álbumes (predefinido)
                     "Albums"
-                - # Enlace de segundo nivel - Anime (predefinido)
-                    "Anime"
+
         - # Enlace de primer nivel - Amigos (predefinido)
             "Friends"
         - # Enlace de primer nivel - Acerca de (predefinido)
