@@ -1,9 +1,9 @@
 # Configuración del Sitio
 site:
     # URL del sitio (debe terminar en barra /)
-    siteURL: "https://twilight.spr-aachen.com/"
+    siteURL: "https://eljardindeunapedagoga.vercel.app/"
     # Título del sitio
-    title: "Twilight"
+    title: "El jardin de una pedagoga"
     # Subtítulo del sitio
     subtitle: "Plantilla de Blog"
     # Configuración de idioma
