@@ -46,12 +46,7 @@ export const LinkPresets: { [key in LinkPreset]: NavbarLink } = {
         icon: "material-symbols:photo-library",
         description: i18n(I18nKey.albumsSubtitle),
     },
-    [LinkPreset.Anime]: {
-        name: i18n(I18nKey.anime),
-        url: "/anime/",
-        icon: "material-symbols:movie",
-        description: "A list of anime I have watched.",
-    },
+
     [LinkPreset.Friends]: {
         name: i18n(I18nKey.friends),
         url: "/friends/",

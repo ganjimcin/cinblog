@@ -4,7 +4,7 @@ import { Icon } from "astro-icon/components";
 import { getCategoryUrl, getTagUrl, url } from "@utils/url";
 import { getCategoryPathParts } from "@utils/category";
 import { formatDateToYYYYMMDD } from "@utils/date";
-import { getAnalyticsConfig } from "@utils/analytics";
+
 import { i18n } from "@i18n/translation";
 import I18nKey from "@i18n/i18nKey";
 
@@ -37,7 +37,7 @@ const {
 const finalPostUrl = postUrl || (slug ? url(`/posts/${slug}/`) : "");
 const categoryParts = getCategoryPathParts(category ?? null);
 
-const { enabled: analyticsEnabled, platform, baseUrl, apiKey, websiteId } = getAnalyticsConfig();
+
 ---
 
 <div class:list={["flex flex-wrap text-neutral-500 dark:text-neutral-400 items-center gap-x-4 gap-y-2", className]}>
@@ -105,34 +105,5 @@ const { enabled: analyticsEnabled, platform, baseUrl, apiKey, websiteId } = getA
             {!(tags && tags.length > 0) && <div class="transition text-50 text-sm font-medium">{i18n(I18nKey.noTags)}</div>}
         </div>
     </div>
-    <!-- 访问量（首页不显示，且启用统计时显示） -->
-    {!isHome && analyticsEnabled && finalPostUrl && (
-        <div class="flex items-center page-views-container"
-            data-page-url={finalPostUrl}
-            data-analytics-base-url={baseUrl}
-            data-analytics-api-key={apiKey}
-            data-analytics-website-id={websiteId}
-            data-i18n-views={i18n(I18nKey.pageViews)}
-            data-i18n-visitors={i18n(I18nKey.visitors)}
-            data-i18n-error={i18n(I18nKey.statsError)}
-        >
-            <div class="meta-icon">
-                <Icon name="material-symbols:visibility-outline-rounded" class="text-xl"></Icon>
-            </div>
-            <span class="text-50 text-sm font-medium page-views-display">{i18n(I18nKey.statsLoading)}</span>
-        </div>
-    )}
+
 </div>
-
-<!-- 只有在非首页且启用统计且有finalPostUrl时才加载脚本 -->
-{!isHome && analyticsEnabled && finalPostUrl && (
-    <script>
-        import { initAnalyticsStats } from "@utils/analytics";
-        import "@/plugins/umami-share";
-
-        initAnalyticsStats(".page-views-container", ".page-views-display", "umami", true);
-        document.addEventListener('astro:page-load', () => {
-            initAnalyticsStats(".page-views-container", ".page-views-display", "umami", true);
-        });
-    </script>
-)}

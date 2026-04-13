@@ -1,6 +1,5 @@
 import type {
     SiteConfig,
-    AnalyticsConfig,
     NavbarLink,
     NavbarConfig,
     SidebarConfig,
@@ -10,7 +9,6 @@ import type {
     FooterConfig,
     ParticleConfig,
     MusicPlayerConfig,
-    PioConfig,
 } from "./types/config";
 import { LinkPreset } from "./types/config";
 import config from "./twilight.config.yaml";
@@ -18,7 +16,7 @@ import config from "./twilight.config.yaml";
 
 type ConfigFile = {
     site: SiteConfig;
-    analytics: AnalyticsConfig;
+
     navbar: {
         links: Array<NavbarLink | LinkPreset | string>;
     };
@@ -29,7 +27,6 @@ type ConfigFile = {
     footer: FooterConfig;
     particle: ParticleConfig;
     musicPlayer: MusicPlayerConfig;
-    pio: PioConfig;
 };
 
 const linkPresetNameMap: Record<string, LinkPreset> = {
@@ -67,30 +64,12 @@ const normalizeNavbarLinks = (links: Array<NavbarLink | LinkPreset | string>) =>
 
 const resolvedPostConfig: PostConfig = {
     ...config.post,
-    comment: config.post.comment.twikoo
-        ? {
-            ...config.post.comment,
-            twikoo: {
-                ...config.post.comment.twikoo,
-                lang: config.post.comment.twikoo.lang ?? config.site.lang,
-            },
-        }
-        : config.post.comment,
 };
 
 // 站点配置
 export const siteConfig: SiteConfig = config.site;
 
-// 统计配置
-export const analyticsConfig: AnalyticsConfig = {
-    enabled: config.analytics.enabled,
-    platform: config.analytics.platform,
-    umami: {
-        apiKey: config.analytics.umami.apiKey ?? import.meta.env.UMAMI_API_KEY,
-        baseUrl: config.analytics.umami.baseUrl,
-        code: config.analytics.umami.code ?? import.meta.env.UMAMI_TRACKING_CODE,
-    }
-};
+
 
 // 导航栏配置
 export const navbarConfig: NavbarConfig = {
@@ -117,6 +96,3 @@ export const particleConfig: ParticleConfig = config.particle;
 
 // 音乐播放器配置
 export const musicPlayerConfig: MusicPlayerConfig = config.musicPlayer;
-
-// 看板娘配置
-export const pioConfig: PioConfig = config.pio;

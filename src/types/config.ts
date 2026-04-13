@@ -12,16 +12,7 @@ import type {
  * 
  */
 
-// Analytics 配置
-export type AnalyticsConfig = {
-    enabled: boolean;
-    platform: "umami";
-    umami: {
-        apiKey: string;
-        baseUrl: string;
-        code: string;
-    };
-};
+
 
 /**
  * 
@@ -188,11 +179,7 @@ export type SiteConfig = {
     loadingOverlay?: LoadingOverlayConfig;
     // Favicon 配置
     favicon: Favicon[];
-    // bangumi 配置
-    bangumi?: {
-        // 用户 ID
-        userId?: string;
-    };
+
     // OpenGraph 配置
     generateOgImages: boolean;
 };
@@ -224,9 +211,8 @@ export enum LinkPreset {
     Timeline = 4,
     Diary = 5,
     Albums = 6,
-    Anime = 7,
-    About = 8,
-    Friends = 9,
+    About = 7,
+    Friends = 8,
 }
 
 
@@ -390,15 +376,7 @@ export type PostConfig = {
     comment: {
         // 启用评论功能
         enable: boolean;
-        // Twikoo 评论系统配置
-        twikoo?: {
-            // 环境 ID
-            envId: string;
-            // 地域
-            region?: string;
-            // 语言
-            lang?: string;
-        };
+
     };
 };
 
@@ -491,19 +469,6 @@ export type MusicPlayerTrack = {
 export type MusicPlayerConfig = {
     // 启用音乐播放器功能
     enable: boolean;
-    // 默认模式
-    mode: "meting" | "local";
-    // meting 模式专属配置
-    meting: {
-        // Meting API 地址
-        meting_api: string;
-        // 音乐平台
-        server: "netease" | "tencent" | "kugou" | "baidu" | "kuwo";
-        // 类型
-        type: "playlist" | "album" | "artist" | "song" | "search";
-        // 资源 ID
-        id: string;
-    };
     // local 模式专属配置
     local: {
         // 播放列表
@@ -516,45 +481,3 @@ export type MusicPlayerConfig = {
 /**
  * 
  */
-
-// 看板娘配置
-export type PioConfig = {
-    // 启用看板娘
-    enable: boolean;
-    // 模型文件路径
-    models?: string[];
-    // 看板娘位置
-    position?: "left" | "right";
-    // 看板娘宽度
-    width?: number;
-    // 看板娘高度
-    height?: number;
-    // 展现模式
-    mode?: "static" | "fixed" | "draggable";
-    // 是否在移动设备上隐藏
-    hiddenOnMobile?: boolean;
-    // 对话框配置
-    dialog?: {
-        // 欢迎词
-        welcome?: string | string[];
-        // 触摸提示
-        touch?: string | string[];
-        // 首页提示
-        home?: string;
-        // 换装提示
-        skin?: [string, string]; // [切换前, 切换后]
-        // 关闭提示
-        close?: string;
-        // 关于链接
-        link?: string;
-        // 自定义属性
-        custom?: Array<{
-            // CSS选择器
-            selector: string;
-            // 类型
-            type: "read" | "link";
-            // 自定义文本
-            text?: string;
-        }>;
-    };
-};

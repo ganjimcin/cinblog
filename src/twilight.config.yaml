@@ -1,463 +1,390 @@
-# 站点配置
+# Configuración del Sitio
 site:
-    # 站点 URL（以斜杠结尾）
+    # URL del sitio (debe terminar en barra /)
     siteURL: "https://twilight.spr-aachen.com/"
-    # 站点标题
+    # Título del sitio
     title: "Twilight"
-    # 站点副标题
-    subtitle: "Blog Template"
-    # 语言配置
-    lang: "en"
-    # 翻译配置
+    # Subtítulo del sitio
+    subtitle: "Plantilla de Blog"
+    # Configuración de idioma
+    lang: "es"
+    # Configuración de traducción
     translate:
-        # 启用翻译功能
+        # Habilitar función de traducción
         enable: true
-        # 翻译服务
+        # Servicio de traducción
         service: "client.edge"
-        # 显示语言选择下拉框
+        # Mostrar menú desplegable de selección de idioma
         showSelectTag: false
-        # 自动检测用户语言
+        # Detectar automáticamente el idioma del usuario
         autoDiscriminate: true
-        # 翻译时忽略的 CSS 类名
+        # Clases de CSS ignoradas durante la traducción
         ignoreClasses:
             - "ignore"
             - "banner-title"
             - "banner-subtitle"
-        # 翻译时忽略的 HTML 标签
+        # Etiquetas HTML ignoradas durante la traducción
         ignoreTags:
             - "script"
             - "style"
             - "code"
             - "pre"
-    # 时区配置
+    # Configuración de zona horaria
     timeZone: 8
-    # 字体配置
+    # Configuración de fuentes
     font:
-        # 示例字体配置 - Zen Maru Gothic
+        # Ejemplo de configuración de fuente - Zen Maru Gothic
         "Example - ZenMaruGothic":
-            # 字体源 (字体 CSS 链接 | 字体文件路径)
+            # Fuente (Enlace CSS | Ruta del archivo de fuente)
             src: "https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap"
-            # 字体名 (font-family)
+            # Nombre de la familia de fuente (font-family)
             family: "Zen Maru Gothic"
-    # 主题色配置
+    # Configuración del color del tema
     themeColor:
-        # 主题色的默认色相 (范围从 0 到 360。例如：红色：0，青色：200，蓝绿色：250，粉色：345)
+        # Tono predeterminado del color del tema (rango de 0 a 360. Ej: Rojo: 0, Cian: 200, Azul verdoso: 250, Rosa: 345)
         hue: 255
-    # 默认主题 ("system" 跟随系统 | "light" 浅色 | "dark" 深色)
+    # Tema por defecto ("system" sigue al sistema | "light" claro | "dark" oscuro)
     defaultTheme: "dark"
-    # 壁纸配置
+    # Configuración del fondo de pantalla
     wallpaper:
-        # 模式 ("banner" 横幅 | "fullscreen" 全屏 | "none" 纯色)
+        # Modo ("banner" encabezado | "fullscreen" pantalla completa | "none" color sólido)
         mode: "banner"
-        # 图片源配置 (fullscreen 和 banner 模式共享)
+        # Configuración de origen de imagen (compartido entre modos fullscreen y banner)
         src:
-            # 桌面壁纸图片 (相对于 /public 目录; 支持单张图片或图片数组，当数组长度 > 1 时自动启用轮播)
+            # Imágenes de fondo para escritorio (relativo al directorio /public; admite una imagen o un array, el array activa carrusel)
             desktop:
                 - "/assets/images/desktopWallpaper_1.jpg"
                 - "/assets/images/desktopWallpaper_2.jpg"
                 - "/assets/images/desktopWallpaper_3.jpg"
-            # 移动壁纸图片 (相对于 /public 目录; 支持单张图片或图片数组，当数组长度 > 1 时自动启用轮播)
+            # Imágenes de fondo para móvil (relativo al directorio /public; admite una imagen o un array, el array activa carrusel)
             mobile:
                 - "/assets/images/mobileWallpaper_1.jpg"
                 - "/assets/images/mobileWallpaper_2.jpg"
-        # 壁纸位置 ('top' | 'center' | 'bottom')
+        # Posición del fondo ('top' arriba | 'center' centro | 'bottom' abajo)
         position: "center"
-        # 轮播配置 (fullscreen 和 banner 模式共享)
+        # Configuración del carrusel (compartido entre modos fullscreen y banner)
         carousel:
-            # 为多张图片启用轮播，否则随机显示一张图片
+            # Habilitar carrusel para múltiples imágenes, de lo contrario muestra una al azar
             enable: true
-            # 轮播间隔时间 (秒)
+            # Intervalo del carrusel (segundos)
             interval: 3.6
-            # 启用 Ken Burns 效果
+            # Habilitar efecto Ken Burns
             kenBurns: true
-        # Banner 模式专属配置
+        # Configuración exclusiva para modo Banner
         banner:
-            # 横幅文本配置
+            # Configuración de texto del banner
             homeText:
-                # 在主页显示文本
+                # Mostrar texto en la página principal
                 enable: true
-                # 主标题
+                # Título principal
                 title: "Twilight"
-                # 副标题，支持单个字符串或字符串数组
+                # Subtítulo, admite una cadena o un array de cadenas
                 subtitle:
-                    - "Illuminate Our Paths"
-                # 副标题打字机效果
+                    - "Ilumina Nuestros Caminos"
+                # Efecto de máquina de escribir para el subtítulo
                 typewriter:
-                    # 启用副标题打字机效果
+                    # Habilitar efecto de máquina de escribir
                     enable: true
-                    # 打字速度 (毫秒)
+                    # Velocidad de escritura (ms)
                     speed: 111
-                    # 删除速度 (毫秒)
+                    # Velocidad de borrado (ms)
                     deleteSpeed: 51
-                    # 完全显示后的暂停时间 (毫秒)
+                    # Tiempo de pausa tras mostrarse completo (ms)
                     pauseTime: 3000
-            # 横幅图片来源文本
+            # Texto de créditos de la imagen del banner
             credit:
-                # 显示横幅图片来源文本
+                # Mostrar texto de créditos de la imagen
                 enable: false
-                # 要显示的来源文本
-                text: "Describe"
-                # (可选) 原始艺术品或艺术家页面的 URL 链接
+                # Texto a mostrar
+                text: "Descripción"
+                # (Opcional) URL de la obra original o página del artista
                 url: ""
-            # 导航栏配置
+            # Configuración de la barra de navegación
             navbar:
-                # 导航栏透明模式 ("semi" 半透明加圆角 | "full" 完全透明 | "semifull" 动态透明)
+                # Modo de transparencia ("semi" translúcido con bordes redondeados | "full" totalmente transparente | "semifull" transparente dinámico)
                 transparentMode: "semifull"
-            # 水波纹效果配置
+            # Configuración del efecto de ondas
             waves:
-                # 启用水波纹效果
+                # Habilitar efecto de ondas
                 enable: true
-                # 启用性能模式 (简化波浪效果以提升性能)
+                # Habilitar modo de rendimiento (simplifica las ondas para mejorar el rendimiento)
                 performanceMode: false
-        # Fullscreen 模式专属配置
+        # Configuración exclusiva para modo Fullscreen (Pantalla Completa)
         fullscreen:
-            # 层级
+            # Nivel de capa (zIndex)
             zIndex: -1
-            # 壁纸透明度，0-1之间
+            # Opacidad del fondo (entre 0 y 1)
             opacity: 0.9
-            # 背景模糊程度 (像素值)
+            # Nivel de desenfoque (píxeles)
             blur: 1
-            # 导航栏透明模式
+            # Transparencia de la barra de navegación en este modo
             navbar:
                 transparentMode: "semi"
-    # 加载页配置
+    # Configuración de la pantalla de carga
     loadingOverlay:
-        # 是否启用加载页
+        # Habilitar pantalla de carga
         enable: true
-        # 是否等待所有资源 (如图片、样式表) 加载完成
+        # Esperar a que todos los recursos (imágenes, estilos) se carguen
         waitForAllResources: true
-        # 加载标题配置
+        # Configuración del título de carga
         title:
-            # 是否启用加载标题
+            # Habilitar título de carga
             enable: true
-            # 加载标题文本
-            content: "LOADING"
-            # 动画周期 (s)
+            # Contenido del texto de carga
+            content: "CARGANDO"
+            # Ciclo de animación (segundos)
             interval: 1.5
-        # 加载动画配置
+        # Configuración de la animación de carga (spinner)
         spinner:
-            # 是否启用加载动画
+            # Habilitar animación de carga
             enable: true
-            # 动画周期 (s)
+            # Ciclo de animación (segundos)
             interval: 1.5
-    # favicon 配置
+    # Configuración de favicon
     favicon: []
-    # bangumi 配置
-    bangumi:
-        # 用户 ID
-        userId: "your-bangumi-id"
-    # OpenGraph 配置
+
+    # Configuración de OpenGraph (Imágenes para redes sociales)
     generateOgImages: false
 
-# 统计配置
-analytics:
-    # 是否启用统计
-    enabled: false
-    # 统计平台
-    platform: "umami"
-    # Umami 统计配置
-    umami:
-        # Umami API 地址
-        baseUrl: "https://api.umami.is"
-        # API 密钥
-        apiKey: ''
-        # Tracking code
-        code: ''
 
-# 导航栏配置
+
+# Configuración de la Barra de Navegación
 navbar:
-    # 链接配置 (链接预设位于 src/constants/link-presets.ts 的 LinkPresets)
+    # Configuración de enlaces (Los ajustes preestablecidos están en src/constants/link-presets.ts)
     links:
-        - # 一级导航链接 - 主页 (预设)
+        - # Enlace de primer nivel - Inicio (predefinido)
             "Home"
-        - # 一级导航链接 - 归档 (预设)
+        - # Enlace de primer nivel - Archivo (predefinido)
             "Archive"
-        - # 一级导航链接 - 展览 (自定义)
-            # 导航名称
+        - # Enlace de primer nivel - Exhibición (personalizado)
+            # Nombre de la navegación
             name: "Exhibition"
-            # 导航链接
+            # URL del enlace
             url: "/exhibition/"
-            # 导航图标
+            # Icono
             icon: "material-symbols:person"
-            # 导航描述
-            description: "A collection of my creative works and experiences"
-            # 子链接
+            # Descripción
+            description: "Una colección de mis trabajos creativos y experiencias"
+            # Sub-enlaces
             children:
-                - # 二级导航链接 - 项目 (预设)
+                - # Enlace de segundo nivel - Proyectos (predefinido)
                     "Projects"
-                - # 二级导航链接 - 技能 (预设)
+                - # Enlace de segundo nivel - Habilidades (predefinido)
                     "Skills"
-                - # 二级导航链接 - 历程 (预设)
+                - # Enlace de segundo nivel - Línea de tiempo (predefinido)
                     "Timeline"
-                - # 二级导航链接 - 日记 (预设)
+                - # Enlace de segundo nivel - Diario (predefinido)
                     "Diary"
-                - # 二级导航链接 - 相册 (预设)
+                - # Enlace de segundo nivel - Álbumes (predefinido)
                     "Albums"
-                - # 二级导航链接 - 动画 (预设)
+                - # Enlace de segundo nivel - Anime (predefinido)
                     "Anime"
-        - # 一级导航链接 - 好友 (预设)
+        - # Enlace de primer nivel - Amigos (predefinido)
             "Friends"
-        - # 一级导航链接 - 关于 (预设)
+        - # Enlace de primer nivel - Acerca de (predefinido)
             "About"
 
-# 侧边栏配置
+# Configuración de la Barra Lateral
 sidebar:
-    # 侧边栏组件配置列表 (侧栏组件预设位于 src/types/config.ts 的 WidgetComponentType)
+    # Configuración de componentes de la barra lateral (Predefinidos en src/types/config.ts)
     components:
-        # 左侧侧边栏
+        # Barra lateral izquierda
         left:
-            - # 组件 - 资料 (预设)
-                # 类型
+            - # Componente - Perfil (predefinido)
+                # Tipo
                 type: "profile"
-                # 位置策略 ("top" 顶部固定 | "sticky" 粘性)
+                # Estrategia de posición ("top" fijo arriba | "sticky" pegajoso)
                 position: "top"
-                # 页面可见性配置
+                # Configuración de visibilidad en páginas
                 visibility:
-                    # 匹配模式：'include' (包含), 'exclude' (排除)
+                    # Modo: 'include' (incluir), 'exclude' (excluir)
                     mode: "exclude"
-                    # 页面路径匹配规则列表 (支持正则字符串)
+                    # Lista de reglas de rutas (soporta expresiones regulares)
                     paths: ["^/posts/", "^/archive"]
-            - # 组件 - 目录 (预设)
-                # 类型
+            - # Componente - Directorio (predefinido)
+                # Tipo
                 type: "directory"
-                # 位置策略 ("top" 顶部固定 | "sticky" 粘性)
+                # Estrategia de posición
                 position: "sticky"
-            - # 组件 - 文章类别 (预设)
-                # 类型
+            - # Componente - Categorías (predefinido)
+                # Tipo
                 type: "categories"
-                # 位置策略 ("top" 顶部固定 | "sticky" 粘性)
+                # Estrategia de posición
                 position: "sticky"
-                # 响应式配置
+                # Configuración de respuesta (responsive)
                 responsive:
-                    # 折叠阈值
+                    # Umbral de colapso
                     collapseThreshold: 5
-                # 目录深度
+                # Profundidad del directorio
                 depth: 3
-            - # 组件 - 文章标签 (预设)
-                # 类型
+            - # Componente - Etiquetas (predefinido)
+                # Tipo
                 type: "tags"
-                # 位置策略 ("top" 顶部固定 | "sticky" 粘性)
+                # Estrategia de posición
                 position: "sticky"
-                # 响应式配置
+                # Configuración de respuesta
                 responsive:
-                    # 折叠阈值
+                    # Umbral de colapso
                     collapseThreshold: 20
-        # 右侧侧边栏
+        # Barra lateral derecha
         right:
-            - # 组件 - 公告 (预设)
-                # 类型
+            - # Componente - Anuncios (predefinido)
+                # Tipo
                 type: "announcement"
-                # 位置策略 ("top" 顶部固定 | "sticky" 粘性)
+                # Estrategia de posición
                 position: "top"
-                # 页面可见性配置
+                # Configuración de visibilidad
                 visibility:
-                    # 匹配模式：'include' (包含), 'exclude' (排除)
+                    # Modo de emparejamiento
                     mode: "include"
-                    # 页面路径匹配规则列表 (支持正则字符串)
+                    # Rutas permitidas
                     paths: ["^/$"]
-            - # 组件 - 文章目录 (预设)
-                # 类型
+            - # Componente - Tabla de Contenidos (TOC) (predefinido)
+                # Tipo
                 type: "toc"
-                # 位置策略 ("top" 顶部固定 | "sticky" 粘性)
+                # Estrategia de posición
                 position: "sticky"
-                # 目录深度 (1-6，1 表示只显示 h1 标题，2 表示显示 h1 和 h2 标题，依此类推)
+                # Profundidad (1-6, 1 solo h1, 2 h1 y h2, etc.)
                 depth: 3
-            - # 组件 - 文章统计 (预设)
-                # 类型
+            - # Componente - Estadísticas del blog (predefinido)
+                # Tipo
                 type: "statistics"
-                # 位置策略 ("top" 顶部固定 | "sticky" 粘性)
+                # Estrategia de posición
                 position: "sticky"
-                # 页面可见性配置
+                # Configuración de visibilidad
                 visibility:
-                    # 匹配模式：'include' (包含), 'exclude' (排除)
+                    # Modo
                     mode: "include"
-                    # 页面路径匹配规则列表 (支持正则字符串)
+                    # Rutas
                     paths: ["^/$", "^/archive$"]
 
-# 资料配置
+# Configuración del Perfil
 profile:
-    # 头像配置 (相对于 /public 目录)
+    # Avatar (relativo al directorio /public)
     avatar: "/assets/images/avatar.jpg"
-    # 信息配置
+    # Nombre
     name: "Twilight"
-    # 简介配置
-    bio: "Hi"
-    # 链接配置
+    # Biografía / Introducción
+    bio: "Hola"
+    # Enlaces sociales
     links:
-        - # 链接示例
-            # 名字
+        - # Ejemplo de enlace
+            # Nombre
             name: "GitHub"
-            # 图标
+            # Icono
             icon: "fa6-brands:github"
-            # 链接
+            # URL
             url: "https://github.com/Spr-Aachen/Twilight"
 
-# 公告配置
+# Configuración de Anuncios
 announcement:
-    # 公告标题
-    title: "Announcement"
-    # 公告内容
-    content: "Welcome to my blog!"
-    # 允许用户关闭公告
+    # Título del anuncio
+    title: "Anuncio"
+    # Contenido del anuncio
+    content: "¡Bienvenido a mi blog!"
+    # Permitir al usuario cerrar el anuncio
     closable: true
-    # 链接配置
+    # Configuración de enlace en el anuncio
     link:
-        # 启用链接
+        # Habilitar enlace
         enable: true
-        # 链接文本
-        text: "Learn More"
-        # 链接 URL
+        # Texto del enlace
+        text: "Saber más"
+        # URL del enlace
         url: "/about/"
-        # 是否外部链接
+        # Es un enlace externo
         external: false
 
-# 文章配置
+# Configuración de Artículos/Posts
 post:
-    # 显示“上次编辑”卡片
+    # Mostrar tarjeta de "Última edición"
     showLastModified: true
-    # 代码高亮配置
+    # Configuración de resaltado de código
     expressiveCode:
-        # 主题
+        # Tema
         theme: "github-dark"
-    # 许可证配置
+    # Configuración de licencia
     license:
-        # 启用许可证
+        # Habilitar licencia
         enable: true
-        # 许可证名称
+        # Nombre de la licencia
         name: "CC BY-NC-SA 4.0"
-        # 许可证链接
+        # URL de la licencia
         url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
-    # 评论配置
+    # Configuración de comentarios
     comment:
-        # 启用评论功能
+        # Habilitar comentarios
         enable: false
-        # Twikoo 评论系统配置
-        twikoo:
-            # 环境 ID
-            envId: "https://twikoo.vercel.app"
-            # 语言
-            lang: "en"
 
-# 页脚配置
+
+# Configuración del Pie de Página (Footer)
 footer:
-    # 启用 Footer HTML 注入功能
+    # Habilitar inyección de HTML en el footer (ej: para números de registro/ICP)
     enable: false
-    # 自定义 HTML 内容，用于添加备案号等信息
-    customHtml: ""
 
-# 粒子特效配置
+# Configuración de Efecto de Partículas
 particle:
-    # 启用粒子特效
+    # Habilitar partículas
     enable: true
-    # 粒子数量
+    # Número de partículas
     particleNum: 12
-    # 粒子越界限制次数，-1为无限循环
+    # Límite de veces que una partícula sale de pantalla (-1 para infinito)
     limitTimes: -1
-    # 粒子尺寸配置
+    # Configuración de tamaño de partículas
     size:
-        # 粒子最小尺寸倍数
+        # Tamaño mínimo
         min: 0.3
-        # 粒子最大尺寸倍数
+        # Tamaño máximo
         max: 0.9
-    # 粒子透明度配置
+    # Configuración de opacidad
     opacity:
-        # 粒子最小不透明度
+        # Opacidad mínima
         min: 0.3
-        # 粒子最大不透明度
+        # Opacidad máxima
         max: 0.9
-    # 粒子移动速度配置
+    # Configuración de velocidad de movimiento
     speed:
-        # 水平移动速度
+        # Velocidad horizontal
         horizontal:
-            # 最小值
+            # Mínimo
             min: -0.9
-            # 最大值
+            # Máximo
             max: 0.9
-        # 垂直移动速度
+        # Velocidad vertical
         vertical:
-            # 最小值
+            # Mínimo
             min: 0.15
-            # 最大值
+            # Máximo
             max: 0.3
-        # 旋转速度
+        # Velocidad de rotación
         rotation: 0.12
-        # 消失速度
+        # Velocidad de desvanecimiento
         fadeSpeed: 0.12
-    # 粒子层级
+    # Nivel de capa
     zIndex: 100
 
-# 音乐播放器配置
+# Configuración del Reproductor de Música
 musicPlayer:
-    # 启用音乐播放器功能
+    # Habilitar reproductor de música
     enable: true
-    # 默认模式 ("meting" API | "local" 本地)
-    mode: "meting"
-    # meting 模式专属配置
-    meting:
-        # Meting API 地址
-        meting_api: "https://api.i-meto.com/meting/api"
-        # 音乐平台
-        server: "netease"
-        # 类型 ("playlist" 歌单 | "song" 单曲)
-        type: "playlist"
-        # 资源 ID
-        id: "2161912966"
-    # local 模式专属配置
+    # Configuración para modo Local
     local:
-        # 播放列表
+        # Lista de reproducción
         playlist:
-            - # 列表示例
-                # 序号
+            - # Ejemplo de canción
+                # ID
                 id: 1
-                # 标题
-                title: "深海之息"
-                # 作者
+                # Título
+                title: "Deep Sea Breath"
+                # Artista
                 artist: "Youzee Music"
-                # 封面
+                # Portada
                 cover: "https://p1.music.126.net/PhKOqFtljgHDDpKYM2ADUA==/109951169858309716.jpg"
-                # 音乐路径
+                # Ruta del archivo de música
                 url: "assets/music/深海之息.m4a"
-                # 歌词路径
+                # Ruta del archivo de letras (LRC)
                 lrc: "assets/music/深海之息.lrc"
-                # 时长
+                # Duración (segundos)
                 duration: 146
-    # 是否自动播放
+    # Reproducción automática
     autoplay: true
-
-# 看板娘配置
-pio:
-    # 启用看板娘
-    enable: false
-    # 模型文件路径
-    models:
-        - "/pio/models/pio/model.json"
-    # 看板娘位置
-    position: "left"
-    # 看板娘宽度
-    width: 280
-    # 看板娘高度
-    height: 250
-    # 展现模式
-    mode: "draggable"
-    # 是否在移动设备上隐藏
-    hiddenOnMobile: true
-    # 对话框配置
-    dialog:
-        # 欢迎词
-        welcome: "Welcome!"
-        # 触摸提示
-        touch:
-            - "What are you doing?"
-            - "Stop touching me!"
-            - "Don't bully me like that!"
-            - "(｡í _ ì｡)"
-        # 首页提示
-        home: "Click here to go back to homepage!"
-        # 换装提示
-        skin:
-            - "Want to see my new outfit?"
-            - "The new outfit looks great~"
-        # 关闭提示
-        close: "See you next time~"
-        # 关于链接
-        link: "https://nav.kungal.org"
