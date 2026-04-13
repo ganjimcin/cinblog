@@ -245,24 +245,14 @@ sidebar:
                 position: "sticky"
                 # Profundidad (1-6, 1 solo h1, 2 h1 y h2, etc.)
                 depth: 3
-            - # Componente - Estadísticas del blog (predefinido)
-                # Tipo
-                type: "statistics"
-                # Estrategia de posición
-                position: "sticky"
-                # Configuración de visibilidad
-                visibility:
-                    # Modo
-                    mode: "include"
-                    # Rutas
-                    paths: ["^/$", "^/archive$"]
+
 
 # Configuración del Perfil
 profile:
     # Avatar (relativo al directorio /public)
     avatar: "/assets/images/avatar.jpg"
     # Nombre
-    name: "Twilight"
+    name: "Lili Grow"
     # Biografía / Introducción
     bio: "Hola"
     # Enlaces sociales

@@ -248,7 +248,6 @@ export type WidgetComponentType =
     | "directory"
     | "categories"
     | "tags"
-    | "statistics"
     | "toc"
     | "custom";
 
