@@ -5,7 +5,7 @@ site:
     # Título del sitio
     title: "El jardin de una pedagoga"
     # Subtítulo del sitio
-    subtitle: "Plantilla de Blog"
+    subtitle: "Lili"
     # Configuración de idioma
     lang: "es"
     # Configuración de traducción
@@ -77,10 +77,10 @@ site:
                 # Mostrar texto en la página principal
                 enable: true
                 # Título principal
-                title: "Twilight"
+                title: "El jardin de una pedagoga"
                 # Subtítulo, admite una cadena o un array de cadenas
                 subtitle:
-                    - "Ilumina Nuestros Caminos"
+                    - "Life and Liberty"
                 # Efecto de máquina de escribir para el subtítulo
                 typewriter:
                     # Habilitar efecto de máquina de escribir
