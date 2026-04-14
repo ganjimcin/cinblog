@@ -40,7 +40,7 @@ import "../styles/expressive-code.css";
     <script is:inline>
         (function() {
             const LIGHT_MODE = "light", DARK_MODE = "dark", SYSTEM_MODE = "system";
-            const theme = localStorage.getItem('theme') || 'system';
+            const theme = localStorage.getItem('theme') || 'dark';
             let isDark = false;
             if (theme === LIGHT_MODE) {
                 document.documentElement.classList.remove('dark');

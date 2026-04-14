@@ -1,6 +1,6 @@
 // src/components/admin-cms/utils/github.js
-const REPO_OWNER = 'nefDevelop';
-const REPO_NAME = 'astro-blogobs';
+const REPO_OWNER = 'ganjimcin';
+const REPO_NAME = 'cinblog';
 
 /**
  * Fetches data from the GitHub API.
