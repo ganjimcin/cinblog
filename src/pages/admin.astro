@@ -1,0 +1,126 @@
+---
+// src/pages/admin.astro
+import CmsApp from '../cms/components/admin-cms/CmsApp.svelte';
+import "../styles/main.css";
+import "../styles/markdown.css";
+import "../styles/fancybox.css";
+import "../styles/musicplayer.css";
+import "../styles/grid.css";
+import "../styles/anime.css";
+import "../styles/expressive-code.css";
+---
+
+<!DOCTYPE html>
+<html lang="es" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rain and Tea - Admin</title>
+    <!-- Blog Styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <!-- Dependencies -->
+    <script is:inline src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- Base CMS Styles -->
+    <link rel="stylesheet" href="/admin/cms.css?v=4">
+    <link rel="stylesheet" href="/admin/firefly.css?v=4">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
+
+    <script is:inline src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+    <!-- Theme Initialization Script (from base.astro) -->
+    <script is:inline>
+        (function() {
+            const LIGHT_MODE = "light", DARK_MODE = "dark", SYSTEM_MODE = "system";
+            const theme = localStorage.getItem('theme') || 'system';
+            let isDark = false;
+            if (theme === LIGHT_MODE) {
+                document.documentElement.classList.remove('dark');
+                isDark = false;
+            } else if (theme === DARK_MODE) {
+                document.documentElement.classList.add('dark');
+                isDark = true;
+            } else {
+                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.classList.add('dark');
+                    isDark = true;
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    isDark = false;
+                }
+            }
+            const expressiveTheme = isDark ? "github-dark" : "github-light";
+            document.documentElement.setAttribute("data-theme", expressiveTheme);
+            const hue = localStorage.getItem('hue') || '165';
+            document.documentElement.style.setProperty('--hue', hue);
+        })();
+    </script>
+</head>
+
+<body>
+    <div id="cms-app-root">
+        <CmsApp client:only="svelte" />
+    </div>
+</body>
+
+</html>
+
+<style is:global>
+    /* Global fixes for the integrated CMS */
+    /* Ensure selection and pointer events are enabled for the CMS workspace */
+    html, 
+    body, 
+    #cms-app-root, 
+    .cms-editor-wrapper, 
+    .cms-editor-main-content,
+    .cms-split-view,
+    .cms-writing-area,
+    .cms-preview-container {
+        pointer-events: auto !important;
+        user-select: text !important;
+        -webkit-user-select: text !important;
+    }
+
+    /* Keep UI elements non-selectable for a better app-like feel */
+    button, 
+    .cms-btn-icon, 
+    .cms-editor-toolbar button, 
+    .cms-view-toggle,
+    .cms-view-toggle button,
+    .logo-link,
+    .cms-editor-breadcrumb,
+    .cms-editor-status,
+    .preview-header-title,
+    .preview-main-meta,
+    .cms-sidebar-header,
+    .cms-sidebar-section label,
+    iconify-icon {
+        user-select: none !important;
+        -webkit-user-select: none !important;
+    }
+
+    /* Ensure inputs and textareas always allow selection regardless of parents */
+    input, textarea {
+        user-select: text !important;
+        -webkit-user-select: text !important;
+        pointer-events: auto !important;
+    }
+
+    /* Force a visible selection color */
+    ::selection {
+        background-color: #3b82f6 !important;
+        color: white !important;
+    }
+    ::-moz-selection {
+        background-color: #3b82f6 !important;
+        color: white !important;
+    }
+</style>

@@ -12,12 +12,13 @@ public_folder: "/assets/images"
 collections:
   - name: posts
     label: "Entradas (Posts)"
+    icon: "material-symbols:article-outline"
     label_singular: "Post"
     folder: "src/content/posts"
     extension: "md"
     format: "frontmatter"
     create: true
-    nested: true
+    nested: false
     slug: "{{slug}}"
     fields:
       - { label: "Título", name: "title", widget: "string" }
@@ -43,6 +44,7 @@ collections:
 
   - name: pages
     label: "Páginas Estáticas"
+    icon: "material-symbols:description-outline"
     files:
       - label: "Sobre mí (About)"
         name: "about"
@@ -59,6 +61,7 @@ collections:
 
   - name: "projects"
     label: "Proyectos"
+    icon: "material-symbols:rocket-launch-outline"
     folder: "src/content/projects"
     extension: "json"
     format: "json"
@@ -91,6 +94,7 @@ collections:
 
   - name: "diary"
     label: "Diario"
+    icon: "material-symbols:auto-stories-outline"
     folder: "src/content/diary"
     extension: "json"
     format: "json"
@@ -105,6 +109,7 @@ collections:
 
   - name: "skills"
     label: "Habilidades (Skills)"
+    icon: "material-symbols:award-star-outline"
     folder: "src/content/skills"
     extension: "json"
     format: "json"
@@ -126,6 +131,7 @@ collections:
 
   - name: "timeline"
     label: "Línea de Tiempo"
+    icon: "material-symbols:timeline"
     folder: "src/content/timeline"
     extension: "json"
     format: "json"
@@ -151,6 +157,7 @@ collections:
 
   - name: "albums"
     label: "Álbumes"
+    icon: "material-symbols:photo-library-outline"
     folder: "src/content/albums"
     extension: "json"
     format: "json"
@@ -179,6 +186,7 @@ collections:
 
   - name: "settings"
     label: "Configuración del Blog"
+    icon: "material-symbols:settings-outline"
     delete: false
     editor:
       preview: false
@@ -226,8 +234,8 @@ collections:
                     name: "src"
                     widget: "object"
                     fields:
-                      - { label: "Escritorio (Rutas)", name: "desktop", widget: "list" }
-                      - { label: "Móvil (Rutas)", name: "mobile", widget: "list" }
+                      - { label: "Escritorio (Rutas)", name: "desktop", widget: "list", field: { widget: "image" } }
+                      - { label: "Móvil (Rutas)", name: "mobile", widget: "list", field: { widget: "image" } }
                   - { label: "Posición", name: "position", widget: "select", options: ["top", "center", "bottom"] }
                   - label: "Texto del Banner"
                     name: "banner"
@@ -239,7 +247,7 @@ collections:
                         fields:
                           - { label: "Habilitar", name: "enable", widget: "boolean" }
                           - { label: "Título", name: "title", widget: "string" }
-                          - { label: "Subtítulo", name: "subtitle", widget: "list" }
+                          - { label: "Subtítulo", name: "subtitle", widget: "list", field: { widget: "string" } }
 
           - label: "Anuncios"
             name: "announcement"
@@ -275,6 +283,13 @@ collections:
             fields:
               - { label: "Habilitar", name: "enable", widget: "boolean" }
               - { label: "Autoreproducir", name: "autoplay", widget: "boolean" }
+              - label: "Botón Flotante (FAB)"
+                name: "fab"
+                widget: "object"
+                fields:
+                  - { label: "Tipo", name: "type", widget: "select", options: ["icon", "image"], default: "icon" }
+                  - { label: "Icono", name: "icon", widget: "string", default: "material-symbols:music-note" }
+                  - { label: "Imagen", name: "image", widget: "image" }
               - label: "Playlist Local"
                 name: "local"
                 widget: "object"

@@ -45,6 +45,7 @@
 		"hastscript": "^9.0.1",
 		"js-yaml": "^4.1.1",
 		"katex": "^0.16.33",
+		"lucide-svelte": "^1.0.1",
 		"markdown-it": "^14.1.1",
 		"mdast-util-to-string": "^4.0.0",
 		"node-html-parser": "^7.0.2",

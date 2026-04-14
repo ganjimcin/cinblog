@@ -475,6 +475,15 @@ export type MusicPlayerConfig = {
     };
     // 是否自动播放
     autoplay?: boolean;
+    // Configuración del botón flotante (FAB)
+    fab?: {
+        // Tipo: 'icon' o 'image'
+        type: "icon" | "image";
+        // Nombre del icono
+        icon?: string;
+        // Ruta de la imagen
+        image?: string;
+    };
 };
 
 /**

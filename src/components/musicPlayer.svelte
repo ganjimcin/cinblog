@@ -657,7 +657,7 @@ onDestroy(() => {
         </div>
     {/if}
     <!-- 折叠状态的小圆球 -->
-    <div class="orb-player w-12 h-12 bg-(--primary) rounded-full shadow-lg cursor-pointer transition-all duration-500 ease-in-out flex items-center justify-center hover:scale-110 active:scale-95"
+    <div class="orb-player w-12 h-12 bg-(--primary) rounded-full shadow-lg cursor-pointer transition-all duration-500 ease-in-out flex items-center justify-center hover:scale-110 active:scale-95 overflow-hidden"
          class:opacity-0={!isCollapsed}
          class:scale-0={!isCollapsed}
          class:pointer-events-auto={isCollapsed}
@@ -674,14 +674,21 @@ onDestroy(() => {
          aria-label={i18n(Key.musicExpand)}>
         {#if isLoading}
             <Icon icon="eos-icons:loading" class="text-white text-lg" />
-        {:else if isPlaying}
-            <div class="flex space-x-0.5">
-                <div class="w-0.5 h-3 bg-white rounded-full animate-pulse"></div>
-                <div class="w-0.5 h-4 bg-white rounded-full animate-pulse" style="animation-delay: 150ms;"></div>
-                <div class="w-0.5 h-2 bg-white rounded-full animate-pulse" style="animation-delay: 300ms;"></div>
-            </div>
         {:else}
-            <Icon icon="material-symbols:music-note" class="text-white text-lg" />
+            {#if musicPlayerConfig.fab?.type === 'image' && musicPlayerConfig.fab?.image}
+                <img src={getAssetPath(musicPlayerConfig.fab.image)} 
+                     alt="Disco" 
+                     class="w-full h-full object-cover transition-transform" 
+                     class:spinning={isPlaying && !isLoading} />
+            {:else if isPlaying}
+                <div class="flex space-x-0.5">
+                    <div class="w-0.5 h-3 bg-white rounded-full animate-pulse"></div>
+                    <div class="w-0.5 h-4 bg-white rounded-full animate-pulse" style="animation-delay: 150ms;"></div>
+                    <div class="w-0.5 h-2 bg-white rounded-full animate-pulse" style="animation-delay: 300ms;"></div>
+                </div>
+            {:else}
+                <Icon icon={musicPlayerConfig.fab?.icon || "material-symbols:music-note"} class="text-white text-lg" />
+            {/if}
         {/if}
     </div>
     <!-- 展开状态的完整播放器（封面圆形） -->

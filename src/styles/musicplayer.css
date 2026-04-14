@@ -44,11 +44,11 @@
         rotate: 360deg;
     }
 }
-.cover-container img {
+.cover-container img, .orb-player img {
     animation: spin-continuous 3s linear infinite;
     animation-play-state: paused;
 }
-.cover-container img.spinning {
+.cover-container img.spinning, .orb-player img.spinning {
     animation-play-state: running;
 }
 
