@@ -272,4 +272,10 @@ export const zh: Translation = {
     [Key.musicCollapse]: "折叠播放器",
     [Key.musicVolume]: "音量控制",
     [Key.musicExpand]: "展开音乐播放器",
+    [Key.musicRepeatOne]: "单曲循环",
+    [Key.musicShuffle]: "随机播放",
+    [Key.musicRepeatAll]: "列表循环",
+    [Key.musicNoLyrics]: "暂无歌词",
+    [Key.musicLoadingLyrics]: "加载歌词中...",
+    [Key.musicToggleLyrics]: "切换歌词显示",
 };

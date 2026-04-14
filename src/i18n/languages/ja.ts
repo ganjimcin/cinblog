@@ -272,4 +272,10 @@ export const ja: Translation = {
     [Key.musicCollapse]: "プレイヤーを閉じる",
     [Key.musicVolume]: "音量調節",
     [Key.musicExpand]: "音楽プレイヤーを展開",
+    [Key.musicRepeatOne]: "1曲リピート",
+    [Key.musicShuffle]: "シャッフル",
+    [Key.musicRepeatAll]: "全曲リピート",
+    [Key.musicNoLyrics]: "歌詞なし",
+    [Key.musicLoadingLyrics]: "歌詞を読み込み中...",
+    [Key.musicToggleLyrics]: "歌詞表示を切り替え",
 };

@@ -269,6 +269,12 @@ enum I18nKey {
     musicCollapse = "musicCollapse",
     musicVolume = "musicVolume",
     musicExpand = "musicExpand",
+    musicRepeatOne = "musicRepeatOne",
+    musicShuffle = "musicShuffle",
+    musicRepeatAll = "musicRepeatAll",
+    musicNoLyrics = "musicNoLyrics",
+    musicLoadingLyrics = "musicLoadingLyrics",
+    musicToggleLyrics = "musicToggleLyrics",
 }
 
 export default I18nKey;

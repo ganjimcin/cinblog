@@ -675,10 +675,10 @@ onDestroy(() => {
         {#if isLoading}
             <Icon icon="eos-icons:loading" class="text-white text-lg" />
         {:else}
-            {#if musicPlayerConfig.fab?.type === 'image' && musicPlayerConfig.fab?.image}
-                <img src={getAssetPath(musicPlayerConfig.fab.image)} 
+            {#if musicPlayerConfig.fab?.type === 'image'}
+                <img src={getAssetPath(musicPlayerConfig.fab?.image || currentSong.cover)} 
                      alt="Disco" 
-                     class="w-full h-full object-cover transition-transform" 
+                     class="w-full h-full object-cover" 
                      class:spinning={isPlaying && !isLoading} />
             {:else if isPlaying}
                 <div class="flex space-x-0.5">
@@ -728,11 +728,11 @@ onDestroy(() => {
                  onscroll={handleLrcScroll}>
                 {#if noLyrics}
                     <div class="h-full flex items-center justify-center text-sm text-30">
-                        暂无歌词
+                        {i18n(Key.musicNoLyrics)}
                     </div>
                 {:else if lyrics.length === 0}
                      <div class="h-full flex items-center justify-center text-sm text-30">
-                        加载歌词中...
+                        {i18n(Key.musicLoadingLyrics)}
                     </div>
                 {:else}
                     <div class="py-8">
@@ -818,7 +818,7 @@ onDestroy(() => {
             <!-- 歌词显示切换按钮 -->
             <button class="w-10 h-10 rounded-lg btn-plain"
                     onclick={toggleLyrics}
-                    title="切换歌词显示">
+                    title={i18n(Key.musicToggleLyrics)}>
                 <Icon icon="material-symbols:lyrics" class="text-lg {showLyrics ? 'text-(--primary)' : 'opacity-90'}" />
             </button>
         </div>

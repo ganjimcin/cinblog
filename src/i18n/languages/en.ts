@@ -272,4 +272,10 @@ export const en: Translation = {
     [Key.musicCollapse]: "Collapse player",
     [Key.musicVolume]: "Volume",
     [Key.musicExpand]: "Expand music player",
+    [Key.musicRepeatOne]: "Repeat One",
+    [Key.musicShuffle]: "Shuffle",
+    [Key.musicRepeatAll]: "Repeat All",
+    [Key.musicNoLyrics]: "No Lyrics",
+    [Key.musicLoadingLyrics]: "Loading Lyrics...",
+    [Key.musicToggleLyrics]: "Toggle Lyrics",
 };
