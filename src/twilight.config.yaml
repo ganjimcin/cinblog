@@ -1,379 +1,191 @@
-# Configuración del Sitio
 site:
-    # URL del sitio (debe terminar en barra /)
-    siteURL: "https://eljardindeunapedagoga.vercel.app/"
-    # Título del sitio
-    title: "El jardin de una pedagoga"
-    # Subtítulo del sitio
-    subtitle: "Lili"
-    # Configuración de idioma
-    lang: "es"
-    # Configuración de traducción
-    translate:
-        # Habilitar función de traducción
+  siteURL: https://eljardindeunapedagoga.vercel.app/
+  title: El jardin de una pedagoga
+  subtitle: Lili
+  lang: es
+  translate:
+    enable: true
+    service: client.edge
+    showSelectTag: false
+    autoDiscriminate: true
+    ignoreClasses:
+      - ignore
+      - banner-title
+      - banner-subtitle
+    ignoreTags:
+      - script
+      - style
+      - code
+      - pre
+  timeZone: 8
+  font:
+    Example - ZenMaruGothic:
+      src: https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap
+      family: Zen Maru Gothic
+  themeColor:
+    hue: 255
+  defaultTheme: dark
+  wallpaper:
+    mode: banner
+    src:
+      desktop:
+        - /assets/images/desktopWallpaper_1.jpg
+        - /assets/images/desktopWallpaper_2.jpg
+        - /assets/images/desktopWallpaper_3.jpg
+      mobile:
+        - /assets/images/mobileWallpaper_1.jpg
+        - /assets/images/mobileWallpaper_2.jpg
+    position: center
+    carousel:
+      enable: true
+      interval: 3.6
+      kenBurns: true
+    banner:
+      homeText:
         enable: true
-        # Servicio de traducción
-        service: "client.edge"
-        # Mostrar menú desplegable de selección de idioma
-        showSelectTag: false
-        # Detectar automáticamente el idioma del usuario
-        autoDiscriminate: true
-        # Clases de CSS ignoradas durante la traducción
-        ignoreClasses:
-            - "ignore"
-            - "banner-title"
-            - "banner-subtitle"
-        # Etiquetas HTML ignoradas durante la traducción
-        ignoreTags:
-            - "script"
-            - "style"
-            - "code"
-            - "pre"
-    # Configuración de zona horaria
-    timeZone: 8
-    # Configuración de fuentes
-    font:
-        # Ejemplo de configuración de fuente - Zen Maru Gothic
-        "Example - ZenMaruGothic":
-            # Fuente (Enlace CSS | Ruta del archivo de fuente)
-            src: "https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap"
-            # Nombre de la familia de fuente (font-family)
-            family: "Zen Maru Gothic"
-    # Configuración del color del tema
-    themeColor:
-        # Tono predeterminado del color del tema (rango de 0 a 360. Ej: Rojo: 0, Cian: 200, Azul verdoso: 250, Rosa: 345)
-        hue: 255
-    # Tema por defecto ("system" sigue al sistema | "light" claro | "dark" oscuro)
-    defaultTheme: "dark"
-    # Configuración del fondo de pantalla
-    wallpaper:
-        # Modo ("banner" encabezado | "fullscreen" pantalla completa | "none" color sólido)
-        mode: "banner"
-        # Configuración de origen de imagen (compartido entre modos fullscreen y banner)
-        src:
-            # Imágenes de fondo para escritorio (relativo al directorio /public; admite una imagen o un array, el array activa carrusel)
-            desktop:
-                - "/assets/images/desktopWallpaper_1.jpg"
-                - "/assets/images/desktopWallpaper_2.jpg"
-                - "/assets/images/desktopWallpaper_3.jpg"
-            # Imágenes de fondo para móvil (relativo al directorio /public; admite una imagen o un array, el array activa carrusel)
-            mobile:
-                - "/assets/images/mobileWallpaper_1.jpg"
-                - "/assets/images/mobileWallpaper_2.jpg"
-        # Posición del fondo ('top' arriba | 'center' centro | 'bottom' abajo)
-        position: "center"
-        # Configuración del carrusel (compartido entre modos fullscreen y banner)
-        carousel:
-            # Habilitar carrusel para múltiples imágenes, de lo contrario muestra una al azar
-            enable: true
-            # Intervalo del carrusel (segundos)
-            interval: 3.6
-            # Habilitar efecto Ken Burns
-            kenBurns: true
-        # Configuración exclusiva para modo Banner
-        banner:
-            # Configuración de texto del banner
-            homeText:
-                # Mostrar texto en la página principal
-                enable: true
-                # Título principal
-                title: "El jardin de una pedagoga"
-                # Subtítulo, admite una cadena o un array de cadenas
-                subtitle:
-                    - "Life and Liberty"
-                # Efecto de máquina de escribir para el subtítulo
-                typewriter:
-                    # Habilitar efecto de máquina de escribir
-                    enable: true
-                    # Velocidad de escritura (ms)
-                    speed: 111
-                    # Velocidad de borrado (ms)
-                    deleteSpeed: 51
-                    # Tiempo de pausa tras mostrarse completo (ms)
-                    pauseTime: 3000
-            # Texto de créditos de la imagen del banner
-            credit:
-                # Mostrar texto de créditos de la imagen
-                enable: false
-                # Texto a mostrar
-                text: "Descripción"
-                # (Opcional) URL de la obra original o página del artista
-                url: ""
-            # Configuración de la barra de navegación
-            navbar:
-                # Modo de transparencia ("semi" translúcido con bordes redondeados | "full" totalmente transparente | "semifull" transparente dinámico)
-                transparentMode: "semifull"
-            # Configuración del efecto de ondas
-            waves:
-                # Habilitar efecto de ondas
-                enable: true
-                # Habilitar modo de rendimiento (simplifica las ondas para mejorar el rendimiento)
-                performanceMode: false
-        # Configuración exclusiva para modo Fullscreen (Pantalla Completa)
-        fullscreen:
-            # Nivel de capa (zIndex)
-            zIndex: -1
-            # Opacidad del fondo (entre 0 y 1)
-            opacity: 0.9
-            # Nivel de desenfoque (píxeles)
-            blur: 1
-            # Transparencia de la barra de navegación en este modo
-            navbar:
-                transparentMode: "semi"
-    # Configuración de la pantalla de carga
-    loadingOverlay:
-        # Habilitar pantalla de carga
-        enable: true
-        # Esperar a que todos los recursos (imágenes, estilos) se carguen
-        waitForAllResources: true
-        # Configuración del título de carga
-        title:
-            # Habilitar título de carga
-            enable: true
-            # Contenido del texto de carga
-            content: "CARGANDO"
-            # Ciclo de animación (segundos)
-            interval: 1.5
-        # Configuración de la animación de carga (spinner)
-        spinner:
-            # Habilitar animación de carga
-            enable: true
-            # Ciclo de animación (segundos)
-            interval: 1.5
-    # Configuración de favicon
-    favicon: []
-
-    # Configuración de OpenGraph (Imágenes para redes sociales)
-    generateOgImages: false
-
-
-
-# Configuración de la Barra de Navegación
-navbar:
-    # Configuración de enlaces (Los ajustes preestablecidos están en src/constants/link-presets.ts)
-    links:
-        - # Enlace de primer nivel - Inicio (predefinido)
-            "Home"
-        - # Enlace de primer nivel - Archivo (predefinido)
-            "Archive"
-        - # Enlace de primer nivel - Exhibición (personalizado)
-            # Nombre de la navegación
-            name: "Exhibition"
-            # URL del enlace
-            url: "/exhibition/"
-            # Icono
-            icon: "material-symbols:person"
-            # Descripción
-            description: "Una colección de mis trabajos creativos y experiencias"
-            # Sub-enlaces
-            children:
-                - # Enlace de segundo nivel - Proyectos (predefinido)
-                    "Projects"
-                - # Enlace de segundo nivel - Habilidades (predefinido)
-                    "Skills"
-                - # Enlace de segundo nivel - Línea de tiempo (predefinido)
-                    "Timeline"
-                - # Enlace de segundo nivel - Diario (predefinido)
-                    "Diary"
-                - # Enlace de segundo nivel - Álbumes (predefinido)
-                    "Albums"
-
-        - # Enlace de primer nivel - Amigos (predefinido)
-            "Friends"
-        - # Enlace de primer nivel - Acerca de (predefinido)
-            "About"
-
-# Configuración de la Barra Lateral
-sidebar:
-    # Configuración de componentes de la barra lateral (Predefinidos en src/types/config.ts)
-    components:
-        # Barra lateral izquierda
-        left:
-            - # Componente - Perfil (predefinido)
-                # Tipo
-                type: "profile"
-                # Estrategia de posición ("top" fijo arriba | "sticky" pegajoso)
-                position: "top"
-                # Configuración de visibilidad en páginas
-                visibility:
-                    # Modo: 'include' (incluir), 'exclude' (excluir)
-                    mode: "exclude"
-                    # Lista de reglas de rutas (soporta expresiones regulares)
-                    paths: ["^/posts/", "^/archive"]
-            - # Componente - Directorio (predefinido)
-                # Tipo
-                type: "directory"
-                # Estrategia de posición
-                position: "sticky"
-            - # Componente - Categorías (predefinido)
-                # Tipo
-                type: "categories"
-                # Estrategia de posición
-                position: "sticky"
-                # Configuración de respuesta (responsive)
-                responsive:
-                    # Umbral de colapso
-                    collapseThreshold: 5
-                # Profundidad del directorio
-                depth: 3
-            - # Componente - Etiquetas (predefinido)
-                # Tipo
-                type: "tags"
-                # Estrategia de posición
-                position: "sticky"
-                # Configuración de respuesta
-                responsive:
-                    # Umbral de colapso
-                    collapseThreshold: 20
-        # Barra lateral derecha
-        right:
-            - # Componente - Anuncios (predefinido)
-                # Tipo
-                type: "announcement"
-                # Estrategia de posición
-                position: "top"
-                # Configuración de visibilidad
-                visibility:
-                    # Modo de emparejamiento
-                    mode: "include"
-                    # Rutas permitidas
-                    paths: ["^/$"]
-            - # Componente - Tabla de Contenidos (TOC) (predefinido)
-                # Tipo
-                type: "toc"
-                # Estrategia de posición
-                position: "sticky"
-                # Profundidad (1-6, 1 solo h1, 2 h1 y h2, etc.)
-                depth: 3
-
-
-# Configuración del Perfil
-profile:
-    # Avatar (relativo al directorio /public)
-    avatar: "/assets/images/avatar.jpg"
-    # Nombre
-    name: "Lili Grow"
-    # Biografía / Introducción
-    bio: "Hola"
-    # Enlaces sociales
-    links:
-        - # Ejemplo de enlace
-            # Nombre
-            name: "GitHub"
-            # Icono
-            icon: "fa6-brands:github"
-            # URL
-            url: "https://github.com/Spr-Aachen/Twilight"
-
-# Configuración de Anuncios
-announcement:
-    # Título del anuncio
-    title: "Anuncio"
-    # Contenido del anuncio
-    content: "¡Bienvenido a mi blog!"
-    # Permitir al usuario cerrar el anuncio
-    closable: true
-    # Configuración de enlace en el anuncio
-    link:
-        # Habilitar enlace
-        enable: true
-        # Texto del enlace
-        text: "Saber más"
-        # URL del enlace
-        url: "/about/"
-        # Es un enlace externo
-        external: false
-
-# Configuración de Artículos/Posts
-post:
-    # Mostrar tarjeta de "Última edición"
-    showLastModified: true
-    # Configuración de resaltado de código
-    expressiveCode:
-        # Tema
-        theme: "github-dark"
-    # Configuración de licencia
-    license:
-        # Habilitar licencia
-        enable: true
-        # Nombre de la licencia
-        name: "CC BY-NC-SA 4.0"
-        # URL de la licencia
-        url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
-    # Configuración de comentarios
-    comment:
-        # Habilitar comentarios
+        title: El jardin de una pedagoga
+        subtitle:
+          - Life and Liberty
+        typewriter:
+          enable: true
+          speed: 111
+          deleteSpeed: 51
+          pauseTime: 3000
+      credit:
         enable: false
-
-
-# Configuración del Pie de Página (Footer)
-footer:
-    # Habilitar inyección de HTML en el footer (ej: para números de registro/ICP)
+        text: Descripción
+        url: ''
+      navbar:
+        transparentMode: semifull
+      waves:
+        enable: true
+        performanceMode: false
+    fullscreen:
+      zIndex: -1
+      opacity: 0.9
+      blur: 1
+      navbar:
+        transparentMode: semi
+  loadingOverlay:
+    enable: true
+    waitForAllResources: true
+    title:
+      enable: true
+      content: CARGANDO
+      interval: 1.5
+    spinner:
+      enable: true
+      interval: 1.5
+  favicon: []
+  generateOgImages: false
+navbar:
+  links:
+    - Home
+    - Archive
+    - name: Exhibition
+      url: /exhibition/
+      icon: material-symbols:person
+      description: Una colección de mis trabajos creativos y experiencias
+      children:
+        - Projects
+        - Skills
+        - Timeline
+        - Diary
+        - Albums
+    - Friends
+    - About
+sidebar:
+  components:
+    left:
+      - type: profile
+        position: top
+        visibility:
+          mode: exclude
+          paths:
+            - ^/posts/
+            - ^/archive
+      - type: directory
+        position: sticky
+      - type: categories
+        position: sticky
+        responsive:
+          collapseThreshold: 5
+        depth: 3
+      - type: tags
+        position: sticky
+        responsive:
+          collapseThreshold: 20
+    right:
+      - type: announcement
+        position: top
+        visibility:
+          mode: include
+          paths:
+            - ^/$
+      - type: toc
+        position: sticky
+        depth: 3
+profile:
+  avatar: /assets/images/avatar.jpg
+  name: Lili Grow
+  bio: Hola
+  links:
+    - name: GitHub
+      icon: fa6-brands:github
+      url: https://github.com/Spr-Aachen/Twilight
+announcement:
+  title: Anuncio
+  content: ¡Bienvenido a mi blog!
+  closable: true
+  link:
+    enable: true
+    text: Saber más
+    url: /about/
+    external: false
+post:
+  showLastModified: true
+  expressiveCode:
+    theme: github-dark
+  license:
+    enable: true
+    name: CC BY-NC-SA 4.0
+    url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+  comment:
     enable: false
-
-# Configuración de Efecto de Partículas
+footer:
+  enable: false
 particle:
-    # Habilitar partículas
-    enable: true
-    # Número de partículas
-    particleNum: 12
-    # Límite de veces que una partícula sale de pantalla (-1 para infinito)
-    limitTimes: -1
-    # Configuración de tamaño de partículas
-    size:
-        # Tamaño mínimo
-        min: 0.3
-        # Tamaño máximo
-        max: 0.9
-    # Configuración de opacidad
-    opacity:
-        # Opacidad mínima
-        min: 0.3
-        # Opacidad máxima
-        max: 0.9
-    # Configuración de velocidad de movimiento
-    speed:
-        # Velocidad horizontal
-        horizontal:
-            # Mínimo
-            min: -0.9
-            # Máximo
-            max: 0.9
-        # Velocidad vertical
-        vertical:
-            # Mínimo
-            min: 0.15
-            # Máximo
-            max: 0.3
-        # Velocidad de rotación
-        rotation: 0.12
-        # Velocidad de desvanecimiento
-        fadeSpeed: 0.12
-    # Nivel de capa
-    zIndex: 100
-
-# Configuración del Reproductor de Música
+  enable: true
+  particleNum: 12
+  limitTimes: -1
+  size:
+    min: 0.3
+    max: 0.9
+  opacity:
+    min: 0.3
+    max: 0.9
+  speed:
+    horizontal:
+      min: -0.9
+      max: 0.9
+    vertical:
+      min: 0.15
+      max: 0.3
+    rotation: 0.12
+    fadeSpeed: 0.12
+  zIndex: 100
 musicPlayer:
-    # Habilitar reproductor de música
-    enable: true
-    # Configuración para modo Local
-    local:
-        # Lista de reproducción
-        playlist:
-            - # Ejemplo de canción
-                # ID
-                id: 1
-                # Título
-                title: "Deep Sea Breath"
-                # Artista
-                artist: "Youzee Music"
-                # Portada
-                cover: "https://p1.music.126.net/PhKOqFtljgHDDpKYM2ADUA==/109951169858309716.jpg"
-                # Ruta del archivo de música
-                url: "assets/music/深海之息.m4a"
-                # Ruta del archivo de letras (LRC)
-                lrc: "assets/music/深海之息.lrc"
-                # Duración (segundos)
-                duration: 146
-    # Reproducción automática
-    autoplay: true
+  enable: true
+  local:
+    playlist:
+      - id: 1
+        title: Deep Sea Breath
+        artist: Youzee Music
+        cover: >-
+          https://p1.music.126.net/PhKOqFtljgHDDpKYM2ADUA==/109951169858309716.jpg
+        url: assets/music/深海之息.m4a
+        lrc: assets/music/深海之息.lrc
+        duration: 146
+  autoplay: true
+  fab:
+    type: image
