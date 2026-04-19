@@ -104,16 +104,10 @@ sidebar:
         position: sticky
         responsive:
           collapseThreshold: 20
-    right:
-      - type: announcement
-        position: top
-        visibility:
-          mode: include
-          paths:
-            - ^/$
       - type: toc
         position: sticky
         depth: 3
+    right: []
 profile:
   avatar: /assets/images/avatar.jpg
   name: Lili Grow

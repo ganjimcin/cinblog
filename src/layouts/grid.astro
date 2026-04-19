@@ -17,6 +17,7 @@ import Sidebar from "@components/sidebar.astro";
 import Footer from "@components/footer.astro";
 import TocButton from "@components/tocButton.astro";
 import BackToTopButton from "@components/back2TopButton.astro";
+import Announcement from "@components/sidebar/announcement.astro";
 import BaseLayout from "./base.astro";
 import "@styles/grid.css";
 
@@ -216,6 +217,7 @@ const {
                         id="content-wrapper"
                         class="onload-animation-up transition-leaving"
                     >
+                        {isHomePage && <Announcement class="mb-4" />}
                         <slot />
                         <div
                             class="footer col-span-2 onload-animation-up hidden lg:block transition-swup-fade"
