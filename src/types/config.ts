@@ -202,17 +202,11 @@ export type WALLPAPER_MODE =
 /**
  * 
  */
-
 export enum LinkPreset {
     Home = 0,
     Archive = 1,
-    Projects = 2,
-    Skills = 3,
-    Timeline = 4,
-    Diary = 5,
-    Albums = 6,
+    Anime = 2,
     About = 7,
-    Friends = 8,
 }
 
 

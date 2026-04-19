@@ -82,17 +82,6 @@ navbar:
   links:
     - Home
     - Archive
-    - name: Exhibition
-      url: /exhibition/
-      icon: material-symbols:person
-      description: Una colección de mis trabajos creativos y experiencias
-      children:
-        - Projects
-        - Skills
-        - Timeline
-        - Diary
-        - Albums
-    - Friends
     - About
 sidebar:
   components:

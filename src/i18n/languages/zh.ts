@@ -190,7 +190,6 @@ export const zh: Translation = {
     [Key.animeEmptyBangumi]: "请检查 Bangumi 配置或网络连接",
 
     // 友链页面
-    [Key.friends]: "友链",
 
     // RSS页面
     [Key.rss]: "RSS 订阅",

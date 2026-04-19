@@ -190,7 +190,6 @@ export const ja: Translation = {
     [Key.animeEmptyBangumi]: "Bangumiの設定またはネットワーク接続を確認してください",
 
     // 友達ページ
-    [Key.friends]: "友達",
 
     // RSSページ
     [Key.rss]: "RSSフィード",

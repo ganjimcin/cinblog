@@ -16,42 +16,11 @@ export const LinkPresets: { [key in LinkPreset]: NavbarLink } = {
         icon: "material-symbols:archive",
         description: "A chronological list of all published posts.",
     },
-    [LinkPreset.Projects]: {
-        name: i18n(I18nKey.projects),
-        url: "/projects/",
-        icon: "material-symbols:work",
-        description: i18n(I18nKey.projectsSubtitle),
-    },
-    [LinkPreset.Skills]: {
-        name: i18n(I18nKey.skills),
-        url: "/skills/",
-        icon: "material-symbols:psychology",
-        description: i18n(I18nKey.skillsSubtitle),
-    },
-    [LinkPreset.Timeline]: {
-        name: i18n(I18nKey.timeline),
-        url: "/timeline/",
-        icon: "material-symbols:timeline",
-        description: i18n(I18nKey.timelineSubtitle),
-    },
-    [LinkPreset.Diary]: {
-        name: i18n(I18nKey.diary),
-        url: "/diary/",
-        icon: "material-symbols:book",
-        description: i18n(I18nKey.diarySubtitle),
-    },
-    [LinkPreset.Albums]: {
-        name: i18n(I18nKey.albums),
-        url: "/albums/",
-        icon: "material-symbols:photo-library",
-        description: i18n(I18nKey.albumsSubtitle),
-    },
-
-    [LinkPreset.Friends]: {
-        name: i18n(I18nKey.friends),
-        url: "/friends/",
-        icon: "material-symbols:group",
-        description: "A curated list of friend sites.",
+    [LinkPreset.Anime]: {
+        name: "Anime",
+        url: "/anime/",
+        icon: "material-symbols:movie",
+        description: "A collection of my favorite anime.",
     },
     [LinkPreset.About]: {
         name: i18n(I18nKey.about),
