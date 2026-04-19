@@ -63,17 +63,7 @@ const style = Astro.props.style;
         widgetLayouts.forEach(layout => {
             (layout as HTMLElement).style.display = 'none';
         });
-        localStorage.setItem('announcementClosed', 'true');
     }
-    // Check if closed on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        if (localStorage.getItem('announcementClosed') === 'true') {
-            const widgetLayouts = document.querySelectorAll('widget-layout[data-id^="announcement"]');
-            widgetLayouts.forEach(layout => {
-                (layout as HTMLElement).style.display = 'none';
-            });
-        }
-    });
     // Make function global
     window.closeAnnouncement = closeAnnouncement;
 </script>

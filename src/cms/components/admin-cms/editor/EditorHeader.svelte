@@ -8,6 +8,7 @@
     onToggleSettings, 
     showSettings, 
     viewMode = "dual", 
+  
     onViewModeChange,
     onDelete // Nueva prop para la acción de eliminar
   } = $props();
