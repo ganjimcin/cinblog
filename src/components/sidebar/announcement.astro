@@ -4,8 +4,6 @@ import { Icon } from "astro-icon/components";
 import { announcementConfig } from "@/config";
 import { i18n } from "@i18n/translation";
 import I18nKey from "@i18n/i18nKey";
-import WidgetLayout from "./widgetLayout.astro";
-
 
 const config = announcementConfig;
 
@@ -17,53 +15,54 @@ const className = Astro.props.class;
 const style = Astro.props.style;
 ---
 
-<WidgetLayout
-    name={config.title || i18n(I18nKey.announcement)}
-    id="announcement"
-    class={className}
+<div
+    id="home-announcement"
+    class:list={["card-base p-6 flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden", className]}
     style={style}
 >
-    <div>
-        <!-- 公告栏内容 -->
-        <div class="text-neutral-600 dark:text-neutral-300 leading-relaxed mb-3">
+    <!-- Accent line -->
+    <div class="absolute top-0 left-0 w-1.5 h-full" style="background-color: var(--primary);"></div>
+    
+    <div class="flex-1 ml-2 w-full">
+        <h2 class="font-bold text-xl text-neutral-900 dark:text-neutral-100 mb-2 flex items-center gap-2">
+            <Icon name={config.icon || "material-symbols:campaign-outline"} style="color: var(--primary); font-size: 1.5rem;" />
+            {config.title || i18n(I18nKey.announcement)}
+        </h2>
+        <div class="text-neutral-600 dark:text-neutral-300 leading-relaxed text-base">
             {config.content}
         </div>
-        <!-- 可选链接和关闭按钮 -->
-        <div class="flex items-center justify-between gap-3">
-            <div>
-                {config.link && config.link.enable !== false && (
-                    <a
-                        href={config.link.url}
-                        target={config.link.external ? "_blank" : "_self"}
-                        rel={config.link.external ? "noopener noreferrer" : undefined}
-                        class="btn-regular rounded-lg px-3 py-1.5 text-sm font-medium active:scale-95 transition-transform"
-                    >
-                        {config.link.text}
-
-                    </a>
-                )}
-            </div>
-            {config.closable && (
-                <button
-                    class="btn-regular rounded-lg h-8 w-8 text-sm hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors"
-                    onclick="closeAnnouncement()"
-                    aria-label={i18n(I18nKey.announcementClose)}
-                >
-                    <Icon name="fa6-solid:xmark" class="text-sm" />
-                </button>
-            )}
-        </div>
     </div>
-</WidgetLayout>
+    
+    <div class="flex items-center gap-3 w-full md:w-auto ml-2 md:ml-0">
+        {config.link && config.link.enable !== false && (
+            <a
+                href={config.link.url}
+                target={config.link.external ? "_blank" : "_self"}
+                rel={config.link.external ? "noopener noreferrer" : undefined}
+                class="btn-regular rounded-lg px-4 py-2 text-sm font-bold active:scale-95 transition-transform"
+            >
+                {config.link.text}
+            </a>
+        )}
+        {config.closable && (
+            <button
+                class="btn-plain rounded-lg h-10 w-10 text-lg hover:bg-red-100 dark:hover:bg-red-900/30 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                onclick="closeAnnouncement()"
+                aria-label={i18n(I18nKey.announcementClose)}
+            >
+                <Icon name="fa6-solid:xmark" />
+            </button>
+        )}
+    </div>
+</div>
 
 <script>
     function closeAnnouncement() {
-        // Find all announcement widgets
-        const widgetLayouts = document.querySelectorAll('widget-layout[data-id^="announcement"]');
-        widgetLayouts.forEach(layout => {
-            (layout as HTMLElement).style.display = 'none';
-        });
+        const announcement = document.getElementById('home-announcement');
+        if (announcement) {
+            announcement.style.display = 'none';
+        }
     }
-    // Make function global
+    
     window.closeAnnouncement = closeAnnouncement;
 </script>
