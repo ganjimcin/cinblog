@@ -759,7 +759,6 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
     showSettings={showSettings}
     viewMode={isConfig || isJSON ? 'write' : viewMode}
     onViewModeChange={(m) => viewMode = m}
-    onDelete={handleDelete}
   />
 
   <main class="cms-editor-main-content">

@@ -15,12 +15,7 @@
   const defaultIcons = {
     posts: "material-symbols:article-outline",
     pages: "material-symbols:description-outline",
-    projects: "material-symbols:rocket-launch-outline",
-    diary: "material-symbols:auto-stories-outline",
     settings: "material-symbols:settings-outline",
-    skills: "material-symbols:award-star-outline",
-    timeline: "material-symbols:timeline",
-    albums: "material-symbols:photo-library-outline"
   };
 
   function getCollection(type) {
