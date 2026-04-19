@@ -9,6 +9,7 @@
     showSettings,
     viewMode = "dual",
     onViewModeChange
+    onDelete // Nueva prop para la acción de eliminar
   } = $props();
   </script>
 
@@ -61,6 +62,15 @@
         <Icon icon="material-symbols:settings-outline-rounded" size="xl" />
       </button>
       <div class="cms-toolbar-divider"></div>
+      {#if filename !== "Nueva Entrada"}
+        <button 
+          class="btn-plain scale-animation btn-delete" 
+          onclick={onDelete} 
+          title="Eliminar Post"
+        >
+          <Icon icon="material-symbols:delete-outline-rounded" size="xl" />
+        </button>
+      {/if}
       <button class="btn-regular" onclick={onSave} disabled={isSaving}>
         {#if isSaving}
           <Icon icon="svg-spinners:ring-resize" size="lg" />
@@ -165,6 +175,10 @@
     color: var(--primary);
     border-color: var(--primary);
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  .btn-delete {
+    color: #ef4444; /* Color rojo para el botón de eliminar */
   }
 
   .btn-regular {

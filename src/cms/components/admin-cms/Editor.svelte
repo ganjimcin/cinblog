@@ -201,11 +201,15 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
         category: categoryInput,
         published: publishedInput,
         tags: tagsInput,
-        description: descriptionInput,
         image: imageInput,
         slug: slugInput,
         author: authorInput,
         lang: langInput,
+        updated: updatedInput,
+        licenseName: licenseNameInput,
+        licenseUrl: licenseUrlInput,
+        sourceLink: sourceLinkInput,
+        description: descriptionInput,
         draft: draftInput,
         pinned: pinnedInput,
         comment: commentInput,
@@ -327,6 +331,21 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
         titleInput = formData.title || "";
         categoryInput = formData.category || "";
         publishedInput = formData.published ? new Date(formData.published).toISOString().split("T")[0] : "";
+        updatedInput = formData.updated ? new Date(formData.updated).toISOString().split("T")[0] : "";
+        pinnedInput = !!formData.pinned;
+        descriptionInput = formData.description || "";
+        imageInput = formData.image || "";
+        tagsInput = Array.isArray(formData.tags) ? formData.tags.join(", ") : formData.tags || "";
+        langInput = formData.lang || "";
+        licenseNameInput = formData.licenseName || "";
+        licenseUrlInput = formData.licenseUrl || "";
+        authorInput = formData.author || "";
+        sourceLinkInput = formData.sourceLink || "";
+        draftInput = !!formData.draft;
+        commentInput = formData.comment !== undefined ? formData.comment : true;
+        inNavbarInput = !!formData.inNavbar;
+        iconInput = formData.icon || "";
+        slugInput = formData.slug || "";
       }
       
       filenameInput = post.name;
@@ -740,6 +759,7 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
     showSettings={showSettings}
     viewMode={isConfig || isJSON ? 'write' : viewMode}
     onViewModeChange={(m) => viewMode = m}
+    onDelete={handleDelete}
   />
 
   <main class="cms-editor-main-content">
