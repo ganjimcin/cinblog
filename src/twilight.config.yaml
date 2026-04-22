@@ -29,12 +29,13 @@ site:
     mode: banner
     src:
       desktop:
-        - /assets/images/desktopWallpaper_1.jpg
-        - /assets/images/desktopWallpaper_2.jpg
-        - /assets/images/desktopWallpaper_3.jpg
+        - /assets/uploads/1776887267960-cafe-atardcdecer.webp
+        - /assets/uploads/1776887285329-mi-jardin.webp
+        - /assets/uploads/1776887294701-cascada.webp
       mobile:
-        - /assets/images/mobileWallpaper_1.jpg
-        - /assets/images/mobileWallpaper_2.jpg
+        - /assets/uploads/1776887851354-sakura-movil.webp
+        - /assets/uploads/1776887865833-japon-movil.webp
+        - /assets/uploads/1776887878596-jard-n-movil.webp
     position: center
     carousel:
       enable: true
@@ -117,9 +118,9 @@ profile:
     Persona | Mamá | Pedagoga 
     (en ese orden) 
   links:
-    - name: GitHub
-      icon: fa6-brands:github
-      url: https://github.com/Spr-Aachen/Twilight
+    - name: Instagram
+      icon: ''
+      url: https://www.instagram.com/eljardindeunapedagoga/
 announcement:
   title: Anuncio
   content: ¡Bienvenido a mi blog!
