@@ -1,24 +1,24 @@
+---
+title: Bienvenidos a mi jardín.
+---
+
 # About This Site
 
-Twilight is a CMS integrated static blog template built with [Astro](https://astro.build) framework.
 
-::github{repo="Spr-Aachen/Twilight"}
+Soy Lili Grow, pedagoga, con una larga carrera profesional con niños y adolescentes, mamá, me encanta vivir conectada con el mundo rural, aunque, por encima de todo, soy persona y como tal me niego a dejar de SER YO. 
+
+Y así es como surge este blog o, mejor dicho, mi Jardín. 
+
+Vivimos en una sociedad que nos empuja a “encajar”, o al menos así es como lo siento.
+Si eres mamá, o papá, parece que debemos dejar a un lado nuestras aficiones, y mucho más si estas aficiones son jugar a lo que sea (videojuegos, juegos de rol…), disfrutar de la vida rural, esperar impaciente el estreno de la nueva película Disney, emocionarte con un k-drama, ser una Otaku... Pues imagínense si encima eres pedagoga, donde las pantallas son el mayor enemigo en la infancia de cualquier niño. 
+
+ Yo digo No… 
+
+Creo en una pedagogía que no prohíbe, que no juzga, sino que acompaña, que valida a cada persona por ser como es (sin importar la edad). Imagínate, solo por un momento, que te encuentras descalza sobre un césped húmedo recién cortado ¿Qué sientes? Para algunas personas puede ser libertad, para otras reparo o miedo… No hay una respuesta correcta, solo la tuya, tan valida como la de cualquier otra. De eso trata este jardín, mostrar una pedagogía de vida que te permita SER. 
+
+Este blog estará dividido por diferentes secciones, sin prisa, sin horarios, sin fechas que cumplir… es un lugar que nace desde mi corazón, donde poder compartir con otras personas mi conocimiento, vivencias, cuentos, o lo que en ese momento me apetezca escribir, a veces será más profesional y otras más humana, pero siempre será escrito con amor y, por supuesto, sin olvidar quien soy. 
+
+Bienvenidos a mi Jardín.
+LiLi Grow. 
 
 
-## Milestones
-
-- Integrated content management system in [#1](https://github.com/Spr-Aachen/Twilight/pull/1)
-- Seamless wallpaper mode switching in [#2](https://github.com/Spr-Aachen/Twilight/pull/2)
-- Dynamic content container response in [#47](https://github.com/Spr-Aachen/Twilight/pull/47)
-- Seamless page component loading in [#48](https://github.com/Spr-Aachen/Twilight/pull/48)
-- Smart music playback handling in [#49](https://github.com/Spr-Aachen/Twilight/pull/49)
-- Infinite-level navigation system in [#50](https://github.com/Spr-Aachen/Twilight/pull/50)
-- Comprehensive statistics dashboard in [#51](https://github.com/Spr-Aachen/Twilight/pull/51)
-- Low-barrier configuration scheme in [#58](https://github.com/Spr-Aachen/Twilight/pull/58)
-- Dynamic breakpoint handling in [#68](https://github.com/Spr-Aachen/Twilight/pull/68)
-- Advanced content management in [#73](https://github.com/Spr-Aachen/Twilight/pull/73)
-- Nested category support in [#74](https://github.com/Spr-Aachen/Twilight/pull/74)
-- Comprehensive music card plugin in [#81](https://github.com/Spr-Aachen/Twilight/pull/81)
-- Refactored DecapCMS OAuth integration in [#107](https://github.com/Spr-Aachen/Twilight/pull/107)
-- Non-breaking PagesCMS support in [#114](https://github.com/Spr-Aachen/Twilight/pull/114)
-- Tree view directory component in [#117](https://github.com/Spr-Aachen/Twilight/pull/117)
