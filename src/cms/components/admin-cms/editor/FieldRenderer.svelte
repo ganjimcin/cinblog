@@ -189,10 +189,18 @@
     <input type="date" id={fieldId} bind:value={value} />
   </div>
 
-{:else if field.widget === 'text'}
+{:else if field.widget === 'markdown' || field.widget === 'text'}
   <div class="cms-field-item">
     <label for={fieldId}>{field.label || field.name}</label>
-    <textarea id={fieldId} bind:value={value} rows="3"></textarea>
+    <textarea 
+      id={fieldId} 
+      bind:value={value} 
+      rows={field.widget === 'markdown' ? 15 : 5}
+      placeholder={field.placeholder || ""}
+    ></textarea>
+    {#if field.widget === 'markdown'}
+      <div class="cms-field-hint">Soporta formato Markdown</div>
+    {/if}
   </div>
 
 {:else}
@@ -229,6 +237,13 @@
     color: var(--text-primary);
     font-size: 0.9rem;
     outline: none;
+  }
+
+  .cms-field-hint {
+    font-size: 0.7rem;
+    opacity: 0.5;
+    font-style: italic;
+    margin-top: -0.25rem;
   }
 
   .cms-field-item-checkbox {

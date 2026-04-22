@@ -328,6 +328,18 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
         const parsed = parsePost(decoded);
         formData = parsed.fm || {};
         contentInput = parsed.content;
+        
+        // Si es una colección de archivos, mapear el contenido al campo 'body' si existe
+        if (isConfig && currentCollection.files) {
+          const fileConfig = currentCollection.files.find(f => f.file === post.path);
+          if (fileConfig && fileConfig.fields) {
+            const hasBodyField = fileConfig.fields.some(f => f.name === 'body');
+            if (hasBodyField) {
+              formData.body = contentInput;
+            }
+          }
+        }
+
         titleInput = formData.title || "";
         categoryInput = formData.category || "";
         publishedInput = formData.published ? new Date(formData.published).toISOString().split("T")[0] : "";
@@ -492,12 +504,18 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
     } else {
       const finalFM = {
         ...$state.snapshot(formData),
-        title: titleInput.trim(),
-        published: publishedInput,
-        // Asegurar que los campos editados en Sidebar se mantengan
-        category: categoryInput.trim(),
       };
-      finalContent = stringifyPost(finalFM, contentInput);
+      
+      // Si existe un campo 'body' en formData, usarlo como contenido principal y quitarlo de FM
+      let bodyContent = contentInput;
+      if (isConfig && finalFM.body !== undefined) {
+        bodyContent = finalFM.body;
+        delete finalFM.body;
+      }
+      
+      if (finalFM.title !== undefined) titleInput = finalFM.title;
+
+      finalContent = stringifyPost(finalFM, bodyContent);
     }
 
     try {
