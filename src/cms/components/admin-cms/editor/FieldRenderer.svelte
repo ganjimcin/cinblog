@@ -80,11 +80,11 @@
     </div>
     
     <div class="cms-field-list-items">
-      {#each value as item, i}
+      {#each value as item, i (i)}
         <div class="cms-field-list-item">
           <div class="cms-item-index">{i + 1}</div>
           <div class="cms-item-content">
-            {#if item}
+            {#if item !== undefined && item !== null}
               {#if field.fields}
                 {#each field.fields as subfield}
                   <FieldRenderer 
