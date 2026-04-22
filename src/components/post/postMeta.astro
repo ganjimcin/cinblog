@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon/components";
+import Icon from "@components/common/icon.astro";
 
 import { getCategoryUrl, getTagUrl, url } from "@utils/url";
 import { getCategoryPathParts } from "@utils/category";
@@ -44,7 +44,7 @@ const categoryParts = getCategoryPathParts(category ?? null);
     <!-- publish date -->
     <div class="flex items-center">
         <div class="meta-icon">
-            <Icon name="material-symbols:calendar-today-outline-rounded" class="text-xl"></Icon>
+            <Icon icon="material-symbols:calendar-today-outline-rounded" class="text-xl"></Icon>
         </div>
         <span class="text-50 text-sm font-medium">{formatDateToYYYYMMDD(published)}</span>
     </div>
@@ -52,7 +52,7 @@ const categoryParts = getCategoryPathParts(category ?? null);
     {!hideUpdateDate && updated && updated.getTime() !== published.getTime() && (
         <div class="flex items-center">
             <div class="meta-icon">
-                <Icon name="material-symbols:edit-calendar-outline-rounded" class="text-xl"></Icon>
+                <Icon icon="material-symbols:edit-calendar-outline-rounded" class="text-xl"></Icon>
             </div>
             <span class="text-50 text-sm font-medium">{formatDateToYYYYMMDD(updated)}</span>
         </div>
@@ -60,7 +60,7 @@ const categoryParts = getCategoryPathParts(category ?? null);
     <!-- categories -->
     <div class="flex items-center">
         <div class="meta-icon">
-            <Icon name="material-symbols:book-2-outline-rounded" class="text-xl"></Icon>
+            <Icon icon="material-symbols:book-2-outline-rounded" class="text-xl"></Icon>
         </div>
         <div class="flex flex-row flex-nowrap items-center">
             {categoryParts && categoryParts.length > 0 ? (
@@ -91,7 +91,7 @@ const categoryParts = getCategoryPathParts(category ?? null);
     <!-- tags -->
     <div class:list={["items-center", {"flex": !hideTagsForMobile, "hidden md:flex": hideTagsForMobile}]}>
         <div class="meta-icon">
-            <Icon name="material-symbols:tag-rounded" class="text-xl"></Icon>
+            <Icon icon="material-symbols:tag-rounded" class="text-xl"></Icon>
         </div>
         <div class="flex flex-row flex-nowrap items-center">
             {(tags && tags.length > 0) && tags.map((tag, i) => (

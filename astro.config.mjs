@@ -9,7 +9,6 @@ import cloudflarePages from "@astrojs/cloudflare";
 import edgeone from "@edgeone/astro";
 import vercel from "@astrojs/vercel";
 import expressiveCode from "astro-expressive-code";
-import icon from "astro-icon";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import rehypeKatex from "rehype-katex";
@@ -77,15 +76,6 @@ export default defineConfig({
             skipPopStateHandling: (event) => {
                 // Skip anchor link handling, let the browser handle it natively
                 return event.state && event.state.url && event.state.url.includes("#");
-            },
-        }),
-        icon({
-            include: {
-                "fa6-brands": ["*"],
-                "fa6-regular": ["*"],
-                "fa6-solid": ["*"],
-                mdi: ["*"],
-                "material-symbols": ["*"],
             },
         }),
         expressiveCode({

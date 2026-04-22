@@ -10,7 +10,7 @@ export interface Props {
     icon: string;
     class?: string;
     style?: string;
-    size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
+    size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | number | string;
     color?: string;
     fallback?: string;
     loading?: "lazy" | "eager";
@@ -36,9 +36,12 @@ const sizeClasses = {
     "2xl": "text-2xl",
 };
 
-const sizeClass = sizeClasses[size] || sizeClasses.md;
+const isPreset = typeof size === "string" && size in sizeClasses;
+const sizeClass = isPreset ? sizeClasses[size] : "";
+const sizeStyle = !isPreset && size ? `font-size: ${typeof size === 'number' ? size + 'px' : size};` : "";
+
 const colorStyle = color ? `color: ${color};` : "";
-const combinedStyle = `${colorStyle}${style}`;
+const combinedStyle = `${colorStyle}${sizeStyle}${style}`;
 const combinedClass = `${sizeClass} ${className}`.trim();
 
 const staticSvg = getIconSvg(icon);

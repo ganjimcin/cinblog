@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon/components";
+import Icon from "@components/common/icon.astro";
 
 import { navbarConfig, siteConfig } from "@/config";
 import { LinkPresets } from "@constants/link-presets";
@@ -40,7 +40,7 @@ let links: NavbarLink[] = navbarConfig.links.map(
         "overflow-visible! max-w-(--page-width) h-18 mx-auto flex items-center justify-between md:px-4"]}>
         <a href={url('/')} class="btn-plain scale-animation rounded-lg h-13 px-5 font-bold active:scale-95">
             <div class="flex flex-row text-(--primary) items-center text-md">
-                <Icon name="material-symbols:home-pin-outline" class="text-[1.75rem] mb-1 mr-2" />
+                <Icon icon="material-symbols:home-pin-outline" class="text-[1.75rem] mb-1 mr-2" />
                 {siteConfig.title}
             </div>
         </a>

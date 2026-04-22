@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon/components";
+import Icon from "@components/common/icon.astro";
 import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import dayjs from "dayjs";
@@ -142,7 +142,7 @@ const jsonLd = {
                     <div
                         class="transition h-6 w-6 rounded-md bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50 flex items-center justify-center mr-2"
                     >
-                        <Icon name="material-symbols:notes-rounded" />
+                        <Icon icon="material-symbols:notes-rounded" />
                     </div>
                     <div class="text-sm">
                         {remarkPluginFrontmatter.words}
@@ -154,7 +154,7 @@ const jsonLd = {
                         class="transition h-6 w-6 rounded-md bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50 flex items-center justify-center mr-2"
                     >
                         <Icon
-                            name="material-symbols:schedule-outline-rounded"
+                            icon="material-symbols:schedule-outline-rounded"
                         />
                     </div>
                     <div class="text-sm">
@@ -317,7 +317,7 @@ const jsonLd = {
                     <div class="flex items-center gap-2">
                         <div class="transition h-9 w-9 rounded-lg overflow-hidden relative flex items-center justify-center mr-0">
                             <Icon
-                                name="material-symbols:history-rounded"
+                                icon="material-symbols:history-rounded"
                                 class="text-4xl text-(--primary) transition-transform group-hover:translate-x-0.5 bg-(--enter-btn-bg) p-2 rounded-md"
                             />
                         </div>
@@ -348,7 +348,7 @@ const jsonLd = {
                 entry.data.nextSlug && (
                     <div class="btn-card rounded-2xl w-full h-15 max-w-full px-4 flex items-center justify-start! gap-4">
                         <Icon
-                            name="material-symbols:chevron-left-rounded"
+                            icon="material-symbols:chevron-left-rounded"
                             class="text-[2rem] text-(--primary)"
                         />
                         <div class="overflow-hidden transition text-ellipsis whitespace-nowrap max-w-[calc(100%-3rem)] text-black/75 dark:text-white/75">
@@ -374,7 +374,7 @@ const jsonLd = {
                             {entry.data.prevTitle}
                         </div>
                         <Icon
-                            name="material-symbols:chevron-right-rounded"
+                            icon="material-symbols:chevron-right-rounded"
                             class="text-[2rem] text-(--primary)"
                         />
                     </div>

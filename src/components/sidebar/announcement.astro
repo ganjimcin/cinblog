@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon/components";
+import Icon from "@components/common/icon.astro";
 
 import { announcementConfig } from "@/config";
 import { i18n } from "@i18n/translation";
@@ -25,7 +25,7 @@ const style = Astro.props.style;
     
     <div class="flex-1 ml-2 w-full">
         <h2 class="font-bold text-xl text-neutral-900 dark:text-neutral-100 mb-2 flex items-center gap-2">
-            <Icon name={config.icon || "material-symbols:campaign-outline"} style="color: var(--primary); font-size: 1.5rem;" />
+            <Icon icon={config.icon || "material-symbols:campaign-outline"} style="color: var(--primary); font-size: 1.5rem;" />
             {config.title || i18n(I18nKey.announcement)}
         </h2>
         <div class="text-neutral-600 dark:text-neutral-300 leading-relaxed text-base">
@@ -50,7 +50,7 @@ const style = Astro.props.style;
                 onclick="closeAnnouncement()"
                 aria-label={i18n(I18nKey.announcementClose)}
             >
-                <Icon name="fa6-solid:xmark" />
+                <Icon icon="fa6-solid:xmark" />
             </button>
         )}
     </div>
