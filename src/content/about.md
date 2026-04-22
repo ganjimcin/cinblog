@@ -19,6 +19,4 @@ Creo en una pedagogía que no prohíbe, que no juzga, sino que acompaña, que va
 Este blog estará dividido por diferentes secciones, sin prisa, sin horarios, sin fechas que cumplir… es un lugar que nace desde mi corazón, donde poder compartir con otras personas mi conocimiento, vivencias, cuentos, o lo que en ese momento me apetezca escribir, a veces será más profesional y otras más humana, pero siempre será escrito con amor y, por supuesto, sin olvidar quien soy. 
 
 Bienvenidos a mi Jardín.
-LiLi Grow. 
-
-
+LiLi Grow.
