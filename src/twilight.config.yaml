@@ -1,7 +1,7 @@
 site:
   siteURL: https://eljardindeunapedagoga.vercel.app/
   title: El jardin de una pedagoga
-  subtitle: Lili
+  subtitle: LiLi
   lang: es
   translate:
     enable: true
@@ -172,7 +172,19 @@ musicPlayer:
         cover: ''
         url: /assets/uploads/1776885621776-Un dia en Tokio.opus
         lrc: ''
-        duration: ''
+        duration: '149'
+      - title: Café en Shibuya
+        artist: Lili Grow con ayuda de IA
+        cover: ''
+        url: /assets/music/1776888290878-cafe-en-shibuya.opus
+        lrc: ''
+        duration: '181'
+      - title: ''
+        artist: Lili Grow con ayuda de IA
+        cover: ''
+        url: /assets/music/1776888527595-suenos-de-verano.opus
+        lrc: ''
+        duration: '158'
   autoplay: true
   fab:
     type: image
