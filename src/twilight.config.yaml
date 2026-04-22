@@ -45,7 +45,9 @@ site:
         enable: true
         title: El jardin de una pedagoga
         subtitle:
-          - Life and Liberty
+          - Life
+          - Liberty
+          - Grow
         typewriter:
           enable: true
           speed: 111
@@ -109,9 +111,11 @@ sidebar:
         depth: 3
     right: []
 profile:
-  avatar: /assets/images/avatar.jpg
+  avatar: /assets/uploads/1776886053142-el-jardin-de-una-pedagoga.webp
   name: Lili Grow
-  bio: Hola
+  bio: |
+    Persona | Mamá | Pedagoga 
+    (en ese orden) 
   links:
     - name: GitHub
       icon: fa6-brands:github
@@ -162,13 +166,12 @@ musicPlayer:
   local:
     playlist:
       - id: 1
-        title: Deep Sea Breath
-        artist: Youzee Music
-        cover: >-
-          https://p1.music.126.net/PhKOqFtljgHDDpKYM2ADUA==/109951169858309716.jpg
-        url: assets/music/深海之息.m4a
-        lrc: assets/music/深海之息.lrc
-        duration: 146
+        title: El Jardín de una Pedagoga
+        artist: Lili Grow con ayuda de AI
+        cover: ''
+        url: /assets/uploads/1776885621776-Un dia en Tokio.opus
+        lrc: ''
+        duration: ''
   autoplay: true
   fab:
     type: image
