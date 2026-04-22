@@ -114,7 +114,8 @@ profile:
   avatar: /assets/uploads/1776886053142-el-jardin-de-una-pedagoga.webp
   name: Lili Grow
   bio: |
-    Persona | Mamá | Pedagoga (en ese orden) 
+    Persona | Mamá | Pedagoga 
+    (en ese orden) 
   links:
     - name: GitHub
       icon: fa6-brands:github
