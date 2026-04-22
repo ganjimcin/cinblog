@@ -10,6 +10,8 @@
 
   const stableId = Math.random().toString(36).slice(2, 6);
   const fieldId = $derived(`field-${field.name}-${stableId}`);
+  let localPreview = $state(null);
+  let isUploading = $state(false);
 
   // Asegurar que el valor tenga la estructura por defecto de forma segura
   if (field.widget === 'object' && !value) value = {};
@@ -45,11 +47,24 @@
     const file = e.target.files[0];
     if (!file) return;
     
-    const path = await onUpload(file);
-    if (item && fieldName) {
-      item[fieldName] = path;
-    } else {
-      value = path;
+    try {
+      isUploading = true;
+      // Vista previa inmediata para mejorar el UX mientras se sube/despliega
+      if (field.widget === 'image') {
+        if (localPreview) URL.revokeObjectURL(localPreview);
+        localPreview = URL.createObjectURL(file);
+      }
+
+      const path = await onUpload(file);
+      if (item && fieldName) {
+        item[fieldName] = path;
+      } else {
+        value = path;
+      }
+    } catch (err) {
+      alert("Error en la subida: " + err.message);
+    } finally {
+      isUploading = false;
     }
   }
 </script>
@@ -144,17 +159,17 @@
       <div class="cms-upload-input-row">
         <input type="text" id={fieldId} bind:value={value} placeholder="Ruta del archivo..." class="cms-path-input" />
         
-        <label class="cms-upload-btn">
-          <Icon icon="material-symbols:upload-rounded" />
-          <span>Subir</span>
-          <input type="file" class="hidden-input" onchange={(e) => handleFileChange(e)} />
+        <label class="cms-upload-btn" class:disabled={isUploading}>
+          <Icon icon={isUploading ? "svg-spinners:ring-resize" : "material-symbols:upload-rounded"} />
+          <span>{isUploading ? "Subiendo..." : "Subir"}</span>
+          <input type="file" class="hidden-input" onchange={(e) => handleFileChange(e)} disabled={isUploading} />
         </label>
       </div>
 
-      {#if field.widget === 'image' && value}
+      {#if field.widget === 'image' && (value || localPreview)}
         <div class="cms-image-preview-container">
-          <img src={value} alt="Preview" class="cms-image-preview" />
-          <button class="cms-remove-image-btn" onclick={() => value = ""}>
+          <img src={localPreview || value} alt="Preview" class="cms-image-preview" />
+          <button class="cms-remove-image-btn" onclick={() => { value = ""; localPreview = null; }}>
             <Icon icon="material-symbols:close-rounded" />
           </button>
         </div>
@@ -342,6 +357,12 @@
     filter: brightness(1.1);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px oklch(from var(--primary) l c h / 0.25);
+  }
+
+  .cms-upload-btn.disabled {
+    opacity: 0.7;
+    pointer-events: none;
+    cursor: wait;
   }
 
   .hidden-input {

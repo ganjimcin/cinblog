@@ -519,6 +519,12 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
   import { optimizeImage } from "./utils/images";
   async function genericUpload(file) {
       if (isMock) return "assets/uploads/mock-upload.jpg";
+
+      // Límite de la API de GitHub REST para subidas directas (25MB aproximado para evitar errores)
+      const MAX_SIZE = 25 * 1024 * 1024;
+      if (file.size > MAX_SIZE) {
+          throw new Error("El archivo es demasiado grande. El límite es de 25MB.");
+      }
       
       let base64 = "";
       let fileName = file.name;
@@ -538,11 +544,28 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
           });
       }
 
-      const finalFileName = `${Date.now()}-${fileName}`;
-      const imagePath = `public/assets/uploads/${finalFileName}`;
-      const publicPath = `/assets/uploads/${finalFileName}`;
+      // Limpiar el nombre del archivo para evitar caracteres problemáticos
+      const fileExt = fileName.includes('.') ? fileName.split('.').pop() : '';
+      const baseName = fileName.includes('.') ? fileName.substring(0, fileName.lastIndexOf('.')) : fileName;
+      const cleanFileName = `${slugify(baseName)}.${fileExt}`;
+      const finalFileName = `${Date.now()}-${cleanFileName}`;
       
-      await ghFetch(`contents/${imagePath}`, githubToken, {
+      // Determinar la subcarpeta según el tipo de archivo (música vs imágenes)
+      const isAudio = file.type.startsWith('audio/') || finalFileName.endsWith('.lrc');
+      
+      let mediaFolder = (cmsConfig?.media_folder || "public/assets/images").replace(/\/$/, "");
+      let publicFolder = (cmsConfig?.public_folder || "/assets/images").replace(/\/$/, "");
+
+      // Si es audio o letras, intentamos usar la carpeta de música si la de imágenes está configurada
+      if (isAudio && (mediaFolder.includes('images') || mediaFolder.includes('img'))) {
+          mediaFolder = mediaFolder.replace(/images|img/, 'music');
+          publicFolder = publicFolder.replace(/images|img/, 'music');
+      }
+
+      const path = `${mediaFolder}/${finalFileName}`;
+      const publicPath = `${publicFolder}/${finalFileName}`;
+      
+      await ghFetch(`contents/${path}`, githubToken, {
         method: "PUT",
         body: JSON.stringify({
           message: `CMS: Upload file ${finalFileName}`,
