@@ -71,80 +71,141 @@
   async function loadContent(type) {
     isLoading = true;
     currentContentType = type;
-    
-
+    console.log("Cargando contenido para tipo:", type);
 
     try {
+      if (!cmsConfig?.collections) {
+        console.error("Configuración de colecciones faltante en cmsConfig");
+        return;
+      }
       const collection = cmsConfig.collections.find(c => c.name === type);
-      if (!collection) return;
+      if (!collection) {
+        console.error("Colección no encontrada:", type);
+        return;
+      }
 
       if (collection.files) {
-        // Manejo de colecciones tipo 'files' (Ej: ajustes)
+        console.log("Cargando colección de archivos:", collection.files);
+        // Manejo de colecciones tipo 'files' (Ej: ajustes, páginas estáticas)
         allPostsData = await Promise.all(
           collection.files.map(async (file) => {
-            const data = await ghFetch(`contents/${file.file}`, githubToken);
-            return {
-              name: file.label,
-              path: file.file,
-              sha: data.sha,
-              fm: { title: file.label, category: "Configuración" },
-              isFileConfig: true
-            };
+            try {
+              const fetchPath = `contents/${file.file}`;
+              console.log("Fetch file:", fetchPath);
+              const data = await ghFetch(fetchPath, githubToken);
+              
+              const decoded = decodeURIComponent(escape(atob(data.content)));
+              let fm = {};
+              if (file.file.endsWith(".json")) {
+                fm = JSON.parse(decoded);
+              } else {
+                fm = parsePost(decoded).fm;
+              }
+
+              return {
+                name: file.label || file.name,
+                path: file.file,
+                sha: data.sha,
+                fm: fm || { title: file.label },
+                isFileConfig: true
+              };
+            } catch (err) {
+              console.error(`Error cargando archivo individual ${file.file}:`, err);
+              return {
+                name: file.label,
+                path: file.file,
+                sha: null,
+                fm: { title: file.label, category: "Error" },
+                isFileConfig: true
+              };
+            }
           })
         );
       } else {
         // Manejo de carpetas
         const path = pathMap[type];
-        const files = await ghFetch(`contents/${path}`, githubToken);
-        
-        // Soportar carpetas anidadas (proyectos, diario, etc)
-        let mdFiles = [];
-        if (collection.nested) {
-           // Si es anidado, buscamos el archivo principal (intro.json o index.md)
-           // Por simplicidad, listamos las subcarpetas
-           mdFiles = files.filter(f => f.type === "dir").map(f => ({
-             ...f,
-             path: `${collection.folder}/${collection.slug.replace("{{slug}}", f.name)}.${collection.extension || 'md'}`,
-             name: f.name
-           }));
-        } else {
-           mdFiles = files.filter((f) => 
-             f.name.endsWith(".md") || 
-             f.name.endsWith(".mdx") || 
-             f.name.endsWith(".json")
-           );
+        if (!path || path === "files_collection") {
+           console.error("Ruta inválida para carpeta:", path);
+           allPostsData = [];
+           return;
         }
 
-      allPostsData = await Promise.all(
-        mdFiles.map(async (file) => {
-          try {
-            const data = await ghFetch(`contents/${file.path}`, githubToken);
-            const decoded = decodeURIComponent(escape(atob(data.content)));
-            let fm = {};
-            if (file.path.endsWith(".json")) {
-              fm = JSON.parse(decoded);
-            } else {
-              fm = parsePost(decoded).fm;
+        console.log("Listando carpeta:", path);
+        const files = await ghFetch(`contents/${path}`, githubToken);
+        
+        let mdFiles = [];
+        
+        // Función recursiva para obtener todos los archivos markdown en subcarpetas
+        async function getRecursiveFiles(currentFiles, folderPath) {
+          let results = [];
+          for (const f of currentFiles) {
+            if (f.type === "dir") {
+              const subFiles = await ghFetch(`contents/${f.path}`, githubToken);
+              const nested = await getRecursiveFiles(subFiles, f.path);
+              results = [...results, ...nested];
+            } else if (
+              f.name.endsWith(".md") || 
+              f.name.endsWith(".mdx") || 
+              f.name.endsWith(".json")
+            ) {
+              results.push(f);
             }
-            return { ...file, fm, sha: data.sha };
-          } catch (e) {
-            return { ...file, fm: { title: file.name }, sha: null };
           }
-        }),
-      );
-    }
+          return results;
+        }
+
+        if (collection.nested) {
+           // Si es anidado, buscamos el archivo principal en cada subcarpeta
+           mdFiles = await Promise.all(files.filter(f => f.type === "dir").map(async f => {
+             const subPath = `${path}/${f.name}`;
+             const subFiles = await ghFetch(`contents/${subPath}`, githubToken);
+             const indexFile = subFiles.find(sf => 
+               sf.name === "index.md" || 
+               sf.name === "index.mdx" || 
+               sf.name === "intro.json" ||
+               sf.name.toLowerCase() === f.name.toLowerCase() + ".md"
+             );
+             return indexFile || null;
+           }));
+           mdFiles = mdFiles.filter(f => f !== null);
+        } else {
+           // Búsqueda recursiva para encontrar posts en subcarpetas
+           mdFiles = await getRecursiveFiles(files, path);
+        }
+
+        console.log("Archivos encontrados:", mdFiles.length);
+
+        allPostsData = await Promise.all(
+          mdFiles.map(async (file) => {
+            try {
+              const data = await ghFetch(`contents/${file.path}`, githubToken);
+              const decoded = decodeURIComponent(escape(atob(data.content)));
+              let fm = {};
+              if (file.path.endsWith(".json")) {
+                fm = JSON.parse(decoded);
+              } else {
+                fm = parsePost(decoded).fm;
+              }
+              return { ...file, fm, sha: data.sha };
+            } catch (e) {
+              console.error(`Error parseando ${file.path}:`, e);
+              return { ...file, fm: { title: file.name }, sha: null };
+            }
+          }),
+        );
+      }
 
       // Auto-carga si es una colección de archivos únicos (como ajustes)
-      if (collection?.files?.length === 1 && allPostsData.length === 1) {
+      if (collection?.files?.length === 1 && allPostsData.length === 1 && type === "settings") {
          onEditPost(allPostsData[0]);
       }
     } catch (err) {
-    console.error(err);
-    allPostsData = [];
-  } finally {
-    isLoading = false;
+      console.error("Error cargando contenido:", err);
+      allPostsData = [];
+    } finally {
+      isLoading = false;
+    }
   }
-}
 
   function updateLayoutUI(layout) {
     currentLayout = layout;

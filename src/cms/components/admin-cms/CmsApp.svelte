@@ -16,14 +16,32 @@
   let isLoadingConfig = $state(true);
 
   onMount(async () => {
-    // Carga de la configuración del CMS
+    // CmsApp.svelte - Carga de la configuración del CMS
     try {
-      const response = await fetch("./config.yml");
-      const yamlText = await response.text();
-      cmsConfig = jsyaml.load(yamlText);
-      console.log("CMS Config cargada:", cmsConfig);
+      // Usamos una ruta más robusta para config.yml
+      const configPath = window.location.pathname.endsWith('/') 
+        ? './config.yml' 
+        : './admin/config.yml';
+      
+      console.log("Cargando config desde:", configPath);
+      const response = await fetch(configPath);
+      
+      if (!response.ok) {
+        // Reintento con ruta absoluta si falla
+        const altResponse = await fetch('/admin/config.yml');
+        if (!altResponse.ok) throw new Error(`Fallaron todas las rutas de config: ${response.status}`);
+        const yamlText = await altResponse.text();
+        cmsConfig = jsyaml.load(yamlText);
+      } else {
+        const yamlText = await response.text();
+        cmsConfig = jsyaml.load(yamlText);
+      }
+      
+      console.log("CMS Config cargada correctamente:", cmsConfig);
     } catch (e) {
-      console.error("Error cargando config.yml:", e);
+      console.error("Error crítico cargando config.yml:", e);
+      // Fallback mínimo para que no crashée
+      cmsConfig = { collections: [] };
     } finally {
       isLoadingConfig = false;
     }
