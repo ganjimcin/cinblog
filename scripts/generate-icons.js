@@ -26,6 +26,7 @@ const ICON_SETS = {
     "fa6-regular": "@iconify-json/fa6-regular",
     "mdi": "@iconify-json/mdi",
     "eos-icons": "@iconify-json/eos-icons",
+    "svg-spinners": "@iconify-json/svg-spinners",
 };
 
 // 图标集数据缓存
