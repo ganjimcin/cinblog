@@ -506,15 +506,18 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
         ...$state.snapshot(formData),
       };
       
-      // Si existe un campo 'body' en formData, usarlo como contenido principal y quitarlo de FM
+      // Sincronizar campos principales de la UI con el objeto de metadatos final
+      if (titleInput) finalFM.title = titleInput.trim();
+      if (categoryInput) finalFM.category = categoryInput.trim();
+      
+      // Si existe un campo 'body' en formData (proveniente de colecciones de archivos), 
+      // usarlo como contenido principal y quitarlo de FM para no duplicar datos
       let bodyContent = contentInput;
       if (isConfig && finalFM.body !== undefined) {
         bodyContent = finalFM.body;
         delete finalFM.body;
       }
       
-      if (finalFM.title !== undefined) titleInput = finalFM.title;
-
       finalContent = stringifyPost(finalFM, bodyContent);
     }
 
@@ -798,12 +801,12 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
     onCancel={onPostCancelled}
     onToggleSettings={() => showSettings = !showSettings}
     showSettings={showSettings}
-    viewMode={isConfig || isJSON ? 'write' : viewMode}
+    viewMode={isJSON || (isYAML && isConfig) ? 'write' : viewMode}
     onViewModeChange={(m) => viewMode = m}
   />
 
   <main class="cms-editor-main-content">
-    {#if isConfig || isJSON}
+    {#if isJSON || (isYAML && isConfig)}
       <div class="cms-config-editor">
         <div class="cms-config-container card-base">
           <h2>Edición de {currentCollection?.label || 'Datos'}</h2>
