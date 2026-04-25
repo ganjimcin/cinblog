@@ -2,7 +2,7 @@
 title: Bienvenidos a mi jardín.
 ---
 
-# About This Site
+# About Me
 
 
 Soy Lili Grow, pedagoga, con una larga carrera profesional con niños y adolescentes, mamá, me encanta vivir conectada con el mundo rural, aunque, por encima de todo, soy persona y como tal me niego a dejar de SER YO. 

@@ -571,7 +571,7 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
 
     try {
       const targetPath = post ? post.path : `src/content/posts/${filenameInput.endsWith(".md") ? filenameInput : filenameInput + ".md"}`;
-      await ghFetch(`contents/${targetPath}`, githubToken, {
+      const response = await ghFetch(`contents/${targetPath}`, githubToken, {
         method: "PUT",
         body: JSON.stringify({
           message: `CMS: Save ${titleInput}`,
@@ -579,6 +579,11 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
           sha: currentSha || undefined,
         }),
       });
+
+      // Actualizar el SHA actual con la respuesta de GitHub/Local para permitir guardados sucesivos
+      if (response && response.content && response.content.sha) {
+        currentSha = response.content.sha;
+      }
       alert("Guardado con éxito");
       clearLocalDraft();
       onPostSaved();
