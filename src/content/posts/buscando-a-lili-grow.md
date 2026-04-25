@@ -3,7 +3,6 @@ title: Buscando a LILI GROW
 category: Raíces
 ---
 
-
 ## El principio del cambio: siendo fiel a mi pedagogía y  a mi persona.
 
 ![Mi jardin.png](/assets/images/1777149258414-mi-jardin.webp)
