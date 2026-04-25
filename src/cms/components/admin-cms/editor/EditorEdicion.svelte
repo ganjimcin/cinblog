@@ -10,10 +10,38 @@
     onImageUpload,
     onScroll,
     onSave,
-    onToggleSettings
+    onToggleSettings,
+    githubToken,
+    isMock,
+    cmsConfig
   } = $props();
 
+  import ImageSelector from "./ImageSelector.svelte";
+
+
   let imageInput;
+  let showGalleryModal = $state(false);
+  let tempImageSelection = $state("");
+
+  function handleImageSelected(url) {
+    if (!url) return;
+    const el = textarea;
+    if (!el) return;
+    const start = el.selectionStart;
+    const end = el.selectionEnd;
+    const snip = `\n![Imagen](${url})\n`;
+    content = content.substring(0, start) + snip + content.substring(end);
+    
+    // Pequeño delay para asegurar que el DOM se actualice antes de dar el foco
+    setTimeout(() => {
+      el.focus();
+      el.setSelectionRange(start + snip.length, start + snip.length);
+    }, 10);
+    
+    showGalleryModal = false;
+    tempImageSelection = "";
+  }
+
 
   let wordCount = $derived(content.trim() ? content.trim().split(/\s+/).length : 0);
   let readingTime = $derived(Math.ceil(wordCount / 200) || 1);
@@ -121,8 +149,10 @@
          <div class="cms-toolbar-divider"></div>
          <div class="cms-toolbar-group">
            <button type="button" onclick={() => onToolbar("link")} title="Enlace"><Icon icon="material-symbols:link-rounded" /></button>
-           <button type="button" onclick={() => imageInput.click()} title="Imagen"><Icon icon="material-symbols:image-outline" /></button>
+           <button type="button" onclick={() => showGalleryModal = true} title="Galería de Imágenes"><Icon icon="material-symbols:image-search-outline" /></button>
+           <button type="button" onclick={() => imageInput.click()} title="Subir Rápido"><Icon icon="material-symbols:upload-file-outline-rounded" /></button>
            <button type="button" onclick={() => onToolbar("hr")} title="Separador"><Icon icon="material-symbols:horizontal-rule-rounded" /></button>
+
          </div>
          <div class="cms-toolbar-divider"></div>
          <div class="cms-toolbar-group">
@@ -130,6 +160,24 @@
          </div>
 
          <input type="file" bind:this={imageInput} onchange={onImageUpload} style="display: none;" accept="image/*" />
+          
+          {#if showGalleryModal}
+            <div class="cms-gallery-modal-wrapper">
+              <div class="cms-modal-content">
+                <ImageSelector 
+                  bind:value={tempImageSelection}
+                  {githubToken}
+                  {isMock}
+                  {cmsConfig}
+                  onSelect={handleImageSelected}
+                />
+                <button class="close-gallery-btn" onclick={() => showGalleryModal = false}>
+                  <Icon icon="material-symbols:close-rounded" />
+                </button>
+              </div>
+            </div>
+          {/if}
+
       </div>
 
       <!-- Fila 2: Componentes Avanzados y Widgets -->
@@ -402,5 +450,40 @@
     height: 1.25rem;
     background: var(--line-divider);
     margin: 0 0.25rem;
+  }
+
+  .cms-gallery-modal-wrapper {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .cms-modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 1000px;
+    pointer-events: auto;
+  }
+
+  .close-gallery-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 2.5rem;
+    z-index: 2100;
+    background: var(--btn-regular-bg);
+    border: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-primary);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   }
 </style>

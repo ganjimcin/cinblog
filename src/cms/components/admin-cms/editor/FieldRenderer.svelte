@@ -5,8 +5,14 @@
   let { 
     field, 
     value = $bindable(), 
-    onUpload = null 
+    onUpload = null,
+    githubToken = null,
+    isMock = false,
+    cmsConfig = null
   } = $props();
+
+  import ImageSelector from "./ImageSelector.svelte";
+
 
   const stableId = Math.random().toString(36).slice(2, 6);
   const fieldId = $derived(`field-${field.name}-${stableId}`);
@@ -75,11 +81,14 @@
     <div class="cms-field-object-content">
       {#if value}
         {#each field.fields as subfield}
-          <FieldRenderer 
-            field={subfield} 
-            bind:value={value[subfield.name]} 
-            {onUpload} 
-          />
+            <FieldRenderer 
+              field={subfield} 
+              bind:value={value[subfield.name]} 
+              {onUpload} 
+              {githubToken}
+              {isMock}
+              {cmsConfig}
+            />
         {/each}
       {/if}
     </div>
@@ -106,6 +115,9 @@
                     field={subfield} 
                     bind:value={item[subfield.name]} 
                     {onUpload} 
+                    {githubToken}
+                    {isMock}
+                    {cmsConfig}
                   />
                 {/each}
               {:else if field.field}
@@ -113,6 +125,9 @@
                     field={field.field} 
                     bind:value={value[i]} 
                     {onUpload} 
+                    {githubToken}
+                    {isMock}
+                    {cmsConfig}
                   />
               {:else}
                 <!-- Default for simple string/value lists -->
@@ -120,6 +135,9 @@
                     field={{ name: 'item', widget: 'string' }} 
                     bind:value={value[i]} 
                     {onUpload} 
+                    {githubToken}
+                    {isMock}
+                    {cmsConfig}
                   />
               {/if}
             {/if}
@@ -146,35 +164,35 @@
 
 {:else if field.widget === 'image' || field.widget === 'file'}
   <div class="cms-field-item">
-    <div class="cms-field-header">
-      <label for={fieldId}>{field.label || field.name}</label>
-      {#if value}
-        <span class="view-status">
-          <Icon icon="material-symbols:check-circle-outline-rounded" /> Listo
-        </span>
-      {/if}
-    </div>
-
-    <div class="cms-upload-box">
-      <div class="cms-upload-input-row">
-        <input type="text" id={fieldId} bind:value={value} placeholder="Ruta del archivo..." class="cms-path-input" />
-        
-        <label class="cms-upload-btn" class:disabled={isUploading}>
-          <Icon icon={isUploading ? "svg-spinners:ring-resize" : "material-symbols:upload-rounded"} />
-          <span>{isUploading ? "Subiendo..." : "Subir"}</span>
-          <input type="file" class="hidden-input" onchange={(e) => handleFileChange(e)} disabled={isUploading} />
-        </label>
+    {#if field.widget === 'image'}
+      <ImageSelector 
+        bind:value={value} 
+        {githubToken} 
+        {isMock} 
+        {cmsConfig} 
+      />
+    {:else}
+      <div class="cms-field-header">
+        <label for={fieldId}>{field.label || field.name}</label>
+        {#if value}
+          <span class="view-status">
+            <Icon icon="material-symbols:check-circle-outline-rounded" /> Listo
+          </span>
+        {/if}
       </div>
 
-      {#if field.widget === 'image' && (value || localPreview)}
-        <div class="cms-image-preview-container">
-          <img src={localPreview || value} alt="Preview" class="cms-image-preview" />
-          <button class="cms-remove-image-btn" onclick={() => { value = ""; localPreview = null; }}>
-            <Icon icon="material-symbols:close-rounded" />
-          </button>
+      <div class="cms-upload-box">
+        <div class="cms-upload-input-row">
+          <input type="text" id={fieldId} bind:value={value} placeholder="Ruta del archivo..." class="cms-path-input" />
+          
+          <label class="cms-upload-btn" class:disabled={isUploading}>
+            <Icon icon={isUploading ? "svg-spinners:ring-resize" : "material-symbols:upload-rounded"} />
+            <span>{isUploading ? "Subiendo..." : "Subir"}</span>
+            <input type="file" class="hidden-input" onchange={(e) => handleFileChange(e)} disabled={isUploading} />
+          </label>
         </div>
-      {/if}
-    </div>
+      </div>
+    {/if}
   </div>
 
 {:else if field.widget === 'boolean'}

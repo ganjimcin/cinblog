@@ -506,9 +506,26 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
         ...$state.snapshot(formData),
       };
       
-      // Sincronizar campos principales de la UI con el objeto de metadatos final
+      // Sincronizar TODOS los campos de la UI con el objeto de metadatos final
       if (titleInput) finalFM.title = titleInput.trim();
       if (categoryInput) finalFM.category = categoryInput.trim();
+      if (publishedInput) finalFM.published = publishedInput;
+      if (descriptionInput) finalFM.description = descriptionInput.trim();
+      if (tagsInput) finalFM.tags = tagsInput.split(",").map(t => t.trim()).filter(t => t);
+      if (imageInput) finalFM.image = imageInput.trim();
+      if (slugInput) finalFM.slug = slugInput.trim();
+      if (authorInput) finalFM.author = authorInput.trim();
+      if (langInput) finalFM.lang = langInput.trim();
+      if (updatedInput) finalFM.updated = updatedInput;
+      if (licenseNameInput) finalFM.licenseName = licenseNameInput.trim();
+      if (licenseUrlInput) finalFM.licenseUrl = licenseUrlInput.trim();
+      if (sourceLinkInput) finalFM.sourceLink = sourceLinkInput.trim();
+      if (iconInput) finalFM.icon = iconInput.trim();
+      
+      finalFM.draft = !!draftInput;
+      finalFM.pinned = !!pinnedInput;
+      finalFM.comment = !!commentInput;
+      finalFM.inNavbar = !!inNavbarInput;
       
       // Si existe un campo 'body' en formData (proveniente de colecciones de archivos), 
       // usarlo como contenido principal y quitarlo de FM para no duplicar datos
@@ -817,6 +834,9 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
                   {field} 
                   bind:value={formData[field.name]} 
                   onUpload={genericUpload} 
+                  {githubToken}
+                  {isMock}
+                  {cmsConfig}
                 />
               {/each}
             {:else if currentCollection?.files}
@@ -827,6 +847,9 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
                     {field} 
                     bind:value={formData[field.name]} 
                     onUpload={genericUpload} 
+                    {githubToken}
+                    {isMock}
+                    {cmsConfig}
                   />
                 {/each}
               {/if}
@@ -846,6 +869,9 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
           onScroll={syncScroll}
           onSave={handleSave}
           onToggleSettings={() => showSettings = !showSettings}
+          {githubToken}
+          {isMock}
+          {cmsConfig}
         />
 
         <EditorPreview 
@@ -860,6 +886,9 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
 
       <EditorMetadata 
         isVisible={showSettings}
+        {githubToken}
+        {isMock}
+        {cmsConfig}
         bind:category={categoryInput}
         bind:published={publishedInput}
         bind:description={descriptionInput}

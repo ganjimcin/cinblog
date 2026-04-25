@@ -2,12 +2,18 @@
   import Icon from "../../common/Icon.svelte";
   
   let { 
-    // Basic (title removed as it will be in the main editor area)
+    // Basic
     category = $bindable(), 
     published = $bindable(), 
     description = $bindable(),
     tags = $bindable(),
     image = $bindable(),
+    
+    // Connection info for ImageSelector
+    githubToken,
+    isMock,
+    cmsConfig,
+
     // Advanced
     slug = $bindable(),
     author = $bindable(),
@@ -23,6 +29,9 @@
     icon = $bindable(),
     isVisible = false
   } = $props();
+
+  import ImageSelector from "./ImageSelector.svelte";
+
 
   let showAdvanced = $state(false);
 </script>
@@ -51,8 +60,12 @@
       </div>
 
       <div class="cms-sidebar-section">
-        <label for="cms-meta-image">Imagen Portada (URL)</label>
-        <input type="text" id="cms-meta-image" bind:value={image} placeholder="https://..." />
+        <ImageSelector 
+          bind:value={image} 
+          {githubToken} 
+          {isMock} 
+          {cmsConfig} 
+        />
       </div>
 
       <div class="cms-sidebar-section">
