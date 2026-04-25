@@ -2,6 +2,7 @@
   import { onMount, tick } from "svelte";
   import { cmsFetch as ghFetch } from "./utils/api";
   import { parsePost, stringifyPost } from "./utils/parser";
+  import { toastStore } from "./stores/toastStore";
   import { slugify } from "./utils/formatter";
   let validationErrors = $derived.by(() => {
     const errors = [];
@@ -280,7 +281,13 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
 
   function clearLocalDraft() { localStorage.removeItem(DRAFT_KEY); }
 
-  $effect(() => { if (contentInput || titleInput) saveLocalDraft(); });
+  let lastDraftSaved = $state(null);
+  $effect(() => { 
+    if (contentInput || titleInput) {
+      saveLocalDraft();
+      lastDraftSaved = new Date();
+    }
+  });
 
   $effect(() => {
     if (post) {
@@ -520,7 +527,8 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
 
   async function handleSave() {
     if (validationErrors.length > 0) {
-      alert("No se puede guardar:\n\n" + validationErrors.map(e => "- " + e.message).join("\n"));
+      toastStore.warning("Por favor, corrige los errores antes de guardar.");
+      console.error("Errores de validación:", validationErrors);
       return;
     }
     isSaving = true;
@@ -584,10 +592,10 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
       if (response && response.content && response.content.sha) {
         currentSha = response.content.sha;
       }
-      alert("Guardado con éxito");
+      toastStore.success("¡Guardado con éxito!");
       clearLocalDraft();
       onPostSaved();
-    } catch (err) { alert(err.message); } finally { isSaving = false; }
+    } catch (err) { toastStore.error("Error al guardar: " + err.message); } finally { isSaving = false; }
   }
 
   import { optimizeImage } from "./utils/images";
@@ -660,8 +668,9 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
       const end = el.selectionEnd;
       const snip = file.type.startsWith('image/') ? `\n![${file.name}](${markdownPath})\n` : `\n[${file.name}](${markdownPath})\n`;
       contentInput = contentInput.substring(0, start) + snip + contentInput.substring(end);
+      toastStore.success("Archivo subido e insertado.");
       tick().then(() => { if (el) { el.focus(); el.setSelectionRange(start + snip.length, start + snip.length); } });
-    } catch (err) { alert("Error: " + err.message); } finally { isUploading = false; if (event.target) event.target.value = ''; }
+    } catch (err) { toastStore.error("Error al subir: " + err.message); } finally { isUploading = false; if (event.target) event.target.value = ''; }
   }
 
   function handleToolbar(type) {
@@ -907,6 +916,8 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
           onScroll={syncScroll}
           onSave={handleSave}
           onToggleSettings={() => showSettings = !showSettings}
+          {isUploading}
+          lastSaved={lastDraftSaved}
           {githubToken}
           {isMock}
           {cmsConfig}

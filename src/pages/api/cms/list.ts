@@ -14,6 +14,17 @@ export const GET: APIRoute = async ({ request }) => {
 
   try {
     const fullPath = path.resolve(process.cwd(), folderPath);
+    
+    // Security: Prevent path traversal and restrict to project directory
+    const isAllowed = fullPath.startsWith(process.cwd()) && (
+      fullPath.includes('/src/content') || 
+      fullPath.includes('/public/assets') ||
+      fullPath === process.cwd()
+    );
+
+    if (!isAllowed) {
+      return new Response(JSON.stringify({ error: 'Forbidden path' }), { status: 403 });
+    }
     const entries = await fs.readdir(fullPath, { withFileTypes: true });
     
     const files = entries.map(entry => ({

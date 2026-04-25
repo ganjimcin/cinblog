@@ -14,6 +14,17 @@ export const GET: APIRoute = async ({ request }) => {
 
   try {
     const fullPath = path.resolve(process.cwd(), filePath);
+    
+    // Security: Prevent path traversal and restrict to project directory
+    const isAllowed = fullPath.startsWith(process.cwd()) && (
+      fullPath.includes('/src/content/') || 
+      fullPath.includes('/public/assets/') || 
+      fullPath.endsWith('twilight.config.yaml')
+    );
+
+    if (!isAllowed) {
+      return new Response(JSON.stringify({ error: 'Forbidden path' }), { status: 403 });
+    }
     try {
       await fs.access(fullPath);
     } catch {

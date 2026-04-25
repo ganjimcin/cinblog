@@ -4,6 +4,7 @@
   import Login from "./Login.svelte";
   import Dashboard from "./Dashboard.svelte";
   import Editor from "./Editor.svelte";
+  import ToastProvider from "./common/ToastProvider.svelte";
   import { getDeviceID } from "./utils/device";
 
   let githubToken = $state(null);
@@ -198,6 +199,7 @@
       onPostCancelled={handleDashboardClick}
     />
   {/if}
+  <ToastProvider />
 </main>
 
 <style>

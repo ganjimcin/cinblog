@@ -1,5 +1,7 @@
 <script>
   import Icon from "../../common/Icon.svelte";
+  import { fade } from "svelte/transition";
+  import ShortcutsModal from "./ShortcutsModal.svelte";
   
   let { 
     content = $bindable(), 
@@ -13,14 +15,19 @@
     onToggleSettings,
     githubToken,
     isMock,
-    cmsConfig
+    cmsConfig,
+    isUploading = false,
+    lastSaved = null
   } = $props();
+  
+  let isDragging = $state(false);
 
   import ImageSelector from "./ImageSelector.svelte";
 
 
   let imageInput;
   let showGalleryModal = $state(false);
+  let showShortcuts = $state(false);
   let tempImageSelection = $state("");
 
   function handleImageSelected(url) {
@@ -48,6 +55,7 @@
 
   function handleDrop(event) {
     event.preventDefault();
+    isDragging = false;
     const file = event.dataTransfer.files[0];
     if (file && file.type.startsWith("image/")) {
       onImageUpload({ target: { files: [file] } });
@@ -56,6 +64,12 @@
 
   function handleDragOver(event) {
     event.preventDefault();
+    isDragging = true;
+  }
+
+  function handleDragLeave(event) {
+    event.preventDefault();
+    isDragging = false;
   }
 
   async function handlePaste(event) {
@@ -99,6 +113,11 @@
           }
           break;
       }
+    } else {
+      if (event.key === '?') {
+        event.preventDefault();
+        showShortcuts = true;
+      }
     }
   }
 
@@ -129,34 +148,34 @@
       <!-- Fila 1: Formato básico y Estructura -->
       <div class="cms-editor-toolbar">
          <div class="cms-toolbar-group">
-           <button type="button" onclick={() => onToolbar("h1")} title="H1"><Icon icon="material-symbols:format-h1-rounded" /></button>
-           <button type="button" onclick={() => onToolbar("h2")} title="H2"><Icon icon="material-symbols:format-h2-rounded" /></button>
-           <button type="button" onclick={() => onToolbar("h3")} title="H3"><Icon icon="material-symbols:format-h3-rounded" /></button>
+           <button type="button" onclick={() => onToolbar("h1")} data-tooltip="Título 1"><Icon icon="material-symbols:format-h1-rounded" /></button>
+           <button type="button" onclick={() => onToolbar("h2")} data-tooltip="Título 2"><Icon icon="material-symbols:format-h2-rounded" /></button>
+           <button type="button" onclick={() => onToolbar("h3")} data-tooltip="Título 3"><Icon icon="material-symbols:format-h3-rounded" /></button>
          </div>
          <div class="cms-toolbar-divider"></div>
          <div class="cms-toolbar-group">
-           <button type="button" onclick={() => onToolbar("bold")} title="Negrita"><Icon icon="material-symbols:format-bold-rounded" /></button>
-           <button type="button" onclick={() => onToolbar("italic")} title="Cursiva"><Icon icon="material-symbols:format-italic-rounded" /></button>
-           <button type="button" onclick={() => onToolbar("strike")} title="Tachado"><Icon icon="material-symbols:strikethrough-s-rounded" /></button>
+           <button type="button" onclick={() => onToolbar("bold")} data-tooltip="Negrita (Ctrl+B)"><Icon icon="material-symbols:format-bold-rounded" /></button>
+           <button type="button" onclick={() => onToolbar("italic")} data-tooltip="Cursiva (Ctrl+I)"><Icon icon="material-symbols:format-italic-rounded" /></button>
+           <button type="button" onclick={() => onToolbar("strike")} data-tooltip="Tachado (Ctrl+Shift+X)"><Icon icon="material-symbols:strikethrough-s-rounded" /></button>
          </div>
          <div class="cms-toolbar-divider"></div>
          <div class="cms-toolbar-group">
-           <button type="button" onclick={() => onToolbar("list-ul")} title="Lista"><Icon icon="material-symbols:format-list-bulleted-rounded" /></button>
-           <button type="button" onclick={() => onToolbar("list-ol")} title="Lista numerada"><Icon icon="material-symbols:format-list-numbered-rounded" /></button>
-           <button type="button" onclick={() => onToolbar("task")} title="Tareas"><Icon icon="material-symbols:check-circle" /></button>
-           <button type="button" onclick={() => onToolbar("table")} title="Tabla"><Icon icon="material-symbols:grid-view-rounded" /></button>
+           <button type="button" onclick={() => onToolbar("list-ul")} data-tooltip="Lista"><Icon icon="material-symbols:format-list-bulleted-rounded" /></button>
+           <button type="button" onclick={() => onToolbar("list-ol")} data-tooltip="Lista numerada"><Icon icon="material-symbols:format-list-numbered-rounded" /></button>
+           <button type="button" onclick={() => onToolbar("task")} data-tooltip="Tareas"><Icon icon="material-symbols:check-circle" /></button>
+           <button type="button" onclick={() => onToolbar("table")} data-tooltip="Tabla"><Icon icon="material-symbols:grid-view-rounded" /></button>
          </div>
          <div class="cms-toolbar-divider"></div>
          <div class="cms-toolbar-group">
-           <button type="button" onclick={() => onToolbar("link")} title="Enlace"><Icon icon="material-symbols:link-rounded" /></button>
-           <button type="button" onclick={() => showGalleryModal = true} title="Galería de Imágenes"><Icon icon="material-symbols:image-search-outline" /></button>
-           <button type="button" onclick={() => imageInput.click()} title="Subir Rápido"><Icon icon="material-symbols:upload-file-outline-rounded" /></button>
-           <button type="button" onclick={() => onToolbar("hr")} title="Separador"><Icon icon="material-symbols:horizontal-rule-rounded" /></button>
-
+           <button type="button" onclick={() => onToolbar("link")} data-tooltip="Enlace (Ctrl+K)"><Icon icon="material-symbols:link-rounded" /></button>
+           <button type="button" onclick={() => showGalleryModal = true} data-tooltip="Galería de Imágenes"><Icon icon="material-symbols:image-search-outline" /></button>
+           <button type="button" onclick={() => imageInput.click()} data-tooltip="Subir Archivo"><Icon icon="material-symbols:upload-file-outline-rounded" /></button>
+           <button type="button" onclick={() => onToolbar("hr")} data-tooltip="Separador"><Icon icon="material-symbols:horizontal-rule-rounded" /></button>
          </div>
          <div class="cms-toolbar-divider"></div>
          <div class="cms-toolbar-group">
-            <button type="button" onclick={clearFormat} title="Limpiar Formato"><Icon icon="material-symbols:format-clear-rounded" /></button>
+            <button type="button" onclick={clearFormat} data-tooltip="Limpiar Formato"><Icon icon="material-symbols:format-clear-rounded" /></button>
+            <button type="button" onclick={() => showShortcuts = true} data-tooltip="Ayuda (Atajos)"><Icon icon="material-symbols:help-outline-rounded" /></button>
          </div>
 
          <input type="file" bind:this={imageInput} onchange={onImageUpload} style="display: none;" accept="image/*" />
@@ -183,27 +202,27 @@
       <!-- Fila 2: Componentes Avanzados y Widgets -->
       <div class="cms-editor-toolbar second-row">
         <div class="cms-toolbar-group">
-          <button type="button" onclick={() => onToolbar("note")} title="Nota" class="tool-note"><Icon icon="material-symbols:info-outline-rounded" /></button>
-          <button type="button" onclick={() => onToolbar("tip")} title="Tip" class="tool-tip"><Icon icon="material-symbols:lightbulb-outline-rounded" /></button>
-          <button type="button" onclick={() => onToolbar("warning")} title="Aviso" class="tool-warning"><Icon icon="material-symbols:warning-amber-rounded" /></button>
-          <button type="button" onclick={() => onToolbar("important")} title="Importante" class="tool-important"><Icon icon="material-symbols:error-outline-rounded" /></button>
+          <button type="button" onclick={() => onToolbar("note")} data-tooltip="Nota Informativa" class="tool-note"><Icon icon="material-symbols:info-outline-rounded" /></button>
+          <button type="button" onclick={() => onToolbar("tip")} data-tooltip="Tip / Consejo" class="tool-tip"><Icon icon="material-symbols:lightbulb-outline-rounded" /></button>
+          <button type="button" onclick={() => onToolbar("warning")} data-tooltip="Aviso / Alerta" class="tool-warning"><Icon icon="material-symbols:warning-amber-rounded" /></button>
+          <button type="button" onclick={() => onToolbar("important")} data-tooltip="Importante" class="tool-important"><Icon icon="material-symbols:error-outline-rounded" /></button>
         </div>
         <div class="cms-toolbar-divider"></div>
         <div class="cms-toolbar-group">
-          <button type="button" onclick={() => onToolbar("mermaid-flow")} title="Flowchart"><Icon icon="material-symbols:bar-chart-4-bars-rounded" /></button>
-          <button type="button" onclick={() => onToolbar("mermaid-seq")} title="Sequence"><Icon icon="material-symbols:timeline" /></button>
-          <button type="button" onclick={() => onToolbar("mermaid-gantt")} title="Gantt"><Icon icon="material-symbols:calendar-month-outline-rounded" /></button>
+          <button type="button" onclick={() => onToolbar("mermaid-flow")} data-tooltip="Diagrama de Flujo"><Icon icon="material-symbols:bar-chart-4-bars-rounded" /></button>
+          <button type="button" onclick={() => onToolbar("mermaid-seq")} data-tooltip="Diagrama de Secuencia"><Icon icon="material-symbols:timeline" /></button>
+          <button type="button" onclick={() => onToolbar("mermaid-gantt")} data-tooltip="Diagrama de Gantt"><Icon icon="material-symbols:calendar-month-outline-rounded" /></button>
         </div>
         <div class="cms-toolbar-divider"></div>
         <div class="cms-toolbar-group">
-          <button type="button" onclick={() => onToolbar("music")} title="Música"><Icon icon="material-symbols:music-note-rounded" /></button>
-          <button type="button" onclick={() => onToolbar("video")} title="Video / iFrame"><Icon icon="material-symbols:video-library-rounded" /></button>
+          <button type="button" onclick={() => onToolbar("music")} data-tooltip="Tarjeta de Música"><Icon icon="material-symbols:music-note-rounded" /></button>
+          <button type="button" onclick={() => onToolbar("video")} data-tooltip="Video / iFrame"><Icon icon="material-symbols:video-library-rounded" /></button>
         </div>
         <div class="cms-toolbar-divider"></div>
         <div class="cms-toolbar-group">
-          <button type="button" onclick={() => onToolbar("code")} title="Bloque de Código"><Icon icon="material-symbols:terminal-rounded" /></button>
-          <button type="button" onclick={() => onToolbar("math")} title="Matemáticas (Math)"><Icon icon="material-symbols:functions-rounded" /></button>
-          <button type="button" onclick={() => onToolbar("spoiler")} title="Spoiler / Detalles"><Icon icon="material-symbols:visibility-off-outline-rounded" /></button>
+          <button type="button" onclick={() => onToolbar("code")} data-tooltip="Bloque de Código"><Icon icon="material-symbols:terminal-rounded" /></button>
+          <button type="button" onclick={() => onToolbar("math")} data-tooltip="Ecuación Matemática"><Icon icon="material-symbols:functions-rounded" /></button>
+          <button type="button" onclick={() => onToolbar("spoiler")} data-tooltip="Spoiler / Detalles"><Icon icon="material-symbols:visibility-off-outline-rounded" /></button>
         </div>
       </div>
     </div>
@@ -225,14 +244,36 @@
           bind:value={content} 
           onscroll={onScroll}
           ondragover={handleDragOver}
+          ondragleave={handleDragLeave}
           ondrop={handleDrop}
           onpaste={handlePaste}
           onkeydown={handleKeyDown}
           class="cms-writing-textarea" 
           placeholder="Comienza a escribir tu historia..."
         ></textarea>
+
+        {#if isDragging}
+          <div class="cms-drag-overlay" in:fade={{duration: 200}}>
+            <div class="cms-drag-box">
+              <Icon icon="material-symbols:add-a-photo-outline-rounded" />
+              <p>Suelta para subir imagen</p>
+            </div>
+          </div>
+        {/if}
+
+        {#if isUploading}
+           <div class="cms-upload-overlay" in:fade={{duration: 200}}>
+             <Icon icon="svg-spinners:ring-resize" />
+             <p>Subiendo archivo...</p>
+           </div>
+        {/if}
       </div>
     </div>
+    
+    {#if showShortcuts}
+      <ShortcutsModal onOpenChange={(val) => showShortcuts = val} />
+    {/if}
+
     <div class="cms-editor-status">
       <div class="cms-status-left">
         <span>{wordCount} palabras</span>
@@ -240,6 +281,13 @@
         <span>Lectura: ~{readingTime} min</span>
       </div>
       <div class="cms-status-right">
+        {#if lastSaved}
+          <span class="autosave-tag">
+            <Icon icon="material-symbols:cloud-done-outline" />
+            Borrador local: {lastSaved.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+          </span>
+          <span class="status-divider"></span>
+        {/if}
         {content.length} caracteres
       </div>
     </div>
@@ -394,6 +442,24 @@
     border-radius: 50%;
   }
 
+  .cms-status-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .autosave-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--primary);
+    opacity: 0.8;
+  }
+
+  .autosave-tag :global(svg) {
+    font-size: 1rem;
+  }
+
   .cms-editor-toolbar {
     display: flex;
     align-items: center;
@@ -485,5 +551,91 @@
     cursor: pointer;
     color: var(--text-primary);
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  /* Overlay Styles */
+  .cms-drag-overlay, .cms-upload-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--bg-glass);
+    backdrop-filter: blur(8px);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    color: var(--primary);
+    gap: 1rem;
+  }
+
+  .cms-drag-overlay {
+    border: 3px dashed var(--primary);
+    background: oklch(from var(--primary) l c h / 0.05);
+  }
+
+  .cms-drag-box {
+    text-align: center;
+    animation: pulse 2s infinite;
+  }
+
+  .cms-drag-box :global(svg) {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  .cms-drag-box p {
+    font-size: 1.25rem;
+    font-weight: 800;
+  }
+
+  .cms-upload-overlay :global(svg) {
+    font-size: 3rem;
+  }
+
+  .cms-upload-overlay p {
+     font-weight: 700;
+     opacity: 0.8;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+
+  /* Tooltip Premium Styles */
+  [data-tooltip] {
+    position: relative;
+  }
+
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line-divider);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 1000;
+    pointer-events: none;
+  }
+
+  [data-tooltip]:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
   }
 </style>

@@ -7,6 +7,7 @@
   import DashboardHeader from "./dashboard/DashboardHeader.svelte";
   import DashboardSidebar from "./dashboard/DashboardSidebar.svelte";
   import PostCard from "./dashboard/PostCard.svelte";
+  import SkeletonCard from "./dashboard/SkeletonCard.svelte";
 
   let { githubToken, isMock = false, cmsConfig, onEditPost, onNewPost } = $props();
 
@@ -240,9 +241,10 @@
       <!-- Área de contenido con grid corregido -->
       <main class="cms-content">
         {#if isLoading}
-          <div class="cms-loading-container">
-            <Icon icon="svg-spinners:ring-resize" />
-            <p>Cargando contenido...</p>
+          <div class="cms-post-list-{currentLayout}">
+            {#each Array(6) as _}
+              <SkeletonCard layout={currentLayout} />
+            {/each}
           </div>
         {:else if filteredPosts.length === 0}
           <div class="cms-empty-state">
