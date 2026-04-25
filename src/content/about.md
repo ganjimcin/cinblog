@@ -1,5 +1,6 @@
 ---
 title: Bienvenidos a mi jardín.
+category: Raíces
 ---
 
 # About Me
