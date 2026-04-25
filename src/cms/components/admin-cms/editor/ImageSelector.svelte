@@ -192,7 +192,18 @@
           {:else}
             <div class="image-grid">
               {#each images as img}
-                <button class="image-item" onclick={() => selectImage(`${publicFolder}/${img.name}`)}>
+                <div 
+                  class="image-item" 
+                  role="button" 
+                  tabindex="0"
+                  onclick={() => selectImage(`${publicFolder}/${img.name}`)}
+                  onkeydown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      selectImage(`${publicFolder}/${img.name}`);
+                    }
+                  }}
+                >
                   <img src={getThumbnailUrl(img)} alt={img.name} loading="lazy" />
                   <div class="image-info">
                     <span class="image-name">{img.name}</span>
@@ -200,7 +211,7 @@
                       <Icon icon="material-symbols:delete-outline-rounded" />
                     </button>
                   </div>
-                </button>
+                </div>
               {/each}
             </div>
           {/if}

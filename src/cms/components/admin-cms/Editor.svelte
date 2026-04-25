@@ -3,6 +3,34 @@
   import { cmsFetch as ghFetch } from "./utils/api";
   import { parsePost, stringifyPost } from "./utils/parser";
   import { slugify } from "./utils/formatter";
+  let validationErrors = $derived.by(() => {
+    const errors = [];
+    
+    // Validación básica para posts
+    if (!isConfig) {
+      if (!titleInput || !titleInput.trim()) errors.push({ field: 'title', message: 'El título es obligatorio.' });
+      if (!publishedInput) errors.push({ field: 'published', message: 'La fecha de publicación es obligatoria.' });
+    }
+
+    // Validación dinámica basada en campos del config.yml
+    if (currentCollection?.fields) {
+      currentCollection.fields.forEach(f => {
+        // En CMS config, los campos son obligatorios por defecto a menos que required sea false
+        if (f.required !== false) {
+           // Ignorar campos que se manejan por inputs específicos (title, published) para no duplicar alerts
+           if (f.name === 'title' || f.name === 'published') return;
+
+           const val = formData[f.name];
+           if (val === undefined || val === null || val === "" || (Array.isArray(val) && val.length === 0)) {
+              errors.push({ field: f.name, message: `El campo '${f.label || f.name}' es obligatorio.` });
+           }
+        }
+      });
+    }
+
+    return errors;
+  });
+
   import EditorHeader from "./editor/EditorHeader.svelte";
   import EditorMetadata from "./editor/EditorMetadata.svelte";
   import EditorEdicion from "./editor/EditorEdicion.svelte";
@@ -491,7 +519,10 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
   $effect(() => { if (contentInput !== undefined) updatePreview(); });
 
   async function handleSave() {
-    if (!titleInput.trim() && !isConfig) { alert("Por favor, ingresa un título."); return; }
+    if (validationErrors.length > 0) {
+      alert("No se puede guardar:\n\n" + validationErrors.map(e => "- " + e.message).join("\n"));
+      return;
+    }
     isSaving = true;
     
 
@@ -820,7 +851,9 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
     showSettings={showSettings}
     viewMode={isJSON || (isYAML && isConfig) ? 'write' : viewMode}
     onViewModeChange={(m) => viewMode = m}
+    {validationErrors}
   />
+
 
   <main class="cms-editor-main-content">
     {#if isJSON || (isYAML && isConfig)}

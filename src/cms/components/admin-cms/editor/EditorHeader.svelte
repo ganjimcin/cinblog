@@ -10,8 +10,12 @@
     viewMode = "dual", 
   
     onViewModeChange,
-    onDelete // Nueva prop para la acción de eliminar
+    onDelete,
+    validationErrors = []
   } = $props();
+
+  let showErrors = $state(false);
+
   </script>
 
   <header class="cms-editor-header">
@@ -72,6 +76,31 @@
           <Icon icon="material-symbols:delete-outline-rounded" size="xl" />
         </button>
       {/if}
+      <div class="validation-status" class:has-errors={validationErrors.length > 0} 
+           onmouseenter={() => showErrors = true} onmouseleave={() => showErrors = false}>
+        {#if validationErrors.length === 0}
+          <div class="status-valid" title="Todos los campos obligatorios completos">
+            <Icon icon="material-symbols:shield-check-outline-rounded" size="lg" />
+            <span>Listo</span>
+          </div>
+        {:else}
+          <div class="status-invalid" title="Faltan campos obligatorios">
+            <Icon icon="material-symbols:warning-outline-rounded" size="lg" />
+            <span class="error-count">{validationErrors.length}</span>
+          </div>
+          {#if showErrors}
+            <div class="error-popover">
+              <div class="popover-header">Campos requeridos</div>
+              <ul>
+                {#each validationErrors as err}
+                  <li>{err.message}</li>
+                {/each}
+              </ul>
+            </div>
+          {/if}
+        {/if}
+      </div>
+      <div class="cms-toolbar-divider"></div>
       <button class="btn-regular" onclick={onSave} disabled={isSaving}>
         {#if isSaving}
           <Icon icon="svg-spinners:ring-resize" size="lg" />
@@ -248,4 +277,101 @@
   .flex { display: flex; }
   .flex-col { flex-direction: column; }
   .font-bold { font-weight: 700; }
+
+  /* Estilos para Validación */
+  .validation-status {
+    position: relative;
+    cursor: help;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.2s;
+  }
+
+  .status-valid {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #10b981;
+    font-weight: 800;
+    font-size: 0.85rem;
+  }
+
+  .status-invalid {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #ef4444;
+    font-weight: 800;
+    font-size: 0.85rem;
+    background: rgba(239, 68, 68, 0.1);
+    padding: 0.35rem 0.6rem;
+    border-radius: 0.5rem;
+  }
+
+  .error-count {
+    background: #ef4444;
+    color: white;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+  }
+
+  .error-popover {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.75rem;
+    background: var(--card-bg);
+    border: 1px solid var(--line-divider);
+    border-radius: 1rem;
+    padding: 1rem;
+    width: 200px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    z-index: 1001;
+    animation: slideIn 0.2s ease-out;
+  }
+
+  .popover-header {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: 900;
+    opacity: 0.5;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+
+  .error-popover ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .error-popover li {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .error-popover li::before {
+    content: "•";
+    color: #ef4444;
+    font-weight: 900;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 </style>
