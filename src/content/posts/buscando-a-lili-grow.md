@@ -1,7 +1,13 @@
 ---
 title: Buscando a LILI GROW
-category: Documentación
+category: Raíces
 ---
+
+
+## El principio del cambio: siendo fiel a mi pedagogía y  a mi persona.
+
+![Mi jardin.png](/assets/images/1777149258414-mi-jardin.webp)
+
 
 En mi primer post os abrí la puerta de mi jardín, os conté quien era, hoy quiero un pasito más allá, quiero adentrarme un poco más en el jardín y en como nace realmente este proyecto y porque he creado este nombre artístico. 
 
@@ -11,8 +17,8 @@ Tras esa búsqueda de volver a ser yo, me di cuenta que tenía miedo, uno de eso
 
 De ese deseo de vivir una vida plena, de amar mi tiempo, de ser fiel a mi misma, nace este nombre: 
 
-	Quiero amar mi vida **(Life)** recordándome que no quiero pasar por ella de puntillas, sino vivirla y disfrutarla, sintiendo esa libertad **(Liberty)** que trae oxigeno limpio y me da fuerzas para crecer **(Grow)** fiel a mí misma. 
+Quiero amar mi vida **(Life)** recordándome que no quiero pasar por ella de puntillas, sino vivirla y disfrutarla, sintiendo esa libertad **(Liberty)** que trae oxigeno limpio y me da fuerzas para crecer **(Grow)** fiel a mí misma. 
 
 Este blog es uno de los primeros pasos de búsqueda de mi misma siendo fiel a mi pedagogía y mi persona, para, dentro de unos años, poder decir orgullosa de mi misma, *“Joder, lo hiciste porque lo intentaste, y aunque costase mucho al principio y te calleras muchas veces, seguiste intentándolo hasta llegar donde estas hoy”*. 
 
-Gracias por acompañarme a volar de nuevo. 
+Gracias por acompañarme a volar de nuevo.
