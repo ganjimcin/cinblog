@@ -1,7 +1,13 @@
 ---
 title: Buscando a LILI GROW
 category: Raíces
-published: 2026-04-26
+published: '2026-04-26'
+cover: /assets/images/1777149258414-mi-jardin.webp
+coverInContent: false
+draft: false
+pinned: false
+comment: true
+inNavbar: false
 ---
 
 ## El principio del cambio: siendo fiel a mi pedagogía y  a mi persona.
