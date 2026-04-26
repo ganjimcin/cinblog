@@ -4,6 +4,10 @@
   import { parsePost, stringifyPost } from "./utils/parser";
   import { toastStore } from "./stores/toastStore";
   import { slugify } from "./utils/formatter";
+  import { fade } from "svelte/transition";
+  import ShortcutsModal from "./editor/ShortcutsModal.svelte";
+  import ImageSelector from "./editor/ImageSelector.svelte";
+  import Icon from "../common/Icon.svelte";
   let validationErrors = $derived.by(() => {
     const errors = [];
     
@@ -218,6 +222,10 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
   let viewMode = $state("dual"); // write, dual, preview
   let renderedHTML = $state("");
   let showSettings = $state(false);
+  let showGalleryModal = $state(false);
+  let showShortcuts = $state(false);
+  let tempImageSelection = $state("");
+  let editorTextarea = $state(null);
 
   // Lógica de detección de Frontmatter manual (Pegado)
   $effect(() => {
@@ -710,6 +718,24 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
       tick().then(() => { if (el) { el.focus(); el.setSelectionRange(start + snip.length, start + snip.length); } });
     } catch (err) { toastStore.error("Error al subir: " + err.message); } finally { isUploading = false; if (event.target) event.target.value = ''; }
   }
+  
+  function handleImageSelected(url) {
+    if (!url) return;
+    const el = editorTextarea;
+    if (!el) return;
+    const start = el.selectionStart;
+    const end = el.selectionEnd;
+    const snip = `\n![Imagen](${url})\n`;
+    contentInput = contentInput.substring(0, start) + snip + contentInput.substring(end);
+    
+    setTimeout(() => {
+      el.focus();
+      el.setSelectionRange(start + snip.length, start + snip.length);
+    }, 10);
+    
+    showGalleryModal = false;
+    tempImageSelection = "";
+  }
 
   function handleToolbar(type) {
     const el = textarea;
@@ -947,13 +973,15 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
         <EditorEdicion 
           bind:content={contentInput}
           bind:title={titleInput}
-          bind:textarea={textarea}
           viewMode={viewMode}
+          bind:textarea={editorTextarea}
           onToolbar={handleToolbar}
           onImageUpload={handleImageUpload}
           onScroll={syncScroll}
           onSave={handleSave}
           onToggleSettings={() => showSettings = !showSettings}
+          onOpenGallery={() => showGalleryModal = true}
+          onOpenShortcuts={() => showShortcuts = true}
           {isUploading}
           lastSaved={lastDraftSaved}
           {githubToken}
@@ -997,6 +1025,29 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
       />
     {/if}
   </main>
+
+  {#if showShortcuts}
+    <ShortcutsModal onOpenChange={(val) => showShortcuts = val} />
+  {/if}
+
+  {#if showGalleryModal}
+    <div class="cms-gallery-modal-overlay" transition:fade={{duration: 200}}>
+      <div class="cms-gallery-modal-wrapper">
+        <div class="cms-modal-content">
+          <ImageSelector 
+            bind:value={tempImageSelection}
+            {githubToken}
+            {isMock}
+            {cmsConfig}
+            onSelect={handleImageSelected}
+          />
+          <button class="close-gallery-btn" onclick={() => showGalleryModal = false} aria-label="Cerrar galería">
+            <Icon icon="material-symbols:close-rounded" />
+          </button>
+        </div>
+      </div>
+    </div>
+  {/if}
 </div>
 
 <style>
@@ -1090,5 +1141,51 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
     .cms-split-view.with-sidebar {
       margin-right: 0;
     }
+  }
+
+  /* Modales Estilos Globales */
+  .cms-gallery-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cms-gallery-modal-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .cms-modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 1000px;
+    pointer-events: auto;
+  }
+
+  .close-gallery-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 2.5rem;
+    z-index: 10000;
+    background: var(--btn-regular-bg);
+    border: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-primary);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   }
 </style>

@@ -13,6 +13,8 @@
     onScroll,
     onSave,
     onToggleSettings,
+    onOpenGallery,
+    onOpenShortcuts,
     githubToken,
     isMock,
     cmsConfig,
@@ -26,29 +28,6 @@
 
 
   let imageInput;
-  let showGalleryModal = $state(false);
-  let showShortcuts = $state(false);
-  let tempImageSelection = $state("");
-
-  function handleImageSelected(url) {
-    if (!url) return;
-    const el = textarea;
-    if (!el) return;
-    const start = el.selectionStart;
-    const end = el.selectionEnd;
-    const snip = `\n![Imagen](${url})\n`;
-    content = content.substring(0, start) + snip + content.substring(end);
-    
-    // Pequeño delay para asegurar que el DOM se actualice antes de dar el foco
-    setTimeout(() => {
-      el.focus();
-      el.setSelectionRange(start + snip.length, start + snip.length);
-    }, 10);
-    
-    showGalleryModal = false;
-    tempImageSelection = "";
-  }
-
 
   let wordCount = $derived(content.trim() ? content.trim().split(/\s+/).length : 0);
   let readingTime = $derived(Math.ceil(wordCount / 200) || 1);
@@ -116,7 +95,7 @@
     } else {
       if (event.key === '?') {
         event.preventDefault();
-        showShortcuts = true;
+        if (onOpenShortcuts) onOpenShortcuts();
       }
     }
   }
@@ -168,14 +147,14 @@
          <div class="cms-toolbar-divider"></div>
          <div class="cms-toolbar-group">
            <button type="button" onclick={() => onToolbar("link")} data-tooltip="Enlace (Ctrl+K)"><Icon icon="material-symbols:link-rounded" /></button>
-           <button type="button" onclick={() => showGalleryModal = true} data-tooltip="Galería de Imágenes"><Icon icon="material-symbols:image-search-outline" /></button>
+           <button type="button" onclick={onOpenGallery} data-tooltip="Galería de Imágenes"><Icon icon="material-symbols:image-search-outline" /></button>
            <button type="button" onclick={() => imageInput.click()} data-tooltip="Subir Archivo"><Icon icon="material-symbols:upload-file-outline-rounded" /></button>
            <button type="button" onclick={() => onToolbar("hr")} data-tooltip="Separador"><Icon icon="material-symbols:horizontal-rule-rounded" /></button>
          </div>
          <div class="cms-toolbar-divider"></div>
          <div class="cms-toolbar-group">
             <button type="button" onclick={clearFormat} data-tooltip="Limpiar Formato"><Icon icon="material-symbols:format-clear-rounded" /></button>
-            <button type="button" onclick={() => showShortcuts = true} data-tooltip="Ayuda (Atajos)"><Icon icon="material-symbols:help-outline-rounded" /></button>
+            <button type="button" onclick={onOpenShortcuts} data-tooltip="Ayuda (Atajos)"><Icon icon="material-symbols:help-outline-rounded" /></button>
          </div>
 
          <input type="file" bind:this={imageInput} onchange={onImageUpload} style="display: none;" accept="image/*" />
@@ -271,31 +250,8 @@
       </div>
     </div>
   </div>
-
-
-  {#if showShortcuts}
-    <ShortcutsModal onOpenChange={(val) => showShortcuts = val} />
-  {/if}
-
-  {#if showGalleryModal}
-    <div class="cms-gallery-modal-overlay" transition:fade={{duration: 200}}>
-      <div class="cms-gallery-modal-wrapper">
-        <div class="cms-modal-content">
-          <ImageSelector 
-            bind:value={tempImageSelection}
-            {githubToken}
-            {isMock}
-            {cmsConfig}
-            onSelect={handleImageSelected}
-          />
-          <button class="close-gallery-btn" onclick={() => showGalleryModal = false} aria-label="Cerrar galería">
-            <Icon icon="material-symbols:close-rounded" />
-          </button>
-        </div>
-      </div>
-    </div>
-  {/if}
 </div>
+
 
 <style>
   .cms-editor-card {    background: var(--card-bg);
@@ -373,7 +329,7 @@
   .cms-editor-toolbar-sticky {
     background: var(--btn-regular-bg);
     border-bottom: 1px solid var(--line-divider);
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1rem 0.5rem 1rem; /* Aumentado padding superior */
     min-height: 7rem;
     display: flex;
     flex-direction: column;
@@ -430,6 +386,8 @@
     border-top: 1px solid var(--line-divider);
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    position: relative;
+    z-index: 5;
   }
 
   .cms-status-left {

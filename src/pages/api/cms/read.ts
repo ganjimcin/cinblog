@@ -31,7 +31,7 @@ export const GET: APIRoute = async ({ request }) => {
       return new Response(JSON.stringify({ error: 'File not found' }), { status: 404 });
     }
     const content = await fs.readFile(fullPath, 'utf8');
-    const base64Content = btoa(unescape(encodeURIComponent(content)));
+    const base64Content = Buffer.from(content).toString('base64');
 
     return new Response(JSON.stringify({
       content: base64Content,

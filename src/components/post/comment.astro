@@ -1,7 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
 
-import { getPostUrl } from "@utils/url";
 import { postConfig } from "@/config";
 
 
@@ -10,8 +9,6 @@ interface Props {
 }
 
 const { post } = Astro.props;
-
-const path = getPostUrl(post);
 
 let commentService = "";
 ---

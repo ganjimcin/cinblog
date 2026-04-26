@@ -14,20 +14,6 @@ import { LinkPreset } from "./types/config";
 import config from "./twilight.config.yaml";
 
 
-type ConfigFile = {
-    site: SiteConfig;
-
-    navbar: {
-        links: Array<NavbarLink | LinkPreset | string>;
-    };
-    sidebar: SidebarConfig;
-    profile: ProfileConfig;
-    announcement: AnnouncementConfig;
-    post: PostConfig;
-    footer: FooterConfig;
-    particle: ParticleConfig;
-    musicPlayer: MusicPlayerConfig;
-};
 
 const linkPresetNameMap: Record<string, LinkPreset> = {
     Home: LinkPreset.Home,

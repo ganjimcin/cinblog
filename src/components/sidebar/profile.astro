@@ -4,8 +4,6 @@ import Icon from "@components/common/icon.astro";
 import { profileConfig } from "@/config";
 
 import { url } from "@utils/url";
-import { i18n } from "@i18n/translation";
-import I18nKey from "@i18n/i18nKey";
 import ImageWrapper from "@/components/common/imageWrapper.astro";
 
 
@@ -16,7 +14,7 @@ interface Props {
     style?: string;
     side?: string;
 }
-const { class: className, style, side = "default" } = Astro.props;
+const { class: className, side = "default" } = Astro.props;
 const id = `profile-${side}`;
 ---
 

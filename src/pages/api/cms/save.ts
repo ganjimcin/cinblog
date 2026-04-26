@@ -26,7 +26,7 @@ export const PUT: APIRoute = async ({ request }) => {
       return new Response(JSON.stringify({ error: 'Forbidden path' }), { status: 403 });
     }
 
-    const decodedContent = decodeURIComponent(escape(atob(content)));
+    const decodedContent = Buffer.from(content, 'base64').toString('utf-8');
 
     await fs.mkdir(path.dirname(fullPath), { recursive: true });
     await fs.writeFile(fullPath, decodedContent, 'utf8');

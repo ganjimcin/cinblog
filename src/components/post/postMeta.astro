@@ -1,7 +1,7 @@
 ---
 import Icon from "@components/common/icon.astro";
 
-import { getCategoryUrl, getTagUrl, url } from "@utils/url";
+import { getCategoryUrl, getTagUrl } from "@utils/url";
 import { getCategoryPathParts } from "@utils/category";
 import { formatDateToYYYYMMDD } from "@utils/date";
 
@@ -16,9 +16,7 @@ export interface Props {
     tags?: string[];
     hideUpdateDate?: boolean;
     hideTagsForMobile?: boolean;
-    isHome?: boolean;
     className?: string;
-    slug?: string;
     postUrl?: string;
 }
 
@@ -29,12 +27,9 @@ const {
     tags,
     hideUpdateDate,
     hideTagsForMobile,
-    isHome,
     className = "",
-    slug,
     postUrl
 } = Astro.props;
-const finalPostUrl = postUrl || (slug ? url(`/posts/${slug}/`) : "");
 const categoryParts = getCategoryPathParts(category ?? null);
 
 
