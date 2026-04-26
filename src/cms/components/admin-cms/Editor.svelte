@@ -161,7 +161,8 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
   let updatedInput = $state("");
   let pinnedInput = $state(false);
   let descriptionInput = $state("");
-  let imageInput = $state("");
+  let coverInput = $state("");
+  let coverInContentInput = $state(false);
   let tagsInput = $state("");
   let categoryInput = $state("");
   let langInput = $state("");
@@ -204,7 +205,8 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
           }
           if (fm.description) descriptionInput = fm.description;
           if (fm.tags) tagsInput = Array.isArray(fm.tags) ? fm.tags.join(", ") : fm.tags;
-          if (fm.image) imageInput = fm.image;
+          if (fm.image || fm.cover) coverInput = fm.cover || fm.image;
+          if (fm.coverInContent !== undefined) coverInContentInput = !!fm.coverInContent;
           if (fm.slug) slugInput = fm.slug;
           if (fm.author) authorInput = fm.author;
           if (fm.lang) langInput = fm.lang;
@@ -230,7 +232,8 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
         category: categoryInput,
         published: publishedInput,
         tags: tagsInput,
-        image: imageInput,
+        cover: coverInput,
+        coverInContent: coverInContentInput,
         slug: slugInput,
         author: authorInput,
         lang: langInput,
@@ -264,7 +267,8 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
             publishedInput = draft.fm.published || "";
             tagsInput = draft.fm.tags || "";
             descriptionInput = draft.fm.description || "";
-            imageInput = draft.fm.image || "";
+            coverInput = draft.fm.cover || draft.fm.image || "";
+            coverInContentInput = !!draft.fm.coverInContent;
             slugInput = draft.fm.slug || "";
             authorInput = draft.fm.author || "";
             langInput = draft.fm.lang || "";
@@ -381,7 +385,8 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
         updatedInput = formData.updated ? new Date(formData.updated).toISOString().split("T")[0] : "";
         pinnedInput = !!formData.pinned;
         descriptionInput = formData.description || "";
-        imageInput = formData.image || "";
+        coverInput = formData.cover || formData.image || "";
+        coverInContentInput = formData.coverInContent !== undefined ? !!formData.coverInContent : false;
         tagsInput = Array.isArray(formData.tags) ? formData.tags.join(", ") : formData.tags || "";
         langInput = formData.lang || "";
         licenseNameInput = formData.licenseName || "";
@@ -551,7 +556,8 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
       if (publishedInput) finalFM.published = publishedInput;
       if (descriptionInput) finalFM.description = descriptionInput.trim();
       if (tagsInput) finalFM.tags = tagsInput.split(",").map(t => t.trim()).filter(t => t);
-      if (imageInput) finalFM.image = imageInput.trim();
+      if (coverInput) finalFM.cover = coverInput.trim();
+      finalFM.coverInContent = !!coverInContentInput;
       if (slugInput) finalFM.slug = slugInput.trim();
       if (authorInput) finalFM.author = authorInput.trim();
       if (langInput) finalFM.lang = langInput.trim();
@@ -942,7 +948,8 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
         bind:published={publishedInput}
         bind:description={descriptionInput}
         bind:tags={tagsInput}
-        bind:image={imageInput}
+        bind:cover={coverInput}
+        bind:coverInContent={coverInContentInput}
         bind:slug={slugInput}
         bind:author={authorInput}
         bind:lang={langInput}

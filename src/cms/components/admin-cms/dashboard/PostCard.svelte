@@ -13,9 +13,9 @@
   tabindex="0"
 >
   <div class="cms-post-card-content">
-    {#if post.fm.image && layout === "grid"}
+    {#if (post.fm.cover || post.fm.image) && layout === "grid"}
       <div class="cms-post-card-thumbnail">
-        <img src={post.fm.image} alt={post.fm.title} loading="lazy" />
+        <img src={post.fm.cover || post.fm.image} alt={post.fm.title} loading="lazy" />
       </div>
     {/if}
 

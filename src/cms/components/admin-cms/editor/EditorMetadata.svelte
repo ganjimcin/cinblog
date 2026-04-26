@@ -7,7 +7,8 @@
     published = $bindable(), 
     description = $bindable(),
     tags = $bindable(),
-    image = $bindable(),
+    cover = $bindable(),
+    coverInContent = $bindable(),
     
     // Connection info for ImageSelector
     githubToken,
@@ -61,11 +62,18 @@
 
       <div class="cms-sidebar-section">
         <ImageSelector 
-          bind:value={image} 
+          bind:value={cover} 
           {githubToken} 
           {isMock} 
           {cmsConfig} 
         />
+      </div>
+
+      <div class="cms-sidebar-section">
+        <label class="cms-checkbox-label">
+          <input type="checkbox" bind:checked={coverInContent} />
+          <span>Habilitar en post</span>
+        </label>
       </div>
 
       <div class="cms-sidebar-section">
@@ -213,7 +221,7 @@
     border-radius: 0.75rem;
   }
 
-  .cms-checkbox-list label {
+  .cms-checkbox-list label, .cms-checkbox-label {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -222,7 +230,7 @@
     cursor: pointer;
   }
 
-  .cms-checkbox-list input {
+  .cms-checkbox-list input, .cms-checkbox-label input {
     accent-color: var(--primary);
   }
 </style>
