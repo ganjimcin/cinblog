@@ -179,23 +179,6 @@
          </div>
 
          <input type="file" bind:this={imageInput} onchange={onImageUpload} style="display: none;" accept="image/*" />
-          
-          {#if showGalleryModal}
-            <div class="cms-gallery-modal-wrapper">
-              <div class="cms-modal-content">
-                <ImageSelector 
-                  bind:value={tempImageSelection}
-                  {githubToken}
-                  {isMock}
-                  {cmsConfig}
-                  onSelect={handleImageSelected}
-                />
-                <button class="close-gallery-btn" onclick={() => showGalleryModal = false}>
-                  <Icon icon="material-symbols:close-rounded" />
-                </button>
-              </div>
-            </div>
-          {/if}
 
       </div>
 
@@ -270,10 +253,6 @@
       </div>
     </div>
     
-    {#if showShortcuts}
-      <ShortcutsModal onOpenChange={(val) => showShortcuts = val} />
-    {/if}
-
     <div class="cms-editor-status">
       <div class="cms-status-left">
         <span>{wordCount} palabras</span>
@@ -292,6 +271,30 @@
       </div>
     </div>
   </div>
+
+
+  {#if showShortcuts}
+    <ShortcutsModal onOpenChange={(val) => showShortcuts = val} />
+  {/if}
+
+  {#if showGalleryModal}
+    <div class="cms-gallery-modal-overlay" transition:fade={{duration: 200}}>
+      <div class="cms-gallery-modal-wrapper">
+        <div class="cms-modal-content">
+          <ImageSelector 
+            bind:value={tempImageSelection}
+            {githubToken}
+            {isMock}
+            {cmsConfig}
+            onSelect={handleImageSelected}
+          />
+          <button class="close-gallery-btn" onclick={() => showGalleryModal = false} aria-label="Cerrar galería">
+            <Icon icon="material-symbols:close-rounded" />
+          </button>
+        </div>
+      </div>
+    </div>
+  {/if}
 </div>
 
 <style>
@@ -518,14 +521,24 @@
     margin: 0 0.25rem;
   }
 
-  .cms-gallery-modal-wrapper {
+  .cms-gallery-modal-overlay {
     position: fixed;
     inset: 0;
-    z-index: 2000;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 5000;
     display: flex;
     align-items: center;
     justify-content: center;
-    pointer-events: none;
+  }
+
+  .cms-gallery-modal-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
   }
 
   .cms-modal-content {

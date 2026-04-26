@@ -25,22 +25,16 @@ collections:
       - { label: "Fecha de Publicación", name: "published", widget: "datetime" }
       - { label: "Fecha de Actualización", name: "updated", widget: "datetime", required: false }
       - { label: "Descripción", name: "description", widget: "string", required: false }
-      - {
-          label: "Categoría",
-          name: "category",
-          widget: "select",
-          options: ["General", "Tecnología", "Cine", "Proyectos", "Diario", "Examples"],
-          default: "General",
-        }
+      - { label: "Categoría", name: "category", widget: "select", options: ["General", "Tecnología", "Cine", "Proyectos", "Diario", "Examples"], default: "General" }
       - { label: "Etiquetas", name: "tags", widget: "list", required: false }
       - { label: "Imagen de Portada", name: "cover", widget: "image", required: false }
-      - { label: "Mostrar Portada en Contenido", name: "coverInContent", widget: "boolean", default: false }
-      - { label: "Fijado (Pinned)", name: "pinned", widget: "boolean", default: false }
-      - { label: "Borrador", name: "draft", widget: "boolean", default: false }
+      - { label: "Mostrar Portada en Contenido", name: "coverInContent", widget: "boolean", default: false, required: false }
+      - { label: "Fijado (Pinned)", name: "pinned", widget: "boolean", default: false, required: false }
+      - { label: "Borrador", name: "draft", widget: "boolean", default: false, required: false }
       - { label: "Autor", name: "author", widget: "string", required: false }
       - { label: "Cuerpo del Post", name: "body", widget: "markdown" }
       - { label: "Idioma", name: "lang", widget: "string", required: false, placeholder: "es" }
-      - { label: "Comentarios Habilitados", name: "comment", widget: "boolean", default: true }
+      - { label: "Comentarios Habilitados", name: "comment", widget: "boolean", default: true, required: false }
 
   - name: pages
     label: "Páginas Estáticas"

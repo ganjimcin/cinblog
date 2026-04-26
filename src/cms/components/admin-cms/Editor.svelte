@@ -7,6 +7,30 @@
   let validationErrors = $derived.by(() => {
     const errors = [];
     
+    // Mapeo de campos que tienen variables de estado específicas
+    const dedicatedValues = {
+      title: titleInput,
+      published: publishedInput,
+      category: categoryInput,
+      description: descriptionInput,
+      tags: tagsInput,
+      cover: coverInput,
+      coverInContent: coverInContentInput,
+      slug: slugInput,
+      author: authorInput,
+      lang: langInput,
+      updated: updatedInput,
+      licenseName: licenseNameInput,
+      licenseUrl: licenseUrlInput,
+      sourceLink: sourceLinkInput,
+      draft: draftInput,
+      pinned: pinnedInput,
+      comment: commentInput,
+      inNavbar: inNavbarInput,
+      icon: iconInput,
+      body: contentInput
+    };
+
     // Validación básica para posts
     if (!isConfig) {
       if (!titleInput || !titleInput.trim()) errors.push({ field: 'title', message: 'El título es obligatorio.' });
@@ -21,8 +45,16 @@
            // Ignorar campos que se manejan por inputs específicos (title, published) para no duplicar alerts
            if (f.name === 'title' || f.name === 'published') return;
 
-           const val = formData[f.name];
-           if (val === undefined || val === null || val === "" || (Array.isArray(val) && val.length === 0)) {
+           // Obtener el valor: primero de variables dedicadas, luego de formData
+           let val = dedicatedValues[f.name];
+           if (val === undefined && formData) {
+             val = formData[f.name];
+           }
+
+           // Validación de vacío (especial atención a booleanos, que pueden ser false)
+           const isEmpty = val === undefined || val === null || val === "" || (Array.isArray(val) && val.length === 0);
+           
+           if (isEmpty) {
               errors.push({ field: f.name, message: `El campo '${f.label || f.name}' es obligatorio.` });
            }
         }
