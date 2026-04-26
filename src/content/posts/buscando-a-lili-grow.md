@@ -8,6 +8,7 @@ draft: false
 pinned: false
 comment: true
 inNavbar: false
+description: Breve Despricion
 ---
 
 ## El principio del cambio: siendo fiel a mi pedagogía y  a mi persona.
