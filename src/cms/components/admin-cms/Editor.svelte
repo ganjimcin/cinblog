@@ -738,7 +738,7 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
   }
 
   function handleToolbar(type) {
-    const el = textarea;
+    const el = editorTextarea;
     if (!el) return;
     
     let start = el.selectionStart;
@@ -874,17 +874,16 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
     });
   }
 
-  let textarea = $state(null);
   let previewEl = $state(null);
   let isSyncingTarget = false;
   let scrollMap = [];
   async function buildScrollMap() {
-    if (!textarea || !previewEl) return;
+    if (!editorTextarea || !previewEl) return;
     await tick();
     const headers = previewEl.querySelectorAll("h1, h2, h3, h4, h5, h6");
     const newMap = [{ editor: 0, preview: 0 }];
     const lines = contentInput.split("\n");
-    const textareaHeight = textarea.scrollHeight;
+    const textareaHeight = editorTextarea.scrollHeight;
     const previewHeight = previewEl.scrollHeight;
     headers.forEach(header => {
       const text = header.textContent.trim();
@@ -899,17 +898,17 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
   function syncScroll(e) {
     if (isSyncingTarget) { isSyncingTarget = false; return; }
     const source = e.target;
-    const target = source === textarea ? previewEl : textarea;
+    const target = source === editorTextarea ? previewEl : editorTextarea;
     if (!target || scrollMap.length < 2) return;
     const scrollPos = source.scrollTop;
     if (scrollPos <= 5) { target.scrollTop = 0; return; }
     for (let i = 0; i < scrollMap.length - 1; i++) {
-      const start = source === textarea ? scrollMap[i].editor : scrollMap[i].preview;
-      const end = source === textarea ? scrollMap[i+1].editor : scrollMap[i+1].preview;
+      const start = source === editorTextarea ? scrollMap[i].editor : scrollMap[i].preview;
+      const end = source === editorTextarea ? scrollMap[i+1].editor : scrollMap[i+1].preview;
       if (scrollPos >= start && scrollPos <= end) {
         const ratio = (scrollPos - start) / (end - start);
-        const targetStart = source === textarea ? scrollMap[i].preview : scrollMap[i].editor;
-        const targetEnd = source === textarea ? scrollMap[i+1].preview : scrollMap[i+1].editor;
+        const targetStart = source === editorTextarea ? scrollMap[i].preview : scrollMap[i].editor;
+        const targetEnd = source === editorTextarea ? scrollMap[i+1].preview : scrollMap[i+1].editor;
         target.scrollTop = targetStart + ratio * (targetEnd - targetStart);
         isSyncingTarget = true;
         break;
