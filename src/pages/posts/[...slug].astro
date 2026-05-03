@@ -10,6 +10,7 @@ import { getSortedPosts } from "@utils/post";
 import { formatDateToYYYYMMDD } from "@utils/date";
 import { getFileDirFromPath, getPostUrl, getPostUrlBySlug, removeFileExtension} from "@utils/url";
 import { SUPPORTED_LANGUAGES, langToTranslateMap } from "@i18n/language";
+import { getCategoryPathLabel } from "@utils/category";
 import { i18n, getTranslation } from "@i18n/translation";
 import I18nKey from "@i18n/i18nKey";
 import License from "@components/post/license.astro";
@@ -220,7 +221,7 @@ const jsonLd = {
                 isEncrypted={isEncrypted}
                 password={entry.data.password}
             >
-                <div class:list={[{ "justify-text-category": entry.data.category === "Susurros en el Jardín" }]}>
+                <div class:list={[{ "justify-text-category": getCategoryPathLabel(entry.data.category) === "Susurros en el Jardín" || entry.data.category === "Susurros en el Jardín" }]}>
                     <Markdown class="mb-6 markdown-content onload-animation-up">
                         <Content />
                     </Markdown>
@@ -387,7 +388,10 @@ const jsonLd = {
 </GridLayout>
 
 <style is:global>
-    .justify-text-category p {
+    .justify-text-category p,
+    .justify-text-category div,
+    .justify-text-category span,
+    .justify-text-category .markdown-content p {
         text-align: justify !important;
     }
 </style>
