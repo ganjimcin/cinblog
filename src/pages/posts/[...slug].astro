@@ -220,7 +220,7 @@ const jsonLd = {
                 isEncrypted={isEncrypted}
                 password={entry.data.password}
             >
-                <Markdown class="mb-6 markdown-content onload-animation-up">
+                <Markdown class={`mb-6 markdown-content onload-animation-up ${entry.data.category === "Susurros en el Jardín" ? "justify-text-category" : ""}`}>
                     <Content />
                 </Markdown>
                 {
@@ -383,3 +383,9 @@ const jsonLd = {
         </a>
     </div>
 </GridLayout>
+
+<style>
+    .justify-text-category :global(p) {
+        text-align: justify;
+    }
+</style>
