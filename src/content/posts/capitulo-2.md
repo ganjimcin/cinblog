@@ -37,7 +37,7 @@ Mocho lo miró de arriba abajo. Su miedo se había transformado en sorpresa. —
 
 Xoshö dio un salto y aterrizó en el suelo sin hacer ni un ruido, como si sus pies fueran de aire, quitándole el bloc de notas de las manos a Mocho —Es que caminas de una forma muy especial —respondió él, ladeando la cabeza—. Pareces alguien que sabe exactamente a dónde va, y eso es muy difícil de dibujar. Aunque no te he dado permiso para que los mires. Cotilla.
 
-Mocho lo miró con su habitual seriedad. No sabía si enfadarse por cómo le hablaba o alegrarse por haber encontrado a alguien tan original en la zona más oscura del bosque.
+Mocho lo miró muy seria. No sabía si enfadarse por cómo le hablaba o alegrarse por haber encontrado a alguien tan original en la zona más oscura del bosque.
 
 —Tus dibujos son muy buenos, pero si no quieres que nadie los vea tienes que tener más cuidado. Ahora si no te importa, tengo que irme, estoy buscando la pradera de las aceitunas rosas, y no quiero que se haga tarde – dijo Mocho muy seca. 
 
