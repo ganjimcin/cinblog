@@ -33,7 +33,7 @@ Era **Xoshö.**
 
 Mocho lo miró de arriba abajo. Su miedo se había transformado en sorpresa. —¿Tú me estabas dibujando? —preguntó ella, señalando el dibujo donde se le veía con su mochila y su pelo corto al viento.
 
-![Imagen|300](/assets/images/1777924182095-mocho-dibujado-por-xosh.webp)
+![Imagen|200](/assets/images/1777924182095-mocho-dibujado-por-xosh.webp)
 
 Xoshö dio un salto y aterrizó en el suelo sin hacer ni un ruido, como si sus pies fueran de aire, quitándole el bloc de notas de las manos a Mocho —Es que caminas de una forma muy especial —respondió él, ladeando la cabeza—. Pareces alguien que sabe exactamente a dónde va, y eso es muy difícil de dibujar. Aunque no te he dado permiso para que los mires. Cotilla.
 Mocho lo miró con su habitual selectividad. No sabía si enfadarse por cómo le hablaba o alegrarse por haber encontrado a alguien tan original en la zona más oscura del bosque.
