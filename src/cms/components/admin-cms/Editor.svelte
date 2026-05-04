@@ -555,6 +555,25 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
             <pre><code class="language-${language}">${code}</code></pre>
           </figure>
         </div>`;
+      },
+      image(token) {
+        const { href, title, text } = token;
+        let alt = text || "";
+        let style = "";
+        let widthAttr = "";
+        
+        if (alt.includes("|")) {
+          const parts = alt.split("|");
+          alt = parts[0].trim();
+          const size = parts[parts.length - 1].trim();
+          if (size && ( /^\d+$/.test(size) || /^\d+(px|em|rem|%|vw|vh)$/.test(size) )) {
+            const width = /^\d+$/.test(size) ? `${size}px` : size;
+            style = `style="width: ${width}; height: auto;"`;
+            widthAttr = `width="${size.replace(/[^0-9]/g, '')}"`;
+          }
+        }
+        
+        return `<img src="${href}" alt="${alt}" ${title ? `title="${title}"` : ""} ${widthAttr} ${style} />`;
       }
     };
     window.marked.use({ renderer });
