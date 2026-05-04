@@ -634,15 +634,32 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
     try {
       const targetPath = post ? post.path : `src/content/posts/${filenameInput.endsWith(".md") ? filenameInput : filenameInput + ".md"}`;
       
-      // Si estamos editando un post pero no tenemos SHA (ej: navegación directa), intentar obtenerlo
+      // Verificación de seguridad: Si es un post NUEVO, no permitimos sobrescribir si el archivo ya existe
+      if (!post && githubToken && !isMock) {
+        console.log(`CMS: Verificando duplicado para ${targetPath}...`);
+        try {
+          const latest = await ghFetch(`contents/${targetPath}`, githubToken);
+          if (latest && latest.sha) {
+            toastStore.error("¡Error! Ya existe un post con este nombre. Cambia el título o edita el post original desde el Dashboard.");
+            isSaving = false;
+            return;
+          }
+        } catch (e) {
+          // Si es 404, perfecto, el archivo es nuevo
+          if (e.status !== 404) {
+            console.warn("CMS: Error inesperado al verificar duplicado:", e.message);
+          }
+        }
+      }
+
+      // Si es una EDICIÓN y no tenemos SHA (ej: navegación directa), recuperarlo
       if (post && !currentSha && githubToken && !isMock) {
-        console.log("CMS: SHA faltante en edición, intentando recuperar de GitHub...");
+        console.log(`CMS: SHA faltante para edición en ${targetPath}, recuperando...`);
         try {
           const latest = await ghFetch(`contents/${targetPath}`, githubToken);
           currentSha = latest.sha;
-          console.log("CMS: SHA recuperado:", currentSha);
         } catch (e) {
-          console.warn("CMS: No se pudo recuperar el SHA. Si el archivo es nuevo, esto es normal.", e);
+          console.error("CMS: No se pudo recuperar el SHA para edición:", e.message);
         }
       }
 

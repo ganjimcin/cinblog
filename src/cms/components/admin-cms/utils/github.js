@@ -33,14 +33,18 @@ export async function ghFetch(path, githubToken, options = {}) {
       // Construir un mensaje de error más detallado para GitHub
       const githubMessage = errorData.message || `Error ${res.status}`;
       const detailedError = errorData.errors ? `: ${JSON.stringify(errorData.errors)}` : '';
-      throw new Error(`${githubMessage}${detailedError}`);
+      const error = new Error(`${githubMessage}${detailedError}`);
+      error.status = res.status;
+      throw error;
     }
     
     return res.json();
   } catch (err) {
     console.error("ghFetch Error:", err);
     if (err.name === 'TypeError' && err.message === 'Failed to fetch') {
-      throw new Error('Error de red: No se pudo conectar con GitHub. Verifica tu conexión o el estado de la API.');
+      const error = new Error('Error de red: No se pudo conectar con GitHub. Verifica tu conexión o el estado de la API.');
+      error.status = 0;
+      throw error;
     }
     throw err;
   }
