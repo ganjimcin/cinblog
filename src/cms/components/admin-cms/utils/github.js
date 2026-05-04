@@ -19,15 +19,26 @@ export async function ghFetch(path, githubToken, options = {}) {
     });
 
     if (!res.ok) {
+      let errorData;
+      try {
+        errorData = await res.json();
+      } catch (e) {
+        errorData = { message: res.statusText };
+      }
+      
       if (res.status === 401) {
         console.error('GitHub API Error: Session expired or invalid token.');
       }
-      const errorData = await res.json().catch(() => ({ message: res.statusText }));
-      throw new Error(errorData.message || `Error ${res.status}`);
+      
+      // Construir un mensaje de error más detallado para GitHub
+      const githubMessage = errorData.message || `Error ${res.status}`;
+      const detailedError = errorData.errors ? `: ${JSON.stringify(errorData.errors)}` : '';
+      throw new Error(`${githubMessage}${detailedError}`);
     }
     
     return res.json();
   } catch (err) {
+    console.error("ghFetch Error:", err);
     if (err.name === 'TypeError' && err.message === 'Failed to fetch') {
       throw new Error('Error de red: No se pudo conectar con GitHub. Verifica tu conexión o el estado de la API.');
     }

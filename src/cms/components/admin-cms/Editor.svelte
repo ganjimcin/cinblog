@@ -336,7 +336,11 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
   $effect(() => {
     if (post) {
       filenameInput = post.name || "nuevo-post.md";
-      currentSha = post.sha || null;
+      // Solo inicializar currentSha si es nulo para evitar sobrescribir el SHA cargado por loadPost
+      if (!currentSha) {
+         currentSha = post.sha || null;
+         console.log("CMS: Inicializando SHA desde post:", currentSha);
+      }
     } else {
       if (!publishedInput) publishedInput = new Date().toISOString().split("T")[0];
       if (titleInput) {
@@ -441,7 +445,11 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
       }
       
       filenameInput = post.name;
-    } catch (err) { console.error(err); } finally { isLoading = false; }
+      console.log("CMS: Post cargado con éxito, SHA:", currentSha);
+    } catch (err) { 
+      console.error("CMS: Error cargando post:", err); 
+      toastStore.error("Error al cargar la versión más reciente: " + err.message);
+    } finally { isLoading = false; }
   }
 
   function updatePreview() {
@@ -625,6 +633,21 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
 
     try {
       const targetPath = post ? post.path : `src/content/posts/${filenameInput.endsWith(".md") ? filenameInput : filenameInput + ".md"}`;
+      
+      // Si estamos editando un post pero no tenemos SHA (ej: navegación directa), intentar obtenerlo
+      if (post && !currentSha && githubToken && !isMock) {
+        console.log("CMS: SHA faltante en edición, intentando recuperar de GitHub...");
+        try {
+          const latest = await ghFetch(`contents/${targetPath}`, githubToken);
+          currentSha = latest.sha;
+          console.log("CMS: SHA recuperado:", currentSha);
+        } catch (e) {
+          console.warn("CMS: No se pudo recuperar el SHA. Si el archivo es nuevo, esto es normal.", e);
+        }
+      }
+
+      console.log(`CMS: Guardando en ${targetPath} con SHA:`, currentSha || "NUEVO ARCHIVO");
+
       const response = await ghFetch(`contents/${targetPath}`, githubToken, {
         method: "PUT",
         body: JSON.stringify({
