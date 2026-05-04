@@ -12,7 +12,6 @@ comment: true
 inNavbar: false
 ---
 
-
 Mocho se quedó inmóvil frente a la entrada del bosque. Sentía miedo en la barriga. Aunque no era su primera aventurera, nunca había ido a la Zona Norte. Allí donde los árboles eran tan altos que parecían tocar el cielo, mucho más altos que cualquier edificio del pueblo. Parecían gigantes de madera vigilando el camino.
 
 En ese momento, Mocho cerró los ojos y recordó la voz de su madre: —"Que el miedo no te paralice, Mocho…".
@@ -33,6 +32,8 @@ Mocho dio un salto del susto, pero no soltó el bloc. Frente a ella, colgado de 
 Era **Xoshö.**
 
 Mocho lo miró de arriba abajo. Su miedo se había transformado en sorpresa. —¿Tú me estabas dibujando? —preguntó ella, señalando el dibujo donde se le veía con su mochila y su pelo corto al viento.
+
+![Imagen|300](/assets/images/1777924182095-mocho-dibujado-por-xosh.webp)
 
 Xoshö dio un salto y aterrizó en el suelo sin hacer ni un ruido, como si sus pies fueran de aire, quitándole el bloc de notas de las manos a Mocho —Es que caminas de una forma muy especial —respondió él, ladeando la cabeza—. Pareces alguien que sabe exactamente a dónde va, y eso es muy difícil de dibujar. Aunque no te he dado permiso para que los mires. Cotilla.
 Mocho lo miró con su habitual selectividad. No sabía si enfadarse por cómo le hablaba o alegrarse por haber encontrado a alguien tan original en la zona más oscura del bosque.
