@@ -2,7 +2,7 @@
 title: Educación "de revista".
 category: Raíces
 published: '2026-05-05'
-description: ¿Cómo seria vivir en una casa en la que no te sientes cómoda?
+description: ¿Cómo seria vivir en una casa que no sientes como tu hogar?
 coverInContent: false
 slug: educacion-de-talla-unica
 draft: false
