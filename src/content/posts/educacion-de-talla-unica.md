@@ -34,7 +34,6 @@ En este blog **NO** vas a encontrar un manual de instrucciones de "talla única"
 
 Hablaremos de distintas formas de educar, y todas son tan correctas como las demás mientras busquen el bienestar de la familia. Aquí no hay juicios; hay herramientas personalizadas.
 
-El ejemplo de Mocho
 Para acabar, quiero hacer referencia a *"Las aventuras de Xoshö y Mocho"*. En el capítulo 2, cuando Mocho se para ante el bosque, su madre no le da una orden universal. Le da una orientación que ella puede usar si la necesita.
 
 Esa herramienta es solo un ejemplo de cómo actuar:
