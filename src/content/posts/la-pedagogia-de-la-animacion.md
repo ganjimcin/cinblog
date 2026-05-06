@@ -22,6 +22,7 @@ Aquí no vamos a hablar de contenido basura, de "ver por ver" o de usar la Table
 - La Pantalla Guiada (La oportunidad): No es solo ver dibujos; es acompañar la emoción, responder la duda y estar presente. Cuando tú disfrutas, la personita bebe de ese entusiasmo. La pantalla se convierte en un momento de conexión pura. Es ver para enseñar.
 
 En estos momentos de cine compartido, ocurre algo mágico: esa personita te mirará para ver cómo reaccionas. Al verte reír, asustarte o emocionarte, valida sus propias emociones.
+
 "Mamá y papá se emocionan como yo".
 
 No solo se producen procesos mentales increíbles en ellas; también en nosotros. Nos sentimos más unidos, comprendidos y reforzamos esos lazos de unión. Es una conexión bidireccional preciosa:
