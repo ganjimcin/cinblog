@@ -20,7 +20,7 @@ Vamos con un ejemplo que me gusta decirles a mis familias: imagina que todos ten
 Pues eso mismo pasa con la educación. La educación debe ser coherente con la realidad de cada uno. No hay una fórmula magistral porque no hay dos familias iguales.
 
 La trampa de la educación teórica
-La forma de educar a nuestras personitas depende de muchos factores: del hogar, de los ritmos de la familia, de los recursos, de quién es el niño y, sobre todo, de quién eres tú.
+La forma de educar a nuestras personitas depende de muchos factores: del hogar, de los ritmos de la familia, de los recursos, de quién es la personita y, sobre todo, de quién eres tú.
 
 Como pedagoga, tengo clara una cosa: la teoría es maravillosa, pero si la aplicación práctica te genera un estrés añadido, deja de ser educativa para convertirse en un problema. ¡Voilà! Ahí surge la trampa.
 
