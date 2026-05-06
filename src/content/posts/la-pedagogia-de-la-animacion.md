@@ -1,6 +1,6 @@
 ---
 title: Pedagogía de la animación
-category: Anima-Acción
+category: Anim-Acción
 published: '2026-05-06'
 description: Hablamos del uso de pantallas guiadas para papis amantes del cine de animación
 coverInContent: false
