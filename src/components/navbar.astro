@@ -33,11 +33,11 @@ let links: NavbarLink[] = navbarConfig.links.map(
 );
 ---
 
-<div id="navbar" class="z-50 onload-animation-down px-3 sm:px-6 md:px-0" data-transparent-mode={navbarTransparentMode} data-is-home={isHomePage}>
+<div id="navbar" class="z-50 onload-animation-down px-0" data-transparent-mode={navbarTransparentMode} data-is-home={isHomePage}>
     <div class="absolute h-8 left-0 right-0 -top-8 bg-(--card-bg) transition"></div> <!-- used for onload animation -->
     <div class:list={[
         className,
-        "overflow-visible! max-w-(--page-width) h-18 mx-auto flex items-center justify-between md:px-4"]}>
+        "overflow-visible! max-w-(--page-width) h-18 mx-auto flex items-center justify-between px-0"]}>
         <a href={url('/')} class="btn-plain scale-animation rounded-lg h-13 px-5 font-bold active:scale-95">
             <div class="flex flex-row text-(--primary) items-center text-md">
                 <Icon icon="material-symbols:home-pin-outline" class="text-[1.75rem] mb-1 mr-2" />
