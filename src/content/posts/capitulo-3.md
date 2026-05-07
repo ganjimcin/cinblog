@@ -13,11 +13,11 @@ inNavbar: false
 
 Mocho caminaba decidida. Sus pasos eran tan rápidos que parecía que sus pies no tocaban el suelo, pero a la vez tan fuertes que marcaban el camino con un ¡pum, pum! Parecía una gigante. Xoshö, que iba un poco más atrás, no podía dejar de mirarla. Le encantaba la seguridad de Mocho; parecía no tener miedo a nada, ni siquiera a las sombras largas del bosque.
  
-*(Te voy a contar un secreto: Xoshö tenía muchísimos amigos, ¡muchos más que dedos en las manos! En el cole todos querían jugar con él. Xoshö caminaba por los pasillos saltando y saludando a todo el mundo. Su seguridad era como la de un globo de colores: era bonita y le hacía flotar como si no pesara nada. Pero, a veces, los globos se sienten un vacíos porque, si el viento deja de soplar, no saben hacia dónde ir.*
-
-*La seguridad de Mocho era diferente. Era una seguridad de las que te hacen poner los pies en la tierra muy fuerte. Mocho no necesitaba que nadie le dijera "¡qué bien lo haces!" para sentirse valiente. Su fuerza estaba guardada dentro de sus botas y en su corazón. Ella era como una montaña gigante: no necesitaba moverse ni hablar para que todos supieran que era fuerte.*
-
-*Xoshö la miraba y pensaba que, mientras él volaba de aquí para allá como una pluma, Mocho caminaba dejando huellas de verdad, de esas que no se borran nunca.)*
+> *(Te voy a contar un secreto: Xoshö tenía muchísimos amigos, ¡muchos más que dedos en las manos! En el cole todos querían jugar con él. Xoshö caminaba por los pasillos saltando y saludando a todo el mundo. Su seguridad era como la de un globo de colores: era bonita y le hacía flotar como si no pesara nada. Pero, a veces, los globos se sienten un vacíos porque, si el viento deja de soplar, no saben hacia dónde ir.*
+>
+>*La seguridad de Mocho era diferente. Era una seguridad de las que te hacen poner los pies en la tierra muy fuerte. Mocho no necesitaba que nadie le dijera "¡qué bien lo haces!" para sentirse valiente. Su fuerza estaba guardada dentro de sus botas y en su corazón. Ella era como una montaña gigante: no necesitaba moverse ni hablar para que todos supieran que era fuerte.*
+>
+>*Xoshö la miraba y pensaba que, mientras él volaba de aquí para allá como una pluma, Mocho caminaba dejando huellas de verdad, de esas que no se borran nunca.)*
 
 Xoshö se quedó quieto como una estatua viendo cómo Mocho se alejaba. En ese momento, una lágrima pequeña, brillante como una gota de agua, empezó a resbalar por su mejilla. Por un instante, un momentito de nada, su sonrisa desapareció. Hasta que algo en el suelo le llamó la atención: ¿Sabes qué pasó? Que ¡el suelo había cambiado de color! Pero ya era demasiado tarde.
 
