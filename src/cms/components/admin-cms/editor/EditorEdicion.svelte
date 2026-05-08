@@ -23,6 +23,9 @@
   } = $props();
   
   let isDragging = $state(false);
+  let showHeadingMenu = $state(false);
+  let showDiagramMenu = $state(false);
+  let showCalloutMenu = $state(false);
 
   import ImageSelector from "./ImageSelector.svelte";
 
@@ -119,17 +122,35 @@
 
     content = content.substring(0, start) + cleaned + content.substring(end);
   }
+
+  function handleOutsideClick(event) {
+    if (!event.target.closest('.cms-dropdown-container')) {
+      showHeadingMenu = false;
+      showDiagramMenu = false;
+      showCalloutMenu = false;
+    }
+  }
 </script>
+
+<svelte:window onclick={handleOutsideClick} />
 
 <div class="cms-editor-card" class:zen-mode={viewMode === 'write'}>
   <div class="cms-editor-toolbar-sticky">
     <div class="cms-toolbar-rows">
       <!-- Fila 1: Formato básico y Estructura -->
       <div class="cms-editor-toolbar">
-         <div class="cms-toolbar-group">
-           <button type="button" onclick={() => onToolbar("h1")} data-tooltip="Título 1"><Icon icon="material-symbols:format-h1-rounded" /></button>
-           <button type="button" onclick={() => onToolbar("h2")} data-tooltip="Título 2"><Icon icon="material-symbols:format-h2-rounded" /></button>
-           <button type="button" onclick={() => onToolbar("h3")} data-tooltip="Título 3"><Icon icon="material-symbols:format-h3-rounded" /></button>
+         <div class="cms-toolbar-group cms-dropdown-container">
+           <button type="button" class="cms-dropdown-trigger" onclick={() => showHeadingMenu = !showHeadingMenu} data-tooltip="Encabezados (H1-H6)">
+             <Icon icon="material-symbols:title-rounded" />
+             <Icon icon="material-symbols:arrow-drop-down-rounded" class="dropdown-arrow" />
+           </button>
+           {#if showHeadingMenu}
+             <div class="cms-dropdown-menu" in:fade={{duration: 100}}>
+               <button type="button" onclick={() => { onToolbar("h1"); showHeadingMenu = false; }}><Icon icon="material-symbols:format-h1-rounded" /> <span>Título 1</span></button>
+               <button type="button" onclick={() => { onToolbar("h2"); showHeadingMenu = false; }}><Icon icon="material-symbols:format-h2-rounded" /> <span>Título 2</span></button>
+               <button type="button" onclick={() => { onToolbar("h3"); showHeadingMenu = false; }}><Icon icon="material-symbols:format-h3-rounded" /> <span>Título 3</span></button>
+             </div>
+           {/if}
          </div>
          <div class="cms-toolbar-divider"></div>
          <div class="cms-toolbar-group">
@@ -163,17 +184,34 @@
 
       <!-- Fila 2: Componentes Avanzados y Widgets -->
       <div class="cms-editor-toolbar second-row">
-        <div class="cms-toolbar-group">
-          <button type="button" onclick={() => onToolbar("note")} data-tooltip="Nota Informativa" class="tool-note"><Icon icon="material-symbols:info-outline-rounded" /></button>
-          <button type="button" onclick={() => onToolbar("tip")} data-tooltip="Tip / Consejo" class="tool-tip"><Icon icon="material-symbols:lightbulb-outline-rounded" /></button>
-          <button type="button" onclick={() => onToolbar("warning")} data-tooltip="Aviso / Alerta" class="tool-warning"><Icon icon="material-symbols:warning-amber-rounded" /></button>
-          <button type="button" onclick={() => onToolbar("important")} data-tooltip="Importante" class="tool-important"><Icon icon="material-symbols:error-outline-rounded" /></button>
+        <div class="cms-toolbar-group cms-dropdown-container">
+          <button type="button" class="cms-dropdown-trigger" onclick={() => showCalloutMenu = !showCalloutMenu} data-tooltip="Avisos (Admonitions)">
+             <Icon icon="material-symbols:info-outline-rounded" />
+             <Icon icon="material-symbols:arrow-drop-down-rounded" class="dropdown-arrow" />
+          </button>
+          {#if showCalloutMenu}
+             <div class="cms-dropdown-menu" in:fade={{duration: 100}}>
+               <button type="button" onclick={() => { onToolbar("note"); showCalloutMenu = false; }} class="tool-note"><Icon icon="material-symbols:info-outline-rounded" /> <span>Nota</span></button>
+               <button type="button" onclick={() => { onToolbar("tip"); showCalloutMenu = false; }} class="tool-tip"><Icon icon="material-symbols:lightbulb-outline-rounded" /> <span>Tip</span></button>
+               <button type="button" onclick={() => { onToolbar("warning"); showCalloutMenu = false; }} class="tool-warning"><Icon icon="material-symbols:warning-amber-rounded" /> <span>Aviso</span></button>
+               <button type="button" onclick={() => { onToolbar("important"); showCalloutMenu = false; }} class="tool-important"><Icon icon="material-symbols:error-outline-rounded" /> <span>Importante</span></button>
+             </div>
+          {/if}
         </div>
         <div class="cms-toolbar-divider"></div>
-        <div class="cms-toolbar-group">
-          <button type="button" onclick={() => onToolbar("mermaid-flow")} data-tooltip="Diagrama de Flujo"><Icon icon="material-symbols:bar-chart-4-bars-rounded" /></button>
-          <button type="button" onclick={() => onToolbar("mermaid-seq")} data-tooltip="Diagrama de Secuencia"><Icon icon="material-symbols:timeline" /></button>
-          <button type="button" onclick={() => onToolbar("mermaid-gantt")} data-tooltip="Diagrama de Gantt"><Icon icon="material-symbols:calendar-month-outline-rounded" /></button>
+        <div class="cms-toolbar-group cms-dropdown-container">
+          <button type="button" class="cms-dropdown-trigger" onclick={() => showDiagramMenu = !showDiagramMenu} data-tooltip="Diagramas y Matemáticas">
+             <Icon icon="material-symbols:account-tree-outline-rounded" />
+             <Icon icon="material-symbols:arrow-drop-down-rounded" class="dropdown-arrow" />
+          </button>
+          {#if showDiagramMenu}
+             <div class="cms-dropdown-menu" in:fade={{duration: 100}}>
+               <button type="button" onclick={() => { onToolbar("mermaid-flow"); showDiagramMenu = false; }}><Icon icon="material-symbols:bar-chart-4-bars-rounded" /> <span>Flujo</span></button>
+               <button type="button" onclick={() => { onToolbar("mermaid-seq"); showDiagramMenu = false; }}><Icon icon="material-symbols:timeline" /> <span>Secuencia</span></button>
+               <button type="button" onclick={() => { onToolbar("mermaid-gantt"); showDiagramMenu = false; }}><Icon icon="material-symbols:calendar-month-outline-rounded" /> <span>Gantt</span></button>
+               <button type="button" onclick={() => { onToolbar("math"); showDiagramMenu = false; }}><Icon icon="material-symbols:functions-rounded" /> <span>Ecuación</span></button>
+             </div>
+          {/if}
         </div>
         <div class="cms-toolbar-divider"></div>
         <div class="cms-toolbar-group">
@@ -183,7 +221,6 @@
         <div class="cms-toolbar-divider"></div>
         <div class="cms-toolbar-group">
           <button type="button" onclick={() => onToolbar("code")} data-tooltip="Bloque de Código"><Icon icon="material-symbols:terminal-rounded" /></button>
-          <button type="button" onclick={() => onToolbar("math")} data-tooltip="Ecuación Matemática"><Icon icon="material-symbols:functions-rounded" /></button>
           <button type="button" onclick={() => onToolbar("spoiler")} data-tooltip="Spoiler / Detalles"><Icon icon="material-symbols:visibility-off-outline-rounded" /></button>
         </div>
       </div>
@@ -254,7 +291,8 @@
 
 
 <style>
-  .cms-editor-card {    background: var(--card-bg);
+  .cms-editor-card {
+    background: var(--card-bg);
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -262,7 +300,6 @@
     border: 1px solid var(--line-divider);
     border-right: none;
     border-radius: 1.5rem 0 0 1.5rem;
-    overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 20px rgba(0,0,0,0.02);
   }
@@ -335,7 +372,7 @@
     flex-direction: column;
     justify-content: center;
     position: relative;
-    z-index: 100;
+    z-index: 1010;
   }
 
   .cms-toolbar-rows {
@@ -466,6 +503,7 @@
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-color: var(--primary);
+    z-index: 20;
   }
 
   .cms-editor-toolbar button :global(svg) {
@@ -482,6 +520,77 @@
     height: 1.25rem;
     background: var(--line-divider);
     margin: 0 0.25rem;
+  }
+
+  /* Dropdown Styles */
+  .cms-dropdown-trigger {
+    width: 3.5rem !important;
+    gap: 0.1rem;
+  }
+  
+  .cms-dropdown-container {
+    position: relative;
+  }
+  
+  .cms-dropdown-container:hover {
+    z-index: 20;
+  }
+  
+  .cms-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line-divider);
+    border-radius: 0.75rem;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    z-index: 1000;
+  }
+
+  .cms-dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: -20px;
+    right: -20px;
+    height: 25px;
+    background: transparent;
+  }
+  
+  .cms-dropdown-menu button {
+    width: 100% !important;
+    height: auto !important;
+    padding: 0.5rem 1rem !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+  
+  .cms-dropdown-menu button:hover {
+    background: var(--btn-regular-bg) !important;
+  }
+  
+  .cms-dropdown-menu button span {
+    white-space: nowrap;
+  }
+  
+  .dropdown-arrow {
+    font-size: 1.1rem;
+    opacity: 0.5;
+    margin-left: -0.25rem;
   }
 
   .cms-gallery-modal-overlay {
@@ -588,9 +697,9 @@
   [data-tooltip]::after {
     content: attr(data-tooltip);
     position: absolute;
-    bottom: calc(100% + 8px);
+    top: calc(100% + 8px);
     left: 50%;
-    transform: translateX(-50%) translateY(10px);
+    transform: translateX(-50%) translateY(-10px);
     background: var(--bg-glass);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
