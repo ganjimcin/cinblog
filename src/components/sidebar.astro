@@ -94,7 +94,7 @@ function renderComponent(component: any, index: number) {
         if (!renderData) return null;
 
         const { Component, props } = renderData;
-        return <Component {...props} side={side} />;
+        return <Component {...props} side={side} data-widget-type={component.type} />;
     })}
 
     <!-- 粘性组件区域 -->
@@ -105,7 +105,7 @@ function renderComponent(component: any, index: number) {
                 if (!renderData) return null;
 
                 const { Component, props } = renderData;
-                return <Component {...props} side={side} />;
+                return <Component {...props} side={side} data-widget-type={component.type} />;
             })}
         </div>
     )}

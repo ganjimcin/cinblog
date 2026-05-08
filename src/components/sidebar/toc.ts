@@ -227,7 +227,12 @@ export class TableOfContents extends HTMLElement {
         }
 
         if (tocWrapper.classList.contains('toc-hide')) {
+            // Si estamos en modo de notas al margen (force-sidebar-mode), no mostramos el TOC
+            if (document.querySelector('.force-sidebar-mode')) {
+                return true;
+            }
             tocWrapper.classList.remove('toc-hide');
+
             if (!isFloating) {
                 const targetHeight = tocWrapper.scrollHeight;
                 tocWrapper.style.maxHeight = '0px';
@@ -349,37 +354,28 @@ export class TableOfContents extends HTMLElement {
 
         const setupSwup = () => {
             if (window.swup && window.swup.hooks) {
-                if ((this as any)._swupListenersAdded) return;
+                if ((window as any).__swupTocHooksAdded) return;
                 window.swup.hooks.on('visit:start', () => {
-                    if (this.isPostPage()) {
-                        const isFloating = this.dataset.isFloating === "true";
-                        const tocWrapper = isFloating
-                            ? this.querySelector('.toc-floating-container') as HTMLElement
-                            : this.closest('widget-layout') as HTMLElement;
-                        if (tocWrapper && !tocWrapper.classList.contains('toc-hide')) {
-                            if (!isFloating) {
-                                tocWrapper.style.maxHeight = tocWrapper.offsetHeight + 'px';
-                                tocWrapper.offsetHeight;
-                                tocWrapper.classList.add('toc-hide');
-                                tocWrapper.style.maxHeight = '';
-                            } else {
-                                tocWrapper.classList.add('toc-hide');
-                            }
+                    // 使用全局查找，因为当前组件可能已经或即将被销毁
+                    const tocWrappers = document.querySelectorAll('widget-layout.toc-wrapper, .toc-floating-container');
+                    tocWrappers.forEach(tocWrapper => {
+                        if (tocWrapper instanceof HTMLElement && !tocWrapper.classList.contains('toc-hide')) {
+                            tocWrapper.classList.add('toc-hide');
                         }
-                    }
+                    });
                 });
                 window.swup.hooks.on('content:replace', () => {
-                    const isFloating = this.dataset.isFloating === "true";
-                    const tocWrapper = isFloating
-                        ? this.querySelector('.toc-floating-container') as HTMLElement
-                        : this.closest('widget-layout') as HTMLElement;
-                    if (tocWrapper && !this.isPostPage()) {
-                        tocWrapper.classList.add('toc-hide');
-                        if (!isFloating) tocWrapper.style.maxHeight = '';
-                    }
-                    setTimeout(() => this.init(), 100);
+                    // 延迟执行以确保 DOM 已更新
+                    setTimeout(() => {
+                        const tocElements = document.querySelectorAll('table-of-contents');
+                        tocElements.forEach(el => {
+                            if (el instanceof TableOfContents) {
+                                el.init();
+                            }
+                        });
+                    }, 100);
                 });
-                (this as any)._swupListenersAdded = true;
+                (window as any).__swupTocHooksAdded = true;
             }
         };
 
@@ -387,6 +383,7 @@ export class TableOfContents extends HTMLElement {
         else document.addEventListener('swup:enable', setupSwup);
         window.addEventListener('content-decrypted', () => this.init());
     };
+
 
     disconnectedCallback() {
         this.headings.forEach((heading) => this.observer.unobserve(heading));

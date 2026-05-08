@@ -1,0 +1,37 @@
+---
+interface Props {
+    notes: string[];
+}
+
+const { notes } = Astro.props;
+---
+
+{notes && notes.length > 0 && (
+    <div class="sidenotes-container relative w-full h-full font-barlow">
+        {notes.map((note, index) => (
+            <div 
+                id={`sidebar-note-${index}`}
+                class="sidenote-card card-base p-5 text-sm leading-relaxed mb-4 w-full opacity-100 transition-all duration-500 hover:shadow-lg border border-black/5 dark:border-white/5 rounded-2xl"
+                style="position: relative;"
+            >
+                <div class="prose prose-sm dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 font-barlow" set:html={note}></div>
+            </div>
+        ))}
+    </div>
+)}
+
+<style is:global>
+    .font-barlow, .font-barlow * {
+        font-family: 'Barlow', sans-serif !important;
+    }
+    .sidenotes-container {
+        min-height: 100%;
+    }
+    .sidenote-card {
+        pointer-events: auto;
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+    }
+</style>
+
+

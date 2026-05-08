@@ -20,6 +20,9 @@ import Comment from "@components/post/comment.astro";
 import PasswordProtection from "@components/common/passwordProtection.astro";
 import PostMetadata from "@components/post/postMeta.astro";
 import GridLayout from "@layouts/grid.astro";
+import MarkdownIt from "markdown-it";
+
+const md = new MarkdownIt();
 
 
 export async function getStaticPaths() {
@@ -59,9 +62,24 @@ export async function getStaticPaths() {
 
 
 const { entry } = Astro.props;
-const { Content, headings } = await render(entry);
+const bodyContent = entry.body || '';
 
-const { remarkPluginFrontmatter } = await render(entry);
+// Extraer notas antes de renderizar nada
+const sidenoteRegex = /:::sidebar\s*([\s\S]*?)\s*:::/g;
+const sidenotes: string[] = [];
+let match;
+while ((match = sidenoteRegex.exec(bodyContent)) !== null) {
+    const content = match[1].trim();
+    if (content) {
+        sidenotes.push(md.render(content));
+    }
+}
+const hasSidebarDirective = sidenotes.length > 0;
+
+const { Content, headings, remarkPluginFrontmatter } = await render(entry);
+
+
+
 
 // 处理加密逻辑
 let isEncrypted = !!(entry.data.encrypted && entry.data.password);
@@ -118,6 +136,8 @@ const jsonLd = {
     setOGTypeArticle={true}
     postSlug={entry.id}
     headings={headings}
+    forceRightSidebar={hasSidebarDirective}
+    sidenotes={sidenotes}
 >
     <script
         is:inline
@@ -131,7 +151,7 @@ const jsonLd = {
         <div
             id="post-container"
             class:list={[
-                "card-base z-10 px-6 md:px-9 pt-6 pb-4 relative w-full ",
+                "card-base z-10 px-6 md:px-9 pt-6 pb-4 relative w-full overflow-visible!",
                 {},
             ]}
         >
@@ -177,7 +197,7 @@ const jsonLd = {
                     data-pagefind-body
                     data-pagefind-weight="10"
                     data-pagefind-meta="title"
-                    class="transition w-full block font-bold mb-3
+                    class="transition w-full block font-bold mb-3 post-title
                     text-3xl md:text-[2.25rem]/[2.75rem]
                     text-black/90 dark:text-white/90
                     md:before:w-1 before:h-5 before:rounded-md before:bg-(--primary)
@@ -221,7 +241,10 @@ const jsonLd = {
                 isEncrypted={isEncrypted}
                 password={entry.data.password}
             >
-                <div class:list={[{ "justify-text-category": getCategoryPathLabel(entry.data.category) === "Las aventuras de Xoshö y Mocho" || entry.data.category === "Las aventuras de Xoshö y Mocho" }]}>
+                <div class:list={[
+                    { "justify-text-category": getCategoryPathLabel(entry.data.category) === "Las aventuras de Xoshö y Mocho" || entry.data.category === "Las aventuras de Xoshö y Mocho" },
+                    { "font-adventures": getCategoryPathLabel(entry.data.category) === "Las aventuras de Xoshö y Mocho" || entry.data.category === "Las aventuras de Xoshö y Mocho" }
+                ]}>
                     <Markdown class="mb-6 markdown-content onload-animation-up">
                         <Content />
                     </Markdown>
@@ -314,7 +337,9 @@ const jsonLd = {
                         }
                         document.getElementById("modifiedtime").innerHTML = runtimeString;
                     }
-                    setInterval(runtime, 1000);
+                    if (window.runtimeInterval) clearInterval(window.runtimeInterval);
+                    window.runtimeInterval = setInterval(runtime, 1000);
+
                 </script>
                 <div class="card-base p-1 mb-0.1">
                     <div class="flex items-center gap-2">

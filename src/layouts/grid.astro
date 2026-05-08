@@ -19,6 +19,7 @@ import TocButton from "@components/tocButton.astro";
 import BackToTopButton from "@components/back2TopButton.astro";
 import Announcement from "@components/sidebar/announcement.astro";
 import BaseLayout from "./base.astro";
+import Sidenotes from "@components/sidebar/sidenotes.astro";
 import "@styles/grid.css";
 
 /**
@@ -33,6 +34,8 @@ interface Props {
     setOGTypeArticle?: boolean;
     postSlug?: string;
     headings?: MarkdownHeading[];
+    forceRightSidebar?: boolean;
+    sidenotes?: string[];
 }
 
 const {
@@ -43,6 +46,8 @@ const {
     setOGTypeArticle,
     postSlug,
     headings = [],
+    forceRightSidebar = false,
+    sidenotes = [],
 } = Astro.props;
 const hasBannerCredit = siteConfig.wallpaper.mode === "banner" && siteConfig.wallpaper.banner?.credit?.enable;
 const hasBannerLink = !!siteConfig.wallpaper.banner?.credit?.url;
@@ -69,17 +74,26 @@ const transparentClass = shouldEnableTransparency ? "wallpaper-transparent" : ""
  */
 
 // 检查侧边栏是否启用，动态调整网格布局
+const gridLayout = widgetManager.getGridLayout(headings, Astro.url.pathname);
+
 const {
     hasLeftSidebar,
-    hasRightSidebar,
     hasAnyComponents,
-    gridCols,
+    gridCols: originalGridCols,
     leftSidebarClass,
-    rightSidebarClass,
-    mainContentClass,
+    rightSidebarClass: originalRightSidebarClass,
+    mainContentClass: originalMainContentClass,
     middleSidebarClass,
     mobileFooterClass,
-} = widgetManager.getGridLayout(headings, Astro.url.pathname);
+} = gridLayout;
+
+// Forzar sidebar derecho si se pide o si hay componentes nativos
+const hasRightSidebar = forceRightSidebar || gridLayout.hasRightSidebar;
+
+// Recalcular clases según si hay sidebar derecho
+const gridCols = hasRightSidebar ? "grid-cols-1 md:grid-cols-[17.5rem_1fr] lg:grid-cols-[17.5rem_1fr_17.5rem]" : originalGridCols;
+const rightSidebarClass = hasRightSidebar ? "mb-0 col-span-1 hidden md:hidden lg:flex lg:flex-col lg:max-w-70 lg:col-start-3 lg:col-end-4 lg:row-start-1 lg:row-end-2" : originalRightSidebarClass;
+const mainContentClass = hasRightSidebar ? "w-full col-span-1 row-start-1 row-end-2 md:col-start-2 md:col-end-3 md:row-start-1 md:row-end-2 lg:col-start-2 lg:col-end-3" : originalMainContentClass;
 ---
 
 <BaseLayout
@@ -90,14 +104,12 @@ const {
     setOGTypeArticle={setOGTypeArticle}
     postSlug={postSlug}
 >
-    <!-- 全局图标加载器 -->
+    <slot name="head" slot="head" />
     <IconifyLoader />
 
-    <!-- Navbar -->
-    <slot slot="head" name="head" />
     <div
         id="top-row"
-        class="z-50 pointer-events-none relative transition-all duration-600 max-w-(--page-width) px-8 mx-auto"
+        class="z-50 pointer-events-none relative transition-all duration-600 max-w-[var(--page-width)] px-8 mx-auto"
         class:list={[""]}
     >
         <div
@@ -136,12 +148,12 @@ const {
         style={`top: ${finalMainPanelTop}`}
     >
         <div
-            class="relative max-w-(--page-width) mx-auto pointer-events-auto"
+            class="relative max-w-[var(--page-width)] mx-auto pointer-events-auto"
         >
             <div
-                    id="main-grid"
-                    class={`transition-all duration-600 w-full left-0 right-0 grid ${gridCols} grid-rows-[auto] mx-auto gap-4 px-8 ${!hasAnyComponents ? "mobile-no-sidebar" : ""} ${(hasLeftSidebar || hasRightSidebar) ? "mobile-both-sidebar" : ""}`}
-                >
+                id="main-grid"
+                class={`transition-all duration-600 w-full left-0 right-0 grid ${gridCols} grid-rows-[auto] mx-auto gap-4 px-8 ${!hasAnyComponents ? "mobile-no-sidebar" : ""} ${forceRightSidebar ? "force-sidebar-mode" : ""}`}
+            >
                 <!-- Banner image credit -->
                 {
                     hasBannerCredit && (
@@ -196,12 +208,17 @@ const {
                     }
                     {
                         hasRightSidebar ? (
-                            <Sidebar
-                                id="right-sidebar"
-                                side="right"
-                                class={`${rightSidebarClass} ${transparentClass} onload-animation-up`}
-                                headings={headings}
-                            />
+                            <>
+                                <Sidebar
+                                    id="right-sidebar"
+                                    side="right"
+                                    class={`${rightSidebarClass} ${transparentClass} onload-animation-up`}
+                                    headings={headings}
+                                />
+                                <div id="sidenotes-container" class={`${rightSidebarClass} ${transparentClass} mt-4 sidenotes-container`}>
+                                    <Sidenotes notes={sidenotes} />
+                                </div>
+                            </>
                         ) : (
                             <div id="right-sidebar" class="hidden"></div>
                         )
@@ -215,7 +232,12 @@ const {
                     <div id="grid-class-carrier" data-grid-class={gridCols} class="hidden"></div>
                     <div
                         id="content-wrapper"
-                        class="onload-animation-up transition-leaving"
+                        class:list={[
+                            "onload-animation-up transition-leaving",
+                            {
+                                "shadow-2xl shadow-black/5 dark:shadow-none rounded-(--radius-large)": !isHomePage
+                            }
+                        ]}
                     >
                         {isHomePage && <Announcement class="mb-4" />}
                         <slot />
@@ -244,8 +266,64 @@ const {
         </div>
     </div>
 
-    <TocButton />
-
+    { headings && headings.length > 0 && <TocButton /> }
     <BackToTopButton />
-
 </BaseLayout>
+
+<style is:global>
+    /* Ocultar el Índice automático del tema cuando Lili usa sus notas */
+    .force-sidebar-mode .toc-wrapper,
+    .force-sidebar-mode .toc-title,
+    .force-sidebar-mode [data-widget-type="toc"],
+    .force-sidebar-mode #right-sidebar .toc-wrapper,
+    .force-sidebar-mode #right-sidebar [data-widget-type="toc"],
+    .force-sidebar-mode #right-sidebar .toc-hide {
+        display: none !important;
+        max-height: 0 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+    }
+
+    /* Ocultar las notas en el texto pero mantener su espacio para medir altura */
+    .custom-md .bdm-sidebar {
+        visibility: hidden !important;
+        display: block !important;
+        height: 1px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        overflow: hidden !important;
+    }
+</style>
+
+<script>
+    function syncSidenotesHeight() {
+        const markers = document.querySelectorAll('.custom-md .bdm-sidebar');
+        const postContainer = document.querySelector('#post-container');
+        
+        if (!postContainer) return;
+
+        const containerRect = postContainer.getBoundingClientRect();
+
+        markers.forEach((marker, index) => {
+            const sidebarNote = document.getElementById(`sidebar-note-${index}`);
+            if (sidebarNote) {
+                const markerRect = marker.getBoundingClientRect();
+                // Calculamos la distancia real relativa al contenedor del post
+                const markerTop = markerRect.top - containerRect.top;
+                
+                sidebarNote.style.top = markerTop + 'px';
+                sidebarNote.style.opacity = '1';
+            }
+        });
+    }
+
+    // Ejecutar al cargar, al redimensionar y tras Swup
+    window.addEventListener('resize', syncSidenotesHeight);
+    document.addEventListener('swup:contentReplaced', () => {
+        setTimeout(syncSidenotesHeight, 200);
+    });
+    
+    // Ejecución inicial
+    setTimeout(syncSidenotesHeight, 500);
+</script>

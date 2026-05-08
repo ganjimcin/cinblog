@@ -14,6 +14,12 @@
     --breakpoint-lg: 1280px;
     --breakpoint-xl: 1920px;
 
+    --font-sans: "Barlow", ui-sans-serif, system-ui, sans-serif;
+    --font-serif: "Libre Baskerville", ui-serif, Georgia, serif;
+    --font-domine: "Domine", serif;
+
+    --page-width: 75rem;
+
     --transition-duration-300: 300ms;
     --transition-duration-600: 600ms;
 }

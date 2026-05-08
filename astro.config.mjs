@@ -30,7 +30,7 @@ import { MusicCardComponent } from "./src/plugins/rehype-component-music-card.mj
 import { rehypeMermaid } from "./src/plugins/rehype-mermaid.mjs";
 import { rehypeLazyLoadMedia } from "./src/plugins/rehype-lazy-load-media.mjs";
 import { rehypeImageSize } from "./src/plugins/rehype-image-size.mjs";
-import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
+import remarkDirectiveRehype from "remark-directive-rehype";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkMermaid } from "./src/plugins/remark-mermaid.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
@@ -63,9 +63,10 @@ export default defineConfig({
                 "#left-sidebar",
                 "#right-sidebar",
                 "#middle-sidebar",
+                "#sidenotes-container",
             ],
             cache: true,
-            preload: true,
+            preload: false,
             accessibility: true,
             updateHead: true,
             updateBodyClass: false,
@@ -137,13 +138,12 @@ export default defineConfig({
     ],
     markdown: {
         remarkPlugins: [
+            remarkDirective,
+            remarkDirectiveRehype,
             remarkMath,
             remarkReadingTime,
             remarkExcerpt,
-            remarkGithubAdmonitionsToDirectives,
-            remarkDirective,
             remarkSectionize,
-            parseDirectiveNode,
             remarkMermaid,
         ],
         rehypePlugins: [
@@ -183,6 +183,8 @@ export default defineConfig({
                         important: (x, y) => AdmonitionComponent(x, y, "important"),
                         caution: (x, y) => AdmonitionComponent(x, y, "caution"),
                         warning: (x, y) => AdmonitionComponent(x, y, "warning"),
+                        sidebar: (x, y) => AdmonitionComponent(x, y, "sidebar"),
+                        narrador: (x, y) => AdmonitionComponent(x, y, "narrador"),
                     },
                 },
             ],

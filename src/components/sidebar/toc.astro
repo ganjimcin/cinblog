@@ -13,11 +13,15 @@ interface Props {
     side?: string;
 }
 
-const { id: propId, class: className, style, depth = 3, side = "default" } = Astro.props;
+const { id: propId, class: className, style, depth = 3, side = "default", headings = [], ...rest } = Astro.props;
 const id = propId || `toc-wrapper-${side}`;
+
+// 如果没有标题，强制隐藏
+const hasHeadings = headings && headings.length > 0;
+const finalClassName = [className, "toc-wrapper", !hasHeadings ? "toc-hide" : ""].filter(Boolean).join(" ");
 ---
 
-<WidgetLayout name={i18n(I18nKey.tableOfContents)} id={id} class:list={[className, "toc-wrapper", "toc-hide"]} style={style}>
+<WidgetLayout name={i18n(I18nKey.tableOfContents)} id={id} class:list={finalClassName} style={style} {...rest}>
     <div class="toc-scroll-container">
         <table-of-contents class="group" data-depth={depth} data-navbar-height={NAVBAR_HEIGHT}>
             <div class="toc-inner-content relative"></div>

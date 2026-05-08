@@ -19,11 +19,17 @@ site:
       - pre
   timeZone: 8
   font:
-    Example - ZenMaruGothic:
-      src: https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap
-      family: Zen Maru Gothic
+    titles:
+      src: https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=block
+      family: Libre Baskerville
+    content:
+      src: https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&display=block
+      family: Barlow
+    adventures:
+      src: https://fonts.googleapis.com/css2?family=Domine:wght@400;700&display=block
+      family: Domine
   themeColor:
-    hue: 255
+    hue: 45
   defaultTheme: dark
   wallpaper:
     mode: banner
@@ -39,7 +45,7 @@ site:
     position: center
     carousel:
       enable: true
-      interval: 3.6
+      interval: 10
       kenBurns: true
     banner:
       homeText:
@@ -70,7 +76,7 @@ site:
       navbar:
         transparentMode: semi
   loadingOverlay:
-    enable: true
+    enable: false
     waitForAllResources: true
     title:
       enable: true
@@ -96,6 +102,14 @@ sidebar:
           paths:
             - ^/posts/
             - ^/archive
+      - type: toc
+        position: sticky
+        depth: 3
+        visibility:
+          mode: include
+          paths:
+            - ^/posts/
+
       - type: directory
         position: sticky
       - type: categories
@@ -107,10 +121,8 @@ sidebar:
         position: sticky
         responsive:
           collapseThreshold: 20
-      - type: toc
-        position: sticky
-        depth: 3
     right: []
+
 profile:
   avatar: /assets/uploads/1776886053142-el-jardin-de-una-pedagoga.webp
   name: Lili Grow
@@ -143,7 +155,7 @@ post:
 footer:
   enable: false
 particle:
-  enable: true
+  enable: false
   particleNum: 12
   limitTimes: -1
   size:

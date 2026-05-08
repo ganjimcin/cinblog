@@ -26,7 +26,7 @@ const finalFontFamily = customFontFamily ? `${customFontFamily}, ${fallbacks}` :
         // If it's a Google Font, we can append &display=swap if it's not already there
         let fontSrc = font.src;
         if (fontSrc.includes('fonts.googleapis.com') && !fontSrc.includes('display=')) {
-            fontSrc += (fontSrc.includes('?') ? '&' : '?') + 'display=swap';
+            fontSrc += (fontSrc.includes('?') ? '&' : '?') + 'display=block';
         }
         return (
             <>
@@ -54,22 +54,40 @@ const finalFontFamily = customFontFamily ? `${customFontFamily}, ${fallbacks}` :
 }
 
 <!-- Apply Global Font Family -->
-<style is:global set:html={`
-    :root {
-        --font-family-fallback: ${fallbacks};
-        --global-font-family: ${finalFontFamily};
-    }
+<style is:global>
 
-    /* Apply to body as default */
+
+    /* Aplicar fuentes base usando las variables de Tailwind 4 */
     body {
-        font-family: var(--global-font-family);
+        font-family: var(--font-sans);
     }
 
-    /* Generate specific classes for each font*/
-    ${fonts.map(font => `
-        .font-${font.id},
-        .font-${font.id} * {
-            font-family: "${font.family}", var(--font-family-fallback) !important;
-        }
-    `).join('\n')}
-`} />
+    h1, h2, h3, h4, h5, h6, 
+    .banner-title, .banner-subtitle, 
+    h2.inline, .card-title, .post-title, 
+    .widget-title, .widget-header,
+    .admonition-title {
+        font-family: var(--font-serif), serif !important;
+        letter-spacing: -0.01em;
+    }
+
+    /* Especial para los widgets y cajas del sidebar */
+    #sidebar *, .card-base, .widget-base {
+        font-family: var(--font-sans), sans-serif;
+    }
+
+    /* Categoría Aventuras */
+    .font-adventures, 
+    .font-adventures p, 
+    .font-adventures div, 
+    .font-adventures span,
+    .font-adventures .card-base,
+    .font-adventures #sidebar * {
+        font-family: var(--font-domine), serif !important;
+    }
+
+    /* Pero los títulos de aventuras siguen siendo Serif (Libre Baskerville) si así se desea */
+    .font-adventures h1, .font-adventures h2, .font-adventures h3 {
+        font-family: var(--font-serif), serif !important;
+    }
+</style>

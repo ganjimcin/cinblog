@@ -6,8 +6,10 @@
 
 export function initMarkdownActions() {
     if (typeof document === "undefined") return;
-    // 移除旧的监听器（如果有），防止重复绑定
-    // 注意：由于使用的是匿名函数且通常在页面加载时只运行一次，在 Swup 环境下只要这个脚本在主布局中加载，它就只会运行一次。
+    // 防止重复绑定
+    if ((window as any).__markdownActionsInitialized) return;
+    (window as any).__markdownActionsInitialized = true;
+
     document.addEventListener("click", function (e: MouseEvent) {
         const target = e.target as Element | null;
         if (!target) return;

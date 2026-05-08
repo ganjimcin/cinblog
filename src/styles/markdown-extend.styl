@@ -1,4 +1,6 @@
 .custom-md
+    overflow: visible !important
+    position: relative !important
 
     blockquote.admonition
         .bdm-title
@@ -70,6 +72,53 @@
 
             &:before
                 background: var(--admonitions-color-caution)
+
+        &.bdm-sidebar
+            margin: 0 // Gestionado por grid.astro para alineación
+
+
+
+            .bdm-title
+                display: block !important
+                font-weight: bold
+                margin-bottom: 0.5rem
+                color: var(--primary)
+                font-size: 0.85rem
+
+        &.bdm-narrador
+            position: relative !important
+            display: block !important
+            border: none !important
+            border-left: none !important
+            background: transparent !important 
+            box-shadow: none !important 
+            padding: 0 !important
+            margin: 2.5rem 0 2.5rem 6rem !important
+            font-style: italic
+            
+            &:before, &:after // ELIMINAR EL BORDE REBELDE
+                content: none !important
+                display: none !important
+            
+            @media (max-width: 768px)
+                margin-left: 1.5rem !important
+            
+            .bdm-title
+                display: none !important
+
+            p, span, div
+               font-family: "Domine", serif !important
+               line-height: 1.9 !important
+               margin-bottom: 1rem
+               opacity: 0.95
+               color: unquote("color-mix(in oklch, var(--tw-prose-body) 95%, black)")
+
+
+
+
+
+
+
 
     img
         border-radius: 0.75rem
