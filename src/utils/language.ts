@@ -119,6 +119,10 @@ export function initTranslateService(): void {
     // 检查 translate.js 是否已加载
     const translate = (window as any).translate;
     if (!translate || (window as any).translateInitialized) return;
+    
+    // Marcar como inicializado inmediatamente para evitar condiciones de carrera
+    (window as any).translateInitialized = true;
+    
     // 配置 translate.js
     if (siteConfig.translate.service) {
         translate.service.use(siteConfig.translate.service);
@@ -137,10 +141,19 @@ export function initTranslateService(): void {
     if (siteConfig.translate.autoDiscriminate) {
         translate.setAutoDiscriminateLocalLanguage();
     }
+    // TOTALMENTE DESACTIVAR IMÁGENES Y PETICIONES AJAX
+    translate.images.use = false;
+    translate.request.listener.use = false;
+    
+    // Evitar que el traductor intente traducir atributos de imagen
+    translate.element.tagAttribute['img'] = []; 
+    
     // 设置忽略项
     if (siteConfig.translate.ignoreClasses) {
         siteConfig.translate.ignoreClasses.forEach((className: string) => {
-            translate.ignore.class.push(className);
+            if (translate.ignore.class.indexOf(className) === -1) {
+                translate.ignore.class.push(className);
+            }
         });
     }
     if (siteConfig.translate.ignoreTags) {
@@ -168,7 +181,7 @@ export function initTranslateService(): void {
     };
     // 启动翻译监听
     translate.listener.start();
-    (window as any).translateInitialized = true;
+
     // 如果目标语言存在且不是源语言，执行翻译
     // 强制执行一次 execute 以确保初始化时应用翻译
     if (translate.to && translate.to !== translate.language.getLocal()) {
@@ -188,10 +201,12 @@ export async function loadAndInitTranslate(): Promise<void> {
     if (typeof window === "undefined" || !siteConfig.translate?.enable) return;
     try {
         // 检查是否已经加载
-        if (!(window as any).translate) {
+        if (!(window as any).translate && !(window as any).translateScriptLoading) {
+            (window as any).translateScriptLoading = true;
             // 使用动态导入，Vite 会自动处理代码分割
             await import("@/plugins/translate");
             (window as any).translateScriptLoaded = true;
+            (window as any).translateScriptLoading = false;
         }
         // 初始化服务
         initTranslateService();
@@ -207,4 +222,32 @@ export function toggleLanguage(langCode: string): void {
     // 切换语言
     translate.changeLanguage(langCode);
     setStoredLanguage(langCode);
+}
+
+// 停止翻译监听（用于 Swup 导航开始时）
+export function stopTranslateListener(): void {
+    const translate = (window as any).translate;
+    // translate.js 使用 reset() 来停止和清理监听器
+    if (translate && translate.listener && typeof translate.listener.reset === "function") {
+        translate.listener.reset();
+    }
+}
+
+// 启动/恢复翻译监听（用于 Swup 导航结束时）
+export function startTranslateListener(): void {
+    const translate = (window as any).translate;
+    if (translate && translate.listener) {
+        if (typeof translate.listener.addListener === "function") {
+            translate.listener.addListener();
+        } else if (typeof translate.listener.start === "function") {
+            translate.listener.start();
+        }
+        
+        // 恢复后强制执行一次，处理新载入的内容
+        setTimeout(() => {
+            if (translate.to && translate.to !== translate.language.getLocal()) {
+                translate.execute();
+            }
+        }, 50);
+    }
 }

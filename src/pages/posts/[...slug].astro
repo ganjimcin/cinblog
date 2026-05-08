@@ -67,7 +67,7 @@ const bodyContent = entry.body || '';
 // Extraer notas antes de renderizar nada
 const sidenoteRegex = /:::sidebar\s*([\s\S]*?)\s*:::/g;
 const sidenotes: string[] = [];
-let match;
+let match: RegExpExecArray | null;
 while ((match = sidenoteRegex.exec(bodyContent)) !== null) {
     const content = match[1].trim();
     if (content) {

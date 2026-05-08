@@ -17,7 +17,6 @@ import {
 } from "@constants/constants";
 import { pathsEqual, url } from "@utils/url";
 import FontLoader from "@components/fontLoader.astro";
-import LoadingOverlay from "@components/loadingOverlay.astro";
 import ConfigCarrier from "@components/configCarrier.astro";
 import MusicPlayer from "@components/musicPlayer.svelte";
 
@@ -36,7 +35,7 @@ interface Props {
     class?: string;
 }
 
-let { title, banner, description, lang, setOGTypeArticle, postSlug, class: className } = Astro.props;
+let { title, description, lang, setOGTypeArticle, postSlug, class: className } = Astro.props;
 
 // apply a class to the body element to decide the height of the banner, only used for initial page load
 const isHomePage = pathsEqual(Astro.url.pathname, url("/"));
@@ -52,38 +51,7 @@ const navbarTransparentMode =
 const shouldShowTopHighlight =
     navbarTransparentMode === "full" || navbarTransparentMode === "semifull";
 
-// 获取默认banner图片的辅助函数
-const getDefaultBanner = (): string => {
-    const src = siteConfig.wallpaper.src;
-    if (typeof src === "string") {
-        return src;
-    }
-    if (Array.isArray(src)) {
-        return src[0] || "";
-    }
-    if (src && typeof src === "object") {
-        // 优先使用desktop，如果没有则使用mobile
-        const desktopSrc = src.desktop;
-        const mobileSrc = src.mobile;
-        if (typeof desktopSrc === "string") {
-            return desktopSrc;
-        }
-        if (Array.isArray(desktopSrc) && desktopSrc.length > 0) {
-            return desktopSrc[0];
-        }
-        if (typeof mobileSrc === "string") {
-            return mobileSrc;
-        }
-        if (Array.isArray(mobileSrc) && mobileSrc.length > 0) {
-            return mobileSrc[0];
-        }
-    }
-    return "";
-};
-
 // TODO don't use post cover as banner for now
-banner = getDefaultBanner();
-
 const enableBanner = siteConfig.wallpaper.mode === "banner";
 
 let pageTitle: string;
@@ -351,7 +319,7 @@ import { initTheme } from "@utils/theme";
 import { initHue } from "@utils/hue";
 import { initMarkdownActions } from "@/utils/markdown";
 import { initFancybox, cleanupFancybox } from "@utils/fancybox";
-import { loadAndInitTranslate } from "@utils/language";
+import { loadAndInitTranslate, stopTranslateListener, startTranslateListener } from "@utils/language";
 import { setupParticleEffects } from "@/utils/particle";
 
 
@@ -514,6 +482,9 @@ const setup = () => {
         if (mainGrid) {
             mainGrid.classList.remove('force-sidebar-mode');
         }
+
+        // 停止翻译监听以防止导航期间的冗余请求
+        stopTranslateListener();
     });
     window.swup.hooks.on("content:replace", () => {
         // Sync grid classes and sidebar visibility
@@ -557,6 +528,9 @@ const setup = () => {
 
         cleanupFancybox();
         initFancybox();
+        
+        // 重新启动翻译监听并处理新内容
+        startTranslateListener();
         
         // Re-init intervals if needed (handled by the scripts themselves usually)
     },

@@ -1,4 +1,5 @@
 ---
+import type { MarkdownHeading } from "astro";
 import { NAVBAR_HEIGHT } from "@constants/constants";
 import { i18n } from "@i18n/translation";
 import I18nKey from "@i18n/i18nKey";
@@ -11,6 +12,7 @@ interface Props {
     style?: string;
     depth?: number;
     side?: string;
+    headings?: MarkdownHeading[];
 }
 
 const { id: propId, class: className, style, depth = 3, side = "default", headings = [], ...rest } = Astro.props;
