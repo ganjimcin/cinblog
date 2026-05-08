@@ -30,7 +30,7 @@ site:
       family: Domine
   themeColor:
     hue: 45
-  defaultTheme: dark
+  defaultTheme: light
   wallpaper:
     mode: banner
     src:

@@ -151,8 +151,19 @@ export function initTranslateService(): void {
     // 设置忽略项
     if (siteConfig.translate.ignoreClasses) {
         siteConfig.translate.ignoreClasses.forEach((className: string) => {
-            if (translate.ignore.class.indexOf(className) === -1) {
-                translate.ignore.class.push(className);
+            try {
+                const ic = translate.ignore.class;
+                if (typeof ic.push === 'function') {
+                    // 如果是对象且有 push 方法 (translate.js v3+)
+                    ic.push(className, function() { return true; });
+                } else if (Array.isArray(ic)) {
+                    // 如果是普通数组 (旧版本或简化版)
+                    if (ic.indexOf(className) === -1) {
+                        ic.push(className);
+                    }
+                }
+            } catch (e) {
+                console.warn("Failed to add ignore class:", className, e);
             }
         });
     }

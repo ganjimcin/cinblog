@@ -89,7 +89,7 @@ const bannerOffset =
 ---
 
 <!DOCTYPE html>
-<html lang={siteLang} class="bg-(--page-bg) text-[16px] md:text-[18px]"
+<html lang={siteLang} class="bg-(--page-bg) text-[16px] md:text-[18px] is-loading"
 >
     <head>
         <meta charset="UTF-8" />
@@ -173,8 +173,9 @@ const bannerOffset =
             }
             const expressiveTheme = isDark ? "github-dark" : "github-light";
             document.documentElement.setAttribute("data-theme", expressiveTheme);
-            // Load the hue from local storage
-            const hue = localStorage.getItem('hue') || configHue;
+            // Load the hue from config and ignore local storage if it's different to force the change
+            const hue = configHue;
+            localStorage.setItem('hue', hue);
             // Apply the hue to the document
             document.documentElement.style.setProperty('--hue', hue);
             // calculate the --banner-height-extend, which needs to be a multiple of 4 to avoid blurry text
@@ -401,13 +402,6 @@ const setup = () => {
         const navbar = document.getElementById('navbar')
         if (navbar) {
             navbar.setAttribute('data-is-home', isHomePage.toString())
-            const transparentMode = navbar.getAttribute('data-transparent-mode')
-            if (transparentMode === 'semifull') {
-                // Re-call the initialization function to rebind scroll events
-                if (typeof window.initSemifullScrollDetection === 'function') {
-                    window.initSemifullScrollDetection()
-                }
-            }
         }
         // Increase the page height during page transition to prevent the scrolling animation from jumping
         const heightExtend = document.getElementById('page-height-extend')
@@ -454,7 +448,7 @@ const setup = () => {
         // Scroll to top of the page after page transition
         window.scrollTo({
             top: 0,
-            behavior: 'smooth'
+            behavior: 'auto'
         });
         // Check if the current page is a post page, if so, trigger a custom event to initialize the comment system
         setTimeout(() => {
@@ -614,40 +608,43 @@ setupParticleEffects();
 
 // Remove is-loading class and trigger initial-animation after page load
 if (typeof window !== 'undefined') {
+    let hasLoaded = false;
     const onPageLoaded = () => {
+        if (hasLoaded) return;
+        hasLoaded = true;
+
         const overlay = document.getElementById('loading-overlay');
         const enableBanner = document.body.classList.contains('enable-banner');
-        // 触发 LoadingOverlay 淡出
+        
+        // 1. 立即触发 LoadingOverlay 淡出
         if (overlay) {
             overlay.classList.add('fade-out');
         }
-        // 等待 LoadingOverlay 淡出（600ms）
+
+        // 2. 稍微延迟后（给 Overlay 一点淡出时间）同时启动 Banner 恢复和内容动画
         setTimeout(() => {
             if (overlay) {
                 overlay.style.display = 'none';
             }
+            
+            // 同时启动 Banner 和内容动画
             if (enableBanner) {
-                // banner 开始恢复过渡：添加 banner-restoring 类（解除 CSS 中的 height: 0）
                 document.documentElement.classList.add('banner-restoring');
-                // 等待 banner 恢复过渡完成（600ms）
-                setTimeout(() => {
-                    // 触发各容器淡入动画
-                    document.documentElement.classList.remove('is-loading');
-                    document.documentElement.classList.add('show-initial-animation');
-                    setTimeout(() => {
-                        document.documentElement.classList.remove('show-initial-animation');
-                        document.documentElement.classList.remove('banner-restoring');
-                    }, 1200);
-                }, 600);
-            } else {
-                // 非 banner 模式，直接触发淡入
-                document.documentElement.classList.remove('is-loading');
-                document.documentElement.classList.add('show-initial-animation');
-                setTimeout(() => {
-                    document.documentElement.classList.remove('show-initial-animation');
-                }, 1200);
             }
-        }, 600);
+            
+            // 立即移除 is-loading 并添加 show-initial-animation
+            // 这样所有 onload-animation-up 元素会开始它们的动画
+            document.documentElement.classList.remove('is-loading');
+            document.documentElement.classList.add('show-initial-animation');
+            
+            // 3. 所有动画完成后清理类名
+            setTimeout(() => {
+                document.documentElement.classList.remove('show-initial-animation');
+                if (enableBanner) {
+                    document.documentElement.classList.remove('banner-restoring');
+                }
+            }, 1200);
+        }, 400); // 缩短等待时间，使整体感觉更连贯
     };
 
     const configCarrier = document.getElementById('config-carrier');
@@ -666,5 +663,23 @@ if (typeof window !== 'undefined') {
             document.addEventListener('DOMContentLoaded', onPageLoaded);
         }
     }
+
+    // Safety timeout: ensure page is shown even if load event fires late or errors occur
+    setTimeout(() => {
+        if (document.documentElement.classList.contains('is-loading')) {
+            console.warn("[DEBUG] Safety timeout triggered: forcing page visibility");
+            onPageLoaded();
+        } else {
+            console.log("[DEBUG] Safety timeout checked: page already visible");
+        }
+        
+        // Swup stuck classes cleaner
+        const swupClasses = ['is-changing', 'is-animating', 'is-leaving', 'is-rendering'];
+        const stuckClasses = swupClasses.filter(c => document.documentElement.classList.contains(c));
+        if (stuckClasses.length > 0) {
+            console.warn("[DEBUG] Swup stuck classes detected, cleaning up:", stuckClasses);
+            document.documentElement.classList.remove(...swupClasses);
+        }
+    }, 3000);
 }
 </script>

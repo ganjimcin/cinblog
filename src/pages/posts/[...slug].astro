@@ -17,7 +17,6 @@ import License from "@components/post/license.astro";
 import Markdown from "@components/common/markdown.astro";
 import ImageWrapper from "@components/common/imageWrapper.astro";
 import Comment from "@components/post/comment.astro";
-import PasswordProtection from "@components/common/passwordProtection.astro";
 import PostMetadata from "@components/post/postMeta.astro";
 import GridLayout from "@layouts/grid.astro";
 import MarkdownIt from "markdown-it";
@@ -41,10 +40,11 @@ export async function getStaticPaths() {
             props: { entry },
         });
         // 如果文章有自定义固定链接，也创建对应的路径
-        if (entry.data.routeName) {
+        const customRoute = entry.data.routeName || entry.data.slug;
+        if (customRoute) {
             // 移除开头的斜杠和结尾的斜杠
             // 同时移除可能的 "posts/" 前缀，避免重复
-            let routeName = entry.data.routeName
+            let routeName = customRoute
                 .replace(/^\/+/, "")
                 .replace(/\/+$/, "");
             if (routeName.startsWith("posts/")) {
@@ -78,11 +78,7 @@ const hasSidebarDirective = sidenotes.length > 0;
 
 const { Content, headings, remarkPluginFrontmatter } = await render(entry);
 
-
-
-
-// 处理加密逻辑
-let isEncrypted = !!(entry.data.encrypted && entry.data.password);
+// 处理加密逻辑 (Eliminado)
 
 dayjs.extend(utc);
 const lastModified = dayjs(entry.data.updated || entry.data.published)
@@ -214,7 +210,6 @@ const jsonLd = {
                     updated={entry.data.updated}
                     tags={entry.data.tags}
                     category={entry.data.category}
-                    postUrl={getPostUrl(entry)}
                 />
                 {
                     (!entry.data.cover || (entry.data.cover && !entry.data.coverInContent)) && (
@@ -237,17 +232,14 @@ const jsonLd = {
                     </>
                 )
             }
-            <PasswordProtection
-                isEncrypted={isEncrypted}
-                password={entry.data.password}
-            >
                 <div class:list={[
+                    "pause-swup-transition",
                     { "justify-text-category": getCategoryPathLabel(entry.data.category) === "Las aventuras de Xoshö y Mocho" || entry.data.category === "Las aventuras de Xoshö y Mocho" },
                     { "font-adventures": getCategoryPathLabel(entry.data.category) === "Las aventuras de Xoshö y Mocho" || entry.data.category === "Las aventuras de Xoshö y Mocho" }
                 ]}>
-                    <Markdown class="mb-6 markdown-content onload-animation-up">
+                    <div data-pagefind-body class="mb-6 markdown-content prose dark:prose-invert prose-base max-w-none! custom-md overflow-visible! relative">
                         <Content />
-                    </Markdown>
+                    </div>
                 </div>
                 {
                     postConfig.license.enable && (
@@ -264,7 +256,6 @@ const jsonLd = {
                         />
                     )
                 }
-            </PasswordProtection>
         </div>
     </div>
     <!-- 评论 -->

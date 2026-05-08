@@ -80,7 +80,12 @@ export class TableOfContents extends HTMLElement {
         } else {
             const top = this.tocEntries[min].offsetTop;
             const bottom = this.tocEntries[max].offsetTop + this.tocEntries[max].offsetHeight;
-            this.activeIndicator?.setAttribute("style", `top: ${top}px; height: ${bottom - top}px; opacity: 1`);
+            
+            if (!isNaN(top) && !isNaN(bottom)) {
+                this.activeIndicator?.setAttribute("style", `top: ${top}px; height: ${bottom - top}px; opacity: 1`);
+            } else {
+                this.activeIndicator?.setAttribute("style", `opacity: 0`);
+            }
         }
     };
 

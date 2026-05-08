@@ -17,7 +17,6 @@ export interface Props {
     hideUpdateDate?: boolean;
     hideTagsForMobile?: boolean;
     className?: string;
-    postUrl?: string;
 }
 
 const {
@@ -28,7 +27,6 @@ const {
     hideUpdateDate,
     hideTagsForMobile,
     className = "",
-    postUrl
 } = Astro.props;
 const categoryParts = getCategoryPathParts(category ?? null);
 

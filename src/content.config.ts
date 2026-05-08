@@ -51,6 +51,7 @@ const postsCollection = defineCollection({
 
         /* Custom routeName */
         routeName: z.string().optional(),
+        slug: z.string().optional(),
 
         /* For internal use */
         prevTitle: z.string().default(""),

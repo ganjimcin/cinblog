@@ -33,11 +33,12 @@ export function getPostUrlByRouteName(routeName: string): string {
 }
 
 export function getPostUrl(post: CollectionEntry<"posts">): string;
-export function getPostUrl(post: { id: string; data: { routeName?: string } }): string;
+export function getPostUrl(post: { id: string; data: { routeName?: string; slug?: string } }): string;
 export function getPostUrl(post: any): string {
     // 如果文章有自定义固定链接，优先使用固定链接
-    if (post.data.routeName) {
-        return getPostUrlByRouteName(post.data.routeName);
+    const customRoute = post.data.routeName || post.data.slug;
+    if (customRoute) {
+        return getPostUrlByRouteName(customRoute);
     }
     // 否则使用默认的 slug 路径
     return getPostUrlBySlug(post.id);
