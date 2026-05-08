@@ -6,15 +6,14 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 
 import { siteConfig, profileConfig, postConfig } from "@/config";
-import { getSortedPosts } from "@utils/post";
+import { getSortedPosts, isBookCategory } from "@utils/post";
 import { formatDateToYYYYMMDD } from "@utils/date";
-import { getFileDirFromPath, getPostUrl, getPostUrlBySlug, removeFileExtension} from "@utils/url";
+import { getFileDirFromPath, getPostUrl, getPostUrlBySlug, removeFileExtension, url } from "@utils/url";
 import { SUPPORTED_LANGUAGES, langToTranslateMap } from "@i18n/language";
 import { getCategoryPathLabel } from "@utils/category";
 import { i18n, getTranslation } from "@i18n/translation";
 import I18nKey from "@i18n/i18nKey";
 import License from "@components/post/license.astro";
-import Markdown from "@components/common/markdown.astro";
 import ImageWrapper from "@components/common/imageWrapper.astro";
 import Comment from "@components/post/comment.astro";
 import PostMetadata from "@components/post/postMeta.astro";
@@ -77,6 +76,7 @@ while ((match = sidenoteRegex.exec(bodyContent)) !== null) {
 const hasSidebarDirective = sidenotes.length > 0;
 
 const { Content, headings, remarkPluginFrontmatter } = await render(entry);
+const { hasMath, hasMermaid } = remarkPluginFrontmatter;
 
 // 处理加密逻辑 (Eliminado)
 
@@ -134,6 +134,8 @@ const jsonLd = {
     headings={headings}
     forceRightSidebar={hasSidebarDirective}
     sidenotes={sidenotes}
+    hasMath={hasMath}
+    hasMermaid={hasMermaid}
 >
     <script
         is:inline
@@ -189,6 +191,33 @@ const jsonLd = {
             </div>
             <!-- title -->
             <div class="relative onload-animation-up">
+                {isBookCategory(entry.data.category) && (
+                    <div class="flex flex-col gap-2 mb-4 onload-animation-up">
+                        <a href={`${url('/archive/')}?category=${encodeURIComponent(getCategoryPathLabel(entry.data.category) || '')}`} 
+                           class="flex items-center gap-2 text-(--primary) px-3 py-1.5 rounded-lg bg-(--primary)/10 w-fit hover:bg-(--primary)/20 transition-colors">
+                            <Icon icon="material-symbols:menu-book-outline" class="text-xl" />
+                            <span class="text-sm font-bold">Libro: {getCategoryPathLabel(entry.data.category)}</span>
+                        </a>
+                        
+                        {entry.data.book && (
+                            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-50 px-3 italic">
+                                {entry.data.book.saga && (
+                                    <span class="flex items-center gap-1">
+                                        <Icon icon="material-symbols:account-tree-outline" />
+                                        Saga: {entry.data.book.saga}
+                                    </span>
+                                )}
+                                {(entry.data.book.chapter || entry.data.book.part) && (
+                                    <span class="flex items-center gap-1 font-bold text-75">
+                                        <Icon icon="material-symbols:bookmark-outline" />
+                                        {entry.data.book.chapter && `Capítulo ${entry.data.book.chapter}`}
+                                        {entry.data.book.part && ` - Parte ${entry.data.book.part}`}
+                                    </span>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                )}
                 <div
                     data-pagefind-body
                     data-pagefind-weight="10"

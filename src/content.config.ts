@@ -58,6 +58,15 @@ const postsCollection = defineCollection({
         prevSlug: z.string().default(""),
         nextTitle: z.string().default(""),
         nextSlug: z.string().default(""),
+
+        /* Book-specific fields */
+        book: z.object({
+            id: z.string().optional(),
+            chapter: z.number().optional(),
+            part: z.number().optional(),
+            saga: z.string().optional(),
+            title: z.string().optional(),
+        }).optional(),
     }),
 });
 

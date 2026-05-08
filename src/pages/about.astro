@@ -20,10 +20,11 @@ if (!aboutPost) {
     throw new Error("About page content not found");
 }
 
-const { Content } = await render(aboutPost);
+const { Content, remarkPluginFrontmatter } = await render(aboutPost);
+const { hasMath, hasMermaid } = remarkPluginFrontmatter;
 ---
 
-<GridLayout title={pageTitle} description={pageDescription}>
+<GridLayout title={pageTitle} description={pageDescription} hasMath={hasMath} hasMermaid={hasMermaid}>
     <div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32">
         <div class="card-base z-10 px-9 py-6 relative w-full ">
             <BackwardButton currentPath={Astro.url.pathname} />

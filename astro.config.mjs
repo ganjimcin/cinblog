@@ -34,6 +34,7 @@ import remarkDirectiveRehype from "remark-directive-rehype";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkMermaid } from "./src/plugins/remark-mermaid.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
+import { remarkFeatureDetection } from "./src/plugins/remark-feature-detection.js";
 
 // Leer la configuración directamente para evitar problemas de carga de módulos en la fase de config
 const twilightConfig = yaml.load(fs.readFileSync("./src/twilight.config.yaml", "utf8"));
@@ -53,6 +54,7 @@ export default defineConfig({
     site: siteURL,
     base: "/",
     trailingSlash: "always",
+    output: 'static',
     adapter: adapter,
     integrations: [
         swup({
@@ -142,6 +144,7 @@ export default defineConfig({
             remarkDirectiveRehype,
             remarkMath,
             remarkReadingTime,
+            remarkFeatureDetection,
             remarkExcerpt,
             remarkSectionize,
             remarkMermaid,

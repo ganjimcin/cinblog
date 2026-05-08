@@ -1,7 +1,7 @@
 ---
-import "katex/dist/katex.css";
-
 import { siteConfig, profileConfig, musicPlayerConfig } from "@/config";
+import mermaidRenderScript from "../plugins/mermaid-render-script.js?raw";
+import KatexStyles from "@components/KatexStyles.astro";
 
 import type { Favicon } from "@/types/config";
 import { defaultFavicons } from "@constants/icon";
@@ -33,9 +33,11 @@ interface Props {
     setOGTypeArticle?: boolean;
     postSlug?: string;
     class?: string;
+    hasMath?: boolean;
+    hasMermaid?: boolean;
 }
 
-let { title, description, lang, setOGTypeArticle, postSlug, class: className } = Astro.props;
+let { title, description, lang, setOGTypeArticle, postSlug, class: className, hasMath, hasMermaid } = Astro.props;
 
 // apply a class to the body element to decide the height of the banner, only used for initial page load
 const isHomePage = pathsEqual(Astro.url.pathname, url("/"));
@@ -105,7 +107,7 @@ const bannerOffset =
         <!-- FUENTES - CARGA PRIORITARIA -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Libre+Baskerville:wght@400;700&family=Domine:wght@400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&family=Libre+Baskerville:wght@400;700&family=Domine:wght@400;700&display=swap" rel="stylesheet">
 
         <!-- title -->
         <title>{pageTitle}</title>
@@ -190,10 +192,9 @@ const bannerOffset =
         <!-- custom head -->
         <slot name="head"></slot>
 
-        <!-- FUENTES - CARGA PRIORITARIA -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Libre+Baskerville:wght@400;700&family=Domine:wght@400;700&display=swap" rel="stylesheet">
+        {hasMath && <KatexStyles />}
+        {hasMermaid && <script is:inline set:html={mermaidRenderScript} />}
+
 
         <style is:global>
             /* REGLAS MAESTRAS DE FUENTES - ÚLTIMA PALABRA */
@@ -442,7 +443,7 @@ const setup = () => {
             if (heightExtend) {
                 heightExtend.classList.add('hidden')
             }
-        }, 300)
+        }, 200)
     });
     window.swup.hooks.on('page:view', () => {
         // Scroll to top of the page after page transition
@@ -461,7 +462,7 @@ const setup = () => {
                 });
                 document.dispatchEvent(pageLoadedEvent);
             }
-        }, 300);
+        }, 200);
         // Initialize Fancybox
         initFancybox();
     });

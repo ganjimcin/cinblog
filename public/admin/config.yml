@@ -6,8 +6,8 @@ backend:
   branch: main
 
 # Rutas relativas a la raíz del repositorio
-media_folder: "public/assets/images"
-public_folder: "/assets/images"
+media_folder: "public/assets/uploads"
+public_folder: "/assets/uploads"
 
 collections:
   - name: posts
@@ -20,12 +20,15 @@ collections:
     create: true
     nested: false
     slug: "{{slug}}"
+    media_folder: "{{media_folder}}/{{year}}/{{month}}"
+    public_folder: "{{public_folder}}/{{year}}/{{month}}"
     fields:
       - { label: "Título", name: "title", widget: "string" }
+      - { label: "Slug Personalizado", name: "slug", widget: "string", required: false, hint: "Opcional: URL personalizada para este post" }
       - { label: "Fecha de Publicación", name: "published", widget: "datetime" }
       - { label: "Fecha de Actualización", name: "updated", widget: "datetime", required: false }
       - { label: "Descripción", name: "description", widget: "string", required: false }
-      - { label: "Categoría", name: "category", widget: "select", options: ["General", "Tecnología", "Cine", "Proyectos", "Diario", "Examples"], default: "General" }
+      - { label: "Categoría", name: "category", widget: "select", options: ["Raíces", "Las aventuras de Xoshö y Mocho", "Anim-Acción", "General"], default: "Raíces" }
       - { label: "Etiquetas", name: "tags", widget: "list", required: false }
       - { label: "Imagen de Portada", name: "cover", widget: "image", required: false }
       - { label: "Mostrar Portada en Contenido", name: "coverInContent", widget: "boolean", default: false, required: false }
@@ -35,6 +38,16 @@ collections:
       - { label: "Cuerpo del Post", name: "body", widget: "markdown" }
       - { label: "Idioma", name: "lang", widget: "string", required: false, placeholder: "es" }
       - { label: "Comentarios Habilitados", name: "comment", widget: "boolean", default: true, required: false }
+      - label: "Información de Libro (Opcional)"
+        name: "book"
+        widget: "object"
+        required: false
+        fields:
+          - { label: "ID del Libro", name: "id", widget: "string", required: false, hint: "Ej: xosho-mocho" }
+          - { label: "Saga / Arco", name: "saga", widget: "string", required: false, hint: "Ej: El viaje al Norte" }
+          - { label: "Número de Capítulo", name: "chapter", widget: "number", required: false, value_type: "int" }
+          - { label: "Número de Parte", name: "part", widget: "number", required: false, value_type: "int", hint: "Si un capítulo tiene varias partes" }
+          - { label: "Título del Capítulo/Parte", name: "title", widget: "string", required: false, hint: "Título específico si es distinto al del post" }
 
   - name: pages
     label: "Páginas Estáticas"
@@ -55,7 +68,7 @@ collections:
       preview: false
     files:
       - name: "twilight_config"
-        label: "Ajustes de Twilight"
+        label: "Ajustes del Blog"
         file: "src/twilight.config.yaml"
         fields:
           - label: "Identidad del Sitio"
@@ -132,6 +145,7 @@ collections:
             widget: "object"
             fields:
               - { label: "Mostrar 'Última edición'", name: "showLastModified", widget: "boolean" }
+              - { label: "Categorías de Libros (Orden Cronológico)", name: "bookCategories", widget: "list", field: { widget: "string" } }
               - label: "Licencia"
                 name: "license"
                 widget: "object"

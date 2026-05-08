@@ -300,7 +300,7 @@
   }
   .cms-item-index {
     background: var(--primary);
-    color: white;
+    color: var(--text-on-primary);
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;
@@ -320,7 +320,7 @@
     height: 2rem;
     border-radius: 50%;
     background: var(--primary);
-    color: white;
+    color: var(--text-on-primary);
     border: none;
     cursor: pointer;
     display: flex;
@@ -376,7 +376,7 @@
     gap: 0.5rem;
     padding: 0.5rem 1.25rem;
     background: var(--primary);
-    color: white;
+    color: var(--text-on-primary);
     border-radius: var(--radius-md);
     font-weight: 700;
     font-size: 0.85rem;

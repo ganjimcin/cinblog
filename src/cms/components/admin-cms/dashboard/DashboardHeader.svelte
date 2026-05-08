@@ -141,7 +141,7 @@
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     background: var(--primary);
-    color: white;
+    color: var(--text-on-primary);
     border: none;
     font-size: 1.1rem;
     box-shadow: 0 8px 20px oklch(from var(--primary) l c h / 0.2);

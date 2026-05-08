@@ -1459,12 +1459,12 @@ var translate = {
                 translate.offline.export();
             };
             button.innerHTML = '导出配置信息';
-            button.setAttribute('style', 'margin-left: 72px; margin-top: 30px; margin-bottom: 20px; font-size: 25px; background-color: blue; padding: 15px; padding-top: 3px; padding-bottom: 3px; border-radius: 3px;');
+            button.setAttribute('style', 'margin-left: 72px; margin-top: 30px; margin-bottom: 20px; font-size: 25px; background-color: var(--primary, #3b82f6); color: white; border: none; padding: 15px; padding-top: 3px; padding-bottom: 3px; border-radius: 3px; cursor: pointer;');
             panel.appendChild(button);
 
             //说明文字
             let textdiv = document.createElement('div');
-            textdiv.innerHTML = '1. 首先将当前语种切换为你要翻译的语种<br/>2. 点击导出按钮，将翻译的配置信息导出<br/>3. 将导出的配置信息粘贴到代码中，即可完成<br/><a href="http://translate.zvo.cn/4076.html" target="_black" style="color: aliceblue; text-decoration: underline;">点此进行查阅详细使用说明</a>';
+            textdiv.innerHTML = '1. 首先将当前语种切换为你要翻译的语种<br/>2. 点击导出按钮，将翻译的配置信息导出<br/>3. 将导出的配置信息粘贴到代码中，即可完成<br/><a href="http://translate.zvo.cn/4076.html" target="_black" style="color: var(--primary, white); text-decoration: underline;">点此进行查阅详细使用说明</a>';
             textdiv.setAttribute('style', 'font-size: 14px; padding: 12px;');
 
             panel.appendChild(textdiv);

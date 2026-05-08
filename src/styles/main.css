@@ -1,7 +1,5 @@
 @import 'tailwindcss';
 
-/* 导入追番页面样式 */
-@import './anime.css' layer(base);
 /* 导入动过渡样式 */
 @import './transition.css' layer(base);
 
@@ -626,10 +624,10 @@
     height: 180px;
     background: linear-gradient(
         to bottom,
-        rgba(255, 255, 255, 0.5) 0%,
-        rgba(255, 255, 255, 0.3) 30%,
-        rgba(255, 255, 255, 0.15) 60%,
-        rgba(255, 255, 255, 0.05) 80%,
+        oklch(0.98 0.015 45 / 0.5) 0%,
+        oklch(0.98 0.015 45 / 0.3) 30%,
+        oklch(0.98 0.015 45 / 0.15) 60%,
+        oklch(0.98 0.015 45 / 0.05) 80%,
         transparent 100%
     );
     pointer-events: none;
@@ -641,10 +639,10 @@
     :root.dark .top-gradient-highlight {
     background: linear-gradient(
         to bottom,
-        rgba(0, 0, 0, 0.5) 0%,
-        rgba(0, 0, 0, 0.3) 30%,
-        rgba(0, 0, 0, 0.15) 60%,
-        rgba(0, 0, 0, 0.05) 80%,
+        oklch(0.16 0.014 45 / 0.5) 0%,
+        oklch(0.16 0.014 45 / 0.3) 30%,
+        oklch(0.16 0.014 45 / 0.15) 60%,
+        oklch(0.16 0.014 45 / 0.05) 80%,
         transparent 100%
     );
     }

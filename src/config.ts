@@ -46,33 +46,31 @@ const resolvedPostConfig: PostConfig = {
     ...config.post,
 };
 
-// 站点配置
+// Site Configuration
 export const siteConfig: SiteConfig = config.site;
 
-
-
-// 导航栏配置
+// Navbar Configuration
 export const navbarConfig: NavbarConfig = {
     links: normalizeNavbarLinks(config.navbar.links),
 };
 
-// 侧边栏配置
+// Sidebar Configuration
 export const sidebarConfig: SidebarConfig = config.sidebar;
 
-// 资料配置
+// Profile Configuration
 export const profileConfig: ProfileConfig = config.profile;
 
-// 公告配置
+// Announcement Configuration
 export const announcementConfig: AnnouncementConfig = config.announcement;
 
-// 文章配置
+// Post Configuration
 export const postConfig: PostConfig = resolvedPostConfig;
 
-// 页脚配置
+// Footer Configuration
 export const footerConfig: FooterConfig = config.footer;
 
-// 粒子特效配置
+// Particle Configuration
 export const particleConfig: ParticleConfig = config.particle;
 
-// 音乐播放器配置
+// Music Player Configuration
 export const musicPlayerConfig: MusicPlayerConfig = config.musicPlayer;

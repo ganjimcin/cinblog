@@ -15,7 +15,8 @@ let keywordDesktop = $state("");
 let keywordMobile = $state("");
 let result: SearchResult[] = $state([]);
 let isSearching = $state(false);
-let pagefindLoaded = false;
+let pagefindLoading = false;
+let pagefindLoaded = $state(false);
 let initialized = $state(false);
 let isDesktopSearchExpanded = $state(false);
 let debounceTimer: NodeJS.Timeout;
@@ -129,6 +130,32 @@ const search = async (keyword: string, isDesktop: boolean): Promise<void> => {
     }
 };
 
+const loadPagefind = async () => {
+    if (pagefindLoading || pagefindLoaded || import.meta.env.DEV) return;
+    pagefindLoading = true;
+    try {
+        const scriptUrl = url('/pagefind/pagefind.js');
+        const pagefind = await import(/* @vite-ignore */ scriptUrl);
+        await pagefind.options({
+            excerptLength: 20
+        });
+        (window as any).pagefind = pagefind;
+        pagefindLoaded = true;
+        initialized = true;
+        console.log("Pagefind loaded lazily");
+    } catch (error) {
+        console.error("Failed to load Pagefind lazily:", error);
+        (window as any).pagefind = {
+            search: () => Promise.resolve({ results: [] }),
+            options: () => Promise.resolve(),
+        };
+        pagefindLoaded = false;
+        initialized = true;
+    } finally {
+        pagefindLoading = false;
+    }
+};
+
 const handleClickOutside = (event: MouseEvent) => {
     const panel = document.getElementById("search-panel");
     if (!panel || panel.classList.contains("float-panel-closed")) {
@@ -143,37 +170,8 @@ const handleClickOutside = (event: MouseEvent) => {
 
 onMount(() => {
     document.addEventListener("click", handleClickOutside);
-    const initializeSearch = () => {
-        initialized = true;
-        pagefindLoaded =
-            typeof window !== "undefined" &&
-            !!window.pagefind &&
-            typeof window.pagefind.search === "function";
-        console.log("Pagefind status on init:", pagefindLoaded);
-    };
     if (import.meta.env.DEV) {
-        console.log(
-            "Pagefind is not available in development mode. Using mock data.",
-        );
-        initializeSearch();
-    } else {
-        document.addEventListener("pagefindready", () => {
-            console.log("Pagefind ready event received.");
-            initializeSearch();
-        });
-        document.addEventListener("pagefindloaderror", () => {
-            console.warn(
-                "Pagefind load error event received. Search functionality will be limited.",
-            );
-            initializeSearch(); // Initialize with pagefindLoaded as false
-        });
-        // Fallback in case events are not caught or pagefind is already loaded by the time this script runs
-        setTimeout(() => {
-            if (!initialized) {
-                console.log("Fallback: Initializing search after timeout.");
-                initializeSearch();
-            }
-        }, 2000); // Adjust timeout as needed
+        initialized = true;
     }
 });
 
@@ -224,7 +222,7 @@ onDestroy(() => {
     role="button"
     tabindex="0"
     aria-label="Search"
-    onmouseenter={() => {if (!isDesktopSearchExpanded) toggleDesktopSearch()}}
+    onmouseenter={() => {if (!isDesktopSearchExpanded) toggleDesktopSearch(); loadPagefind()}}
     onmouseleave={collapseDesktopSearch}
 >
     <Icon icon="material-symbols:search" class="absolute text-[1.25rem] pointer-events-none {isDesktopSearchExpanded ? 'ml-3' : 'left-1/2 -translate-x-1/2'} transition my-auto {isDesktopSearchExpanded ? 'text-black/30 dark:text-white/30' : ''}"></Icon>
@@ -237,7 +235,7 @@ onDestroy(() => {
 </div>
 
 <!-- toggle btn for phone/tablet view -->
-<button onclick={togglePanel} aria-label="Search Panel" id="search-switch"
+<button onclick={() => {togglePanel(); loadPagefind()}} aria-label="Search Panel" id="search-switch"
         class="btn-plain scale-animation lg:hidden! rounded-lg w-11 h-11 active:scale-90 flex items-center justify-center">
     <Icon icon="material-symbols:search" class="text-[1.25rem]"></Icon>
 </button>

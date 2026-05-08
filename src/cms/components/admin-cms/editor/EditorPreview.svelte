@@ -7,6 +7,13 @@
     previewEl = $bindable(),
     onScroll 
   } = $props();
+
+  // Detectar si es categoría de libro para aplicar estilos especiales
+  const isBook = $derived(
+    category === "Las aventuras de Xoshö y Mocho" || 
+    category === "Libro" || 
+    (category && category.toLowerCase().includes("libro"))
+  );
 </script>
 
 <div class="cms-editor-preview-wrapper">
@@ -19,7 +26,7 @@
     bind:this={previewEl}
     onscroll={onScroll}
   >
-    <div class="cms-preview-card">
+    <div class="cms-preview-card" class:font-adventures={isBook}>
       <div class="cms-preview-content-header">
         <h1 class="preview-main-title">{title || "Sin título"}</h1>
         <div class="preview-main-meta">
@@ -32,6 +39,34 @@
 </div>
 
 <style>
+  /* Estilos de Libro para el Preview */
+  .font-adventures {
+    --title-font: "Libre Baskerville", serif;
+    --story-font: "Domine", serif;
+  }
+
+  .font-adventures .preview-main-title {
+    font-family: var(--title-font) !important;
+  }
+
+  .font-adventures .markdown-content {
+    font-family: var(--story-font) !important;
+    font-size: 1.1rem;
+    line-height: 1.8 !important;
+    text-align: justify;
+  }
+
+  .font-adventures .markdown-content :global(p),
+  .font-adventures .markdown-content :global(li) {
+    font-family: var(--story-font) !important;
+  }
+
+  .font-adventures .markdown-content :global(h1),
+  .font-adventures .markdown-content :global(h2),
+  .font-adventures .markdown-content :global(h3),
+  .font-adventures .markdown-content :global(h4) {
+    font-family: var(--title-font) !important;
+  }
   .cms-editor-preview-wrapper {
     background: var(--card-bg);
     display: flex;

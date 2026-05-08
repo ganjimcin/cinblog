@@ -12,8 +12,14 @@ declare global {
         closeAnnouncement: () => void;
         iconifyLoaded: boolean;
         __iconifyLoader: {
-            load: () => Promise<void>;
+            load: (options?: any) => Promise<void>;
+            onLoad: (callback: () => void) => void;
+            addToPreloadQueue: (icons: string | string[]) => void;
+            isLoaded: boolean;
         };
+        onIconifyReady: (callback: () => void) => void;
+        loadIconify: () => Promise<void>;
+        preloadIcons: (icons: string | string[]) => void;
         pagefind: {
             search: (query: string) => Promise<{
                 results: Array<{

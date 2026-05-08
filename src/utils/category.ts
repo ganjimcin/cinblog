@@ -1,3 +1,5 @@
+import { postConfig } from "@/config";
+
 export const CATEGORY_SEPARATOR = " / ";
 
 export type CategoryPath = string[];
@@ -52,4 +54,10 @@ export function getCategoryPathParts(category: CategoryInput): CategoryPath | nu
 export function getCategoryPathLabel(category: string | string[] | null | undefined): string | null {
     const parts = getCategoryPathParts(category);
     return parts ? parts.join(CATEGORY_SEPARATOR) : null;
+}
+
+export function isBookCategory(category: string | string[] | null | undefined): boolean {
+    const label = getCategoryPathLabel(category);
+    if (!label) return false;
+    return postConfig.bookCategories?.includes(label) || false;
 }

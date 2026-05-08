@@ -219,7 +219,7 @@
     background: var(--primary);
     border: none;
     border-radius: 1rem;
-    color: white;
+    color: var(--text-on-primary);
     font-weight: 750;
     font-size: 0.95rem;
     cursor: pointer;

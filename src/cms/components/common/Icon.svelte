@@ -82,6 +82,8 @@
     "material-symbols:visibility-off-outline-rounded": "EyeOff",
     "material-symbols:deployed-code-outline-rounded": "Cpu",
     "material-symbols:calendar-month-outline-rounded": "Calendar",
+    "material-symbols:dark-mode-outline-rounded": "Moon",
+    "material-symbols:light-mode-outline-rounded": "Sun",
     "svg-spinners:ring-resize": "Loader2"
   };
 

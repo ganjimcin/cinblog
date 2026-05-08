@@ -382,7 +382,7 @@
 
   .upload-btn {
     background: var(--primary);
-    color: white;
+    color: var(--text-on-primary);
     padding: 0.6rem 1.2rem;
     border-radius: 0.75rem;
     font-weight: 700;

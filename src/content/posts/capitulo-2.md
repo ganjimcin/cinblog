@@ -3,7 +3,7 @@ title: Capítulo 2
 category: Las aventuras de Xoshö y Mocho
 published: '2026-05-04'
 description: Capitulo 2. Mocho y Xoshö se conocen.
-cover: /assets/images/1777924182095-mocho-dibujado-por-xosh.webp
+cover: /assets/uploads/2026/05/1777924182095-mocho-dibujado-por-xosh.webp
 coverInContent: false
 slug: capitulo-2
 draft: false
@@ -33,7 +33,7 @@ Era **Xoshö.**
 
 Mocho lo miró de arriba abajo. Su miedo se había transformado en sorpresa. —¿Tú me estabas dibujando? —preguntó ella, señalando el dibujo donde se le veía con su mochila y su pelo corto al viento.
 
-![Imagen|200](/assets/images/1777924182095-mocho-dibujado-por-xosh.webp)
+![Imagen|200](/assets/uploads/2026/05/1777924182095-mocho-dibujado-por-xosh.webp)
 
 Xoshö dio un salto y aterrizó en el suelo sin hacer ni un ruido, como si sus pies fueran de aire, quitándole el bloc de notas de las manos a Mocho —Es que caminas de una forma muy especial —respondió él, ladeando la cabeza—. Pareces alguien que sabe exactamente a dónde va, y eso es muy difícil de dibujar. Aunque no te he dado permiso para que los mires. Cotilla.
 

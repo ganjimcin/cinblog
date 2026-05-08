@@ -34,19 +34,10 @@ export function rehypeMermaid() {
                     ],
                 );
 
-                // 创建客户端渲染脚本
-                const renderScript = h(
-                    "script",
-                    {
-                        type: "text/javascript",
-                    },
-                    mermaidRenderScript,
-                );
-
                 // 替换原始节点
                 node.tagName = "div";
                 node.properties = { class: "mermaid-diagram-container" };
-                node.children = [mermaidContainer, renderScript];
+                node.children = [mermaidContainer];
             }
         });
     };

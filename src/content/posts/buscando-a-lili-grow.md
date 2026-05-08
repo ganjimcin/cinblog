@@ -2,7 +2,7 @@
 title: Buscando a LILI GROW
 category: Raíces
 published: '2026-04-26'
-cover: /assets/images/1777149258414-mi-jardin.webp
+cover: /assets/uploads/2026/04/1777149258414-mi-jardin.webp
 coverInContent: false
 draft: false
 pinned: false
@@ -13,7 +13,7 @@ description: 'El principio del cambio: siendo fiel a mi pedagogía y a mi person
 
 ## El principio del cambio: siendo fiel a mi pedagogía y  a mi persona.
 
-![Mi jardin.png](/assets/images/1777149258414-mi-jardin.webp)
+![Mi jardin.png](/assets/uploads/2026/04/1777149258414-mi-jardin.webp)
 
 
 En mi primer post os abrí la puerta de mi jardín, os conté quien era, hoy quiero un pasito más allá, quiero adentrarme un poco más en el jardín y en como nace realmente este proyecto y porque he creado este nombre artístico. 

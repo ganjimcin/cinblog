@@ -6,15 +6,16 @@
 :root {
   --hue: 165;
   --primary: oklch(.7 .14 var(--hue));
-  --page-bg: oklch(.95 .01 var(--hue));
+  --page-bg: oklch(.96 .01 var(--hue));
   --card-bg: white;
-  --card-bg-transparent: rgba(255, 255, 255, .7);
-  --line-divider: rgba(0, 0, 0, .08);
+  --card-bg-transparent: rgba(255, 255, 255, .8);
+  --line-divider: rgba(0, 0, 0, .12);
   --text-primary: oklch(.25 .02 var(--hue));
-  --text-secondary: oklch(.5 .03 var(--hue));
-  --btn-regular-bg: oklch(.95 .025 var(--hue));
-  --btn-plain-bg-hover: oklch(.95 .025 var(--hue));
-  --toolbar-bg: oklch(.92 .03 var(--hue));
+  --text-secondary: oklch(.45 .03 var(--hue));
+  --text-on-primary: oklch(.20 .02 var(--hue));
+  --btn-regular-bg: oklch(.94 .02 var(--hue));
+  --btn-plain-bg-hover: oklch(.90 .02 var(--hue));
+  --toolbar-bg: oklch(.94 .03 var(--hue));
   --radius-large: 1rem;
   --radius-navbar: .75rem;
   --radius-lg: .5rem;
@@ -28,7 +29,7 @@
   --input-bg: white;
   --header-height: 70px;
   --toolbar-height: 50px;
-  --bg-glass: rgba(255, 255, 255, 0.8);
+  --bg-glass: rgba(255, 255, 255, 0.9);
 }
 
 :root.dark {
@@ -36,15 +37,16 @@
   --page-bg: oklch(.16 .014 var(--hue));
   --card-bg: oklch(.23 .015 var(--hue));
   --card-bg-transparent: rgba(23, 23, 23, .7);
-  --line-divider: rgba(255, 255, 255, .1);
-  --text-primary: oklch(.85 .02 var(--hue));
-  --text-secondary: oklch(.65 .02 var(--hue));
-  --btn-regular-bg: oklch(.33 .035 var(--hue));
-  --btn-plain-bg-hover: oklch(.3 .035 var(--hue));
+  --line-divider: rgba(255, 255, 255, .15);
+  --text-primary: oklch(.95 .01 var(--hue));
+  --text-secondary: oklch(.75 .02 var(--hue));
+  --text-on-primary: white;
+  --btn-regular-bg: oklch(.28 .03 var(--hue));
+  --btn-plain-bg-hover: oklch(.32 .03 var(--hue));
   --toolbar-bg: oklch(.28 .02 var(--hue));
   --float-panel-bg: oklch(.2 .015 var(--hue));
   --input-bg: oklch(.25 .015 var(--hue));
-  --bg-glass: rgba(23, 23, 23, 0.8);
+  --bg-glass: rgba(23, 23, 23, 0.9);
 }
 
 /* Global resets and scrollbars */
@@ -205,7 +207,7 @@ body {
 }
 
 .custom-md blockquote.admonition.bdm-note {
-  border-left-color: #3b82f6;
+  border-left-color: var(--primary);
 }
 
 .custom-md blockquote.admonition.bdm-tip {
@@ -225,7 +227,7 @@ body {
 }
 
 .custom-md blockquote.admonition.bdm-note .bdm-title {
-  color: #3b82f6;
+  color: var(--primary);
 }
 
 .custom-md blockquote.admonition.bdm-tip .bdm-title {
@@ -1379,7 +1381,7 @@ body {
   background-color: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
-  color: var(--ec-collapse-accent-color, var(--sl-color-accent, var(--accent-color, #3b82f6)));
+  color: var(--ec-collapse-accent-color, var(--sl-color-accent, var(--accent-color, var(--primary))));
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
@@ -1406,7 +1408,7 @@ body {
 }
 
 .expressive-code .ec-collapse__toggle:focus-visible {
-  outline: 2px solid var(--ec-collapse-accent-color, var(--sl-color-accent, var(--accent-color, #3b82f6)));
+  outline: 2px solid var(--ec-collapse-accent-color, var(--sl-color-accent, var(--accent-color, var(--primary))));
   outline-offset: 2px
 }
 
@@ -1568,7 +1570,7 @@ body.light .ec-collapse__toggle:hover,
 :root:not([data-theme='one-dark-pro']) .expressive-code[data-theme='one-dark-pro'] {
   --ec-brdRad: 0.75rem;
   --ec-brdWd: 1.5px;
-  --ec-brdCol: #3c424e;
+  --ec-brdCol: var(--line-divider);
   --ec-codeFontFml: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   --ec-codeFontSize: 0.875rem;
   --ec-codeFontWg: 400;
@@ -1590,7 +1592,7 @@ body.light .ec-collapse__toggle:hover,
   --ec-uiPadInl: 1rem;
   --ec-uiSelBg: #2c313a;
   --ec-uiSelFg: #d7dae0;
-  --ec-focusBrd: #3e4452;
+  --ec-focusBrd: var(--primary);
   --ec-sbThumbCol: #4e566660;
   --ec-sbThumbHoverCol: #60697afd;
   --ec-tm-lineMarkerAccentMarg: 0rem;
@@ -1603,8 +1605,8 @@ body.light .ec-collapse__toggle:hover,
   --ec-tm-inlMarkerPad: 0.15rem;
   --ec-tm-insDiffIndContent: '+';
   --ec-tm-delDiffIndContent: '-';
-  --ec-tm-markBg: #00548680;
-  --ec-tm-markBrdCol: #007cb1d0;
+  --ec-tm-markBg: oklch(from var(--primary) l c h / 0.2);
+  --ec-tm-markBrdCol: var(--primary);
   --ec-tm-insBg: #005a4a80;
   --ec-tm-insBrdCol: #008371d0;
   --ec-tm-insDiffIndCol: #2fb6a2d0;
@@ -1644,27 +1646,27 @@ body.light .ec-collapse__toggle:hover,
   --ec-frm-copyIcon: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'1.75'%3E%3Cpath%20d%3D'M3%2019a2%202%200%200%201-1-2V2a2%202%200%200%201%201-1h13a2%202%200%200%201%202%201'%2F%3E%3Crect%20x%3D'6'%20y%3D'5'%20width%3D'16'%20height%3D'18'%20rx%3D'1.5'%20ry%3D'1.5'%2F%3E%3C%2Fsvg%3E");
   --ec-frm-trmIcon: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2060%2016'%20preserveAspectRatio%3D'xMidYMid%20meet'%3E%3Ccircle%20cx%3D'8'%20cy%3D'8'%20r%3D'8'%2F%3E%3Ccircle%20cx%3D'30'%20cy%3D'8'%20r%3D'8'%2F%3E%3Ccircle%20cx%3D'52'%20cy%3D'8'%20r%3D'8'%2F%3E%3C%2Fsvg%3E");
   --ec-languageBadge-fontSize: 0.75rem;
-  --ec-languageBadge-fontCol: darkblue;
+  --ec-languageBadge-fontCol: var(--primary);
   --ec-languageBadge-fontWg: bold;
-  --ec-languageBadge-bg: lightblue;
+  --ec-languageBadge-bg: var(--btn-regular-bg);
   --ec-languageBadge-brdRad: 0.25rem;
   --ec-languageBadge-opa: 1;
-  --ec-languageBadge-brdWd: 0px;
-  --ec-languageBadge-brdCol: transparent;
+  --ec-languageBadge-brdWd: 1px;
+  --ec-languageBadge-brdCol: var(--line-divider);
   --ec-cs-closedBrdWd: 0px;
   --ec-cs-closedPadBlk: 4px;
   --ec-cs-closedMarg: 0;
   --ec-cs-closedFontFml: inherit;
   --ec-cs-closedFontSize: inherit;
   --ec-cs-closedLineHt: inherit;
-  --ec-cs-closedTextCol: #abb2bf;
-  --ec-cs-closedBgCol: rgb(84 174 255 / 20%);
-  --ec-cs-closedBrdCol: rgb(84 174 255 / 50%);
+  --ec-cs-closedTextCol: var(--text-primary);
+  --ec-cs-closedBgCol: var(--btn-regular-bg);
+  --ec-cs-closedBrdCol: var(--line-divider);
   --ec-cs-openBrdWd: 1px;
   --ec-cs-openPad: 0;
   --ec-cs-openMarg: 0;
   --ec-cs-openBgCol: transparent;
-  --ec-cs-openBgColCollapsible: rgb(84 174 255 / 10%);
+  --ec-cs-openBgColCollapsible: var(--btn-regular-bg);
   --ec-cs-openBrdCol: transparent;
   --ec-cs-expandIcon: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2016%2016'%3E%3Cpath%20d%3D'm8.177.677%202.896%202.896a.25.25%200%200%201-.177.427H8.75v1.25a.75.75%200%200%201-1.5%200V4H5.104a.25.25%200%200%201-.177-.427L7.823.677a.25.25%200%200%201%20.354%200ZM7.25%2010.75a.75.75%200%200%201%201.5%200V12h2.146a.25.25%200%200%201%20.177.427l-2.896%202.896a.25.25%200%200%201-.354%200l-2.896-2.896A.25.25%200%200%201%205.104%2012H7.25v-1.25Zm-5-2a.75.75%200%200%200%200-1.5h-.5a.75.75%200%200%200%200%201.5h.5ZM6%208a.75.75%200%200%201-.75.75h-.5a.75.75%200%200%201%200-1.5h.5A.75.75%200%200%201%206%208Zm2.25.75a.75.75%200%200%200%200-1.5h-.5a.75.75%200%200%200%200%201.5h.5ZM12%208a.75.75%200%200%201-.75.75h-.5a.75.75%200%200%201%200-1.5h.5A.75.75%200%200%201%2012%208Zm2.25.75a.75.75%200%200%200%200-1.5h-.5a.75.75%200%200%200%200%201.5h.5Z'%2F%3E%3C%2Fsvg%3E");
   --ec-cs-collapseIcon: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2016%2016'%3E%3Cpath%20d%3D'M10.896%202H8.75V.75a.75.75%200%200%200-1.5%200V2H5.104a.25.25%200%200%200-.177.427l2.896%202.896a.25.25%200%200%200%20.354%200l2.896-2.896A.25.25%200%200%200%2010.896%202ZM8.75%2015.25a.75.75%200%200%201-1.5%200V14H5.104a.25.25%200%200%201-.177-.427l2.896-2.896a.25.25%200%200%201%20.354%200l2.896%202.896a.25.25%200%200%201-.177.427H8.75v1.25Zm-6.5-6.5a.75.75%200%200%200%200-1.5h-.5a.75.75%200%200%200%200%201.5h.5ZM6%208a.75.75%200%200%201-.75.75h-.5a.75.75%200%200%201%200-1.5h.5A.75.75%200%200%201%206%208Zm2.25.75a.75.75%200%200%200%200-1.5h-.5a.75.75%200%200%200%200%201.5h.5ZM12%208a.75.75%200%200%201-.75.75h-.5a.75.75%200%200%201%200-1.5h.5A.75.75%200%200%201%2012%208Zm2.25.75a.75.75%200%200%200%200-1.5h-.5a.75.75%200%200%200%200%201.5h.5Z'%2F%3E%3C%2Fsvg%3E");
@@ -1683,7 +1685,7 @@ body.light .ec-collapse__toggle:hover,
 
 :root[data-theme='one-light'] .expressive-code:not([data-theme='one-dark-pro']),
 .expressive-code[data-theme='one-light'] {
-  --ec-brdCol: #d4d4d4;
+  --ec-brdCol: var(--line-divider);
   --ec-codeBg: #fafafa;
   --ec-codeFg: #383a42;
   --ec-codeSelBg: #e5e5e6;
@@ -1692,10 +1694,10 @@ body.light .ec-collapse__toggle:hover,
   --ec-gtrHlFg: #383a42bc;
   --ec-uiSelBg: #dbdbdc;
   --ec-uiSelFg: #232324;
-  --ec-focusBrd: #526fff;
+  --ec-focusBrd: var(--primary);
   --ec-sbThumbCol: #4e56666e;
   --ec-sbThumbHoverCol: #5a637597;
-  --ec-tm-markBg: #57c3fd80;
+  --ec-tm-markBg: oklch(from var(--primary) l c h / 0.1);
   --ec-tm-insBg: #4cccb780;
   --ec-tm-insDiffIndCol: #006e5dd0;
   --ec-tm-delBg: #fd9cba80;

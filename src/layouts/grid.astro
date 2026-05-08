@@ -36,6 +36,8 @@ interface Props {
     headings?: MarkdownHeading[];
     forceRightSidebar?: boolean;
     sidenotes?: string[];
+    hasMath?: boolean;
+    hasMermaid?: boolean;
 }
 
 const {
@@ -48,6 +50,8 @@ const {
     headings = [],
     forceRightSidebar = false,
     sidenotes = [],
+    hasMath,
+    hasMermaid,
 } = Astro.props;
 const hasBannerCredit = siteConfig.wallpaper.mode === "banner" && siteConfig.wallpaper.banner?.credit?.enable;
 const hasBannerLink = !!siteConfig.wallpaper.banner?.credit?.url;
@@ -103,6 +107,8 @@ const mainContentClass = hasRightSidebar ? "w-full col-span-1 row-start-1 row-en
     lang={lang}
     setOGTypeArticle={setOGTypeArticle}
     postSlug={postSlug}
+    hasMath={hasMath}
+    hasMermaid={hasMermaid}
 >
     <slot name="head" slot="head" />
     <IconifyLoader />
@@ -145,14 +151,15 @@ const mainContentClass = hasRightSidebar ? "w-full col-span-1 row-start-1 row-en
     <!-- Main content -->
     <div
         class={`absolute w-full z-30 pointer-events-none transition-all duration-600 ${siteConfig.wallpaper.mode !== "banner" ? "no-banner-layout" : ""} ${transparentClass}`}
-        style={`top: ${finalMainPanelTop}`}
+        style={`top: ${finalMainPanelTop}; min-height: calc(100vh - ${finalMainPanelTop})`}
     >
         <div
-            class="relative max-w-[var(--page-width)] mx-auto pointer-events-auto"
+            class="relative max-w-[var(--page-width)] mx-auto pointer-events-auto flex flex-col"
+            style={`min-height: calc(100vh - ${finalMainPanelTop})`}
         >
             <div
                 id="main-grid"
-                class={`transition-all duration-600 w-full left-0 right-0 grid ${gridCols} grid-rows-[auto] mx-auto gap-4 px-8 ${!hasAnyComponents ? "mobile-no-sidebar" : ""} ${forceRightSidebar ? "force-sidebar-mode" : ""}`}
+                class={`transition-all duration-600 w-full left-0 right-0 grid ${gridCols} grid-rows-[1fr_auto] mx-auto gap-4 px-8 ${!hasAnyComponents ? "mobile-no-sidebar" : ""} ${forceRightSidebar ? "force-sidebar-mode" : ""} flex-grow`}
             >
                 <!-- Banner image credit -->
                 {
@@ -227,22 +234,24 @@ const mainContentClass = hasRightSidebar ? "w-full col-span-1 row-start-1 row-en
 
                 <main
                     id="swup-container"
-                    class={`${mainContentClass} transition-swup-fade`}
+                    class={`${mainContentClass} ${transparentClass} transition-swup-fade flex flex-col`}
                 >
                     <div id="grid-class-carrier" data-grid-class={gridCols} class="hidden"></div>
                     <div
                         id="content-wrapper"
                         class:list={[
-                            "transition-leaving",
+                            "transition-leaving flex flex-col flex-grow",
                             {
                                 "shadow-2xl shadow-black/5 dark:shadow-none rounded-(--radius-large)": !isHomePage
                             }
                         ]}
                     >
-                        {isHomePage && <Announcement class="mb-4 onload-animation-up" />}
-                        <slot />
+                        <div class="flex-grow">
+                            {isHomePage && <Announcement class="mb-4 onload-animation-up" />}
+                            <slot />
+                        </div>
                         <div
-                            class="footer col-span-2 onload-animation-up hidden lg:block transition-swup-fade"
+                            class="footer col-span-2 onload-animation-up hidden lg:block transition-swup-fade mt-auto"
                         >
                             <Footer />
                         </div>
@@ -258,10 +267,9 @@ const mainContentClass = hasRightSidebar ? "w-full col-span-1 row-start-1 row-en
                     />
                 </div>
 
-                <div class={mobileFooterClass}>
+                <div class={`${mobileFooterClass} mt-auto`}>
                     <Footer />
                 </div>
-
             </div>
         </div>
     </div>

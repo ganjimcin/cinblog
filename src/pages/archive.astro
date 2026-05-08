@@ -1,4 +1,5 @@
 ---
+export const prerender = false;
 import { LinkPresets } from "@constants/link-presets";
 import { LinkPreset } from "@/types/config";
 import { getSortedPostsList } from "@utils/post";
@@ -11,6 +12,11 @@ const pageTitle = LinkPresets[LinkPreset.Archive].name;
 const pageDescription = LinkPresets[LinkPreset.Archive].description;
 
 const sortedPostsList = await getSortedPostsList();
+
+const url = Astro.url;
+const initialCategories = url.searchParams.getAll('category');
+const initialTags = url.searchParams.getAll('tag');
+const initialUncategorized = url.searchParams.get('uncategorized');
 ---
 
 <GridLayout title={pageTitle} description={pageDescription}>
@@ -29,7 +35,13 @@ const sortedPostsList = await getSortedPostsList();
                 )}
             </header>
             <!-- 归档面板 -->
-            <ArchivePanel sortedPosts={sortedPostsList} client:idle></ArchivePanel>
+            <ArchivePanel 
+                sortedPosts={sortedPostsList} 
+                {initialCategories} 
+                {initialTags} 
+                {initialUncategorized}
+                client:load
+            ></ArchivePanel>
         </div>
     </div>
 </GridLayout>

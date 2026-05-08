@@ -176,27 +176,30 @@
   }
 
   .cms-sidebar-section label {
-    font-size: 0.7rem;
-    font-weight: 800;
+    font-size: 0.75rem;
+    font-weight: 850;
     text-transform: uppercase;
-    opacity: 0.5;
+    color: var(--text-secondary);
     letter-spacing: 0.05em;
   }
 
   .cms-sidebar-section input, .cms-sidebar-section textarea {
-    background: var(--btn-regular-bg);
+    background: var(--input-bg);
     border: 1px solid var(--line-divider);
     border-radius: 0.75rem;
     padding: 0.75rem 1rem;
     color: var(--text-primary);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 500;
     outline: none;
     transition: all 0.2s;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
   }
 
   .cms-sidebar-section input:focus, .cms-sidebar-section textarea:focus {
     border-color: var(--primary);
     background: var(--card-bg);
+    box-shadow: 0 0 0 4px oklch(from var(--primary) l c h / 0.1);
   }
 
   .cms-sidebar-toggle-adv {

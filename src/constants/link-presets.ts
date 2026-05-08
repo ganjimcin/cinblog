@@ -8,7 +8,7 @@ export const LinkPresets: { [key in LinkPreset]: NavbarLink } = {
         name: i18n(I18nKey.home),
         url: "/",
         icon: "material-symbols:home",
-        description: "Twilight - A simple, clean, and beautiful blog theme.",
+        description: "El Jardín de una Pedagoga - Un rincón para reflexionar.",
     },
     [LinkPreset.Archive]: {
         name: i18n(I18nKey.archive),

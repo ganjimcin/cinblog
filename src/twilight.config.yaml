@@ -144,6 +144,8 @@ announcement:
     external: false
 post:
   showLastModified: true
+  bookCategories:
+    - "Las aventuras de Xoshö y Mocho"
   expressiveCode:
     theme: github-dark
   license:

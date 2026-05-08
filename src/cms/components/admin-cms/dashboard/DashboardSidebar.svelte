@@ -149,13 +149,13 @@
 
   .cms-nav-item.active {
     background: var(--primary);
-    color: white;
+    color: var(--text-on-primary);
     box-shadow: 0 4px 15px oklch(from var(--primary) l c h / 0.25);
   }
 
   .cms-nav-item.active :global(.cms-nav-icon) {
     opacity: 1;
-    color: white;
+    color: var(--text-on-primary);
   }
 
   .cms-nav-count {
@@ -171,7 +171,7 @@
 
   .cms-nav-item.active .cms-nav-count {
     background: rgba(255, 255, 255, 0.25);
-    color: white;
+    color: var(--text-on-primary);
   }
 
   .cms-nav-divider {

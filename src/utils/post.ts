@@ -1,10 +1,12 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 
-import { CATEGORY_SEPARATOR, type CategoryPath, getCategoryPathParts } from "@utils/category";
+import { CATEGORY_SEPARATOR, type CategoryPath, getCategoryPathParts, getCategoryPathLabel, isBookCategory } from "@utils/category";
+export { isBookCategory };
 import { parseTags, type Tag } from "@utils/tag";
 import { getCategoryUrl } from "@utils/url";
 import { i18n } from "@i18n/translation";
 import I18nKey from "@i18n/i18nKey";
+
 
 
 // // Retrieve posts and sort them by publication date
@@ -27,18 +29,55 @@ async function getRawSortedPosts() {
 }
 
 export async function getSortedPosts() {
-    const sorted = await getRawSortedPosts();
+    const allPosts = await getRawSortedPosts();
 
-    for (let i = 1; i < sorted.length; i++) {
-        sorted[i].data.nextSlug = sorted[i - 1].id;
-        sorted[i].data.nextTitle = sorted[i - 1].data.title;
-    }
-    for (let i = 0; i < sorted.length - 1; i++) {
-        sorted[i].data.prevSlug = sorted[i + 1].id;
-        sorted[i].data.prevTitle = sorted[i + 1].data.title;
+    for (const post of allPosts) {
+        const category = post.data.category;
+        
+        if (isBookCategory(category)) {
+            // Para libros, la navegación es cronológica dentro de la misma categoría
+            const categoryPosts = allPosts
+                .filter(p => getCategoryPathLabel(p.data.category) === getCategoryPathLabel(category))
+                .sort((a, b) => {
+                    // Priorizar orden por capítulo y parte si existe la info de libro
+                    if (a.data.book && b.data.book) {
+                        if (a.data.book.chapter !== b.data.book.chapter) {
+                            return (a.data.book.chapter ?? 0) - (b.data.book.chapter ?? 0);
+                        }
+                        if (a.data.book.part !== b.data.book.part) {
+                            return (a.data.book.part ?? 0) - (b.data.book.part ?? 0);
+                        }
+                    }
+                    // Si no hay info de libro o es la misma, usar fecha (ascendente para libros)
+                    const dateA = new Date(a.data.published);
+                    const dateB = new Date(b.data.published);
+                    return dateA > dateB ? 1 : -1;
+                });
+            
+            const index = categoryPosts.findIndex(p => p.id === post.id);
+            if (index > 0) {
+                post.data.prevSlug = categoryPosts[index - 1].id;
+                post.data.prevTitle = categoryPosts[index - 1].data.title;
+            }
+            if (index < categoryPosts.length - 1) {
+                post.data.nextSlug = categoryPosts[index + 1].id;
+                post.data.nextTitle = categoryPosts[index + 1].data.title;
+            }
+        } else {
+            // Navegación global por defecto (descendente)
+            const index = allPosts.findIndex(p => p.id === post.id);
+            if (index < allPosts.length - 1) {
+                post.data.prevSlug = allPosts[index + 1].id;
+                post.data.prevTitle = allPosts[index + 1].data.title;
+            }
+            if (index > 0) {
+                post.data.nextSlug = allPosts[index - 1].id;
+                post.data.nextTitle = allPosts[index - 1].data.title;
+            }
+        }
     }
 
-    return sorted;
+    return allPosts;
 }
 export type PostForList = {
     id: string;

@@ -13,12 +13,6 @@ inNavbar: false
 
 Mocho caminaba decidida. Sus pasos eran tan rápidos que parecía que sus pies no tocaban el suelo, pero a la vez tan fuertes que marcaban el camino con un ¡pum, pum! Parecía una gigante. Xoshö, que iba un poco más atrás, no podía dejar de mirarla. Le encantaba la seguridad de Mocho; parecía no tener miedo a nada, ni siquiera a las sombras largas del bosque.
 
-:::sidebar
-sta es una nota con tres puntos (Directiva nativa).
-:::
-
-Para la prueba 
-
 :::narrador
 *(Te voy a contar un secreto: Xoshö tenía muchísimos amigos, ¡muchos más que dedos en las manos! En el cole todos querían jugar con él. Xoshö caminaba por los pasillos saltando y saludando a todo el mundo. Su seguridad era como la de un globo de colores: era bonita y le hacía flotar como si no pesara nada. Pero, a veces, los globos se sienten un vacíos porque, si el viento deja de soplar, no saben hacia dónde ir.*
 

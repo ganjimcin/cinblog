@@ -182,7 +182,7 @@
     .shape-3 {
         width: 400px;
         height: 400px;
-        background: #3b82f6;
+        background: oklch(from var(--primary) l c h / 0.8);
         bottom: 10%;
         right: 20%;
         animation-delay: -12s;
@@ -299,7 +299,7 @@
 
     .login-btn-primary {
         background: var(--primary);
-        color: white;
+        color: var(--text-on-primary);
         border: none;
         padding: 1rem;
         border-radius: 0.75rem;

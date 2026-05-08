@@ -351,6 +351,8 @@ export type BlogPostData = {
 export type PostConfig = {
     // 显示“上次编辑”卡片
     showLastModified: boolean;
+    // 强制按最早优先排序的分类（用于书籍/连载）
+    bookCategories?: string[];
     // 代码高亮配置
     expressiveCode: {
         // 主题

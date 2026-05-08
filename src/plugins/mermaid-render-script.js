@@ -218,6 +218,23 @@
             }
         });
 
+        // 兼容 Swup
+        const addSwupHook = () => {
+            if (window.swup && window.swup.hooks) {
+                window.swup.hooks.on('content:replace', () => {
+                    currentTheme = null;
+                    retryCount = 0;
+                    setTimeout(() => renderMermaidDiagrams(), 100);
+                });
+                return true;
+            }
+            return false;
+        };
+
+        if (!addSwupHook()) {
+            document.addEventListener('swup:enable', addSwupHook);
+        }
+
         // 监听页面可见性变化，页面重新可见时重新渲染
         document.addEventListener("visibilitychange", () => {
             if (!document.hidden) {

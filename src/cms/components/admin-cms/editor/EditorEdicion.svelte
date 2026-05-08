@@ -380,7 +380,7 @@
     padding: 0.75rem 2rem;
     font-size: 0.75rem;
     font-weight: 800;
-    opacity: 0.6;
+    color: var(--text-secondary);
     display: flex;
     justify-content: space-between;
     border-top: 1px solid var(--line-divider);
@@ -414,7 +414,7 @@
     align-items: center;
     gap: 0.4rem;
     color: var(--primary);
-    opacity: 0.8;
+    font-weight: 900;
   }
 
   .autosave-tag :global(svg) {
@@ -443,33 +443,38 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.15rem;
-    height: 2.15rem;
+    width: 2.25rem;
+    height: 2.25rem;
     border: none;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--card-bg);
     color: var(--text-primary);
     cursor: pointer;
-    border-radius: 0.6rem;
+    border-radius: 0.5rem;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    font-size: 1.1rem;
-    font-weight: 700;
-    border: 1px solid transparent;
+    font-size: 1.25rem;
+    font-weight: 900;
+    border: 1.5px solid var(--line-divider);
     pointer-events: auto;
     position: relative;
     z-index: 2;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   }
 
   .cms-editor-toolbar button:hover {
-    background: var(--card-bg);
+    background: var(--btn-regular-bg);
     color: var(--primary);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    border-color: var(--line-divider);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-color: var(--primary);
+  }
+
+  .cms-editor-toolbar button :global(svg) {
+    stroke-width: 2;
   }
 
   .tool-warning:hover { color: #f59e0b !important; }
   .tool-tip:hover { color: #10b981 !important; }
-  .tool-note:hover { color: #3b82f6 !important; }
+  .tool-note:hover { color: var(--primary) !important; }
   .tool-important:hover { color: #ef4444 !important; }
 
   .cms-toolbar-divider {

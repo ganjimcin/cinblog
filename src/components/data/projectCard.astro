@@ -120,7 +120,7 @@ const sizeClasses = getSizeClasses(size);
         <!-- 分类标签 -->
         {project.category && (
             <div class="mb-2">
-                <span class="px-2 py-1 text-xs bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400 rounded-sm">
+                <span class="px-2 py-1 text-xs bg-[color-mix(in_oklch,var(--primary)_10%,transparent)] text-(--primary) dark:bg-[color-mix(in_oklch,var(--primary)_20%,transparent)] dark:text-(--primary) rounded-sm">
                     {project.category}
                 </span>
             </div>
@@ -161,7 +161,7 @@ const sizeClasses = getSizeClasses(size);
                     href={project.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class={`inline-flex items-center px-3 py-1.5 rounded-md border border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-300 bg-blue-50/60 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 font-medium transition-colors ${sizeClasses.links}`}
+                    class={`inline-flex items-center px-3 py-1.5 rounded-md border border-(--primary) text-(--primary) bg-[color-mix(in_oklch,var(--primary)_10%,transparent)] dark:bg-[color-mix(in_oklch,var(--primary)_20%,transparent)] hover:bg-[color-mix(in_oklch,var(--primary)_15%,transparent)] dark:hover:bg-[color-mix(in_oklch,var(--primary)_30%,transparent)] font-medium transition-colors ${sizeClasses.links}`}
                 >
                     {i18n(I18nKey.projectsDemo)}
                 </a>

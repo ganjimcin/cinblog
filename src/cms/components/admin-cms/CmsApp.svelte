@@ -15,8 +15,25 @@
   const siteTitle = "Rain and Tea";
   let cmsConfig = $state(null);
   let isLoadingConfig = $state(true);
+  let isDark = $state(true);
+
+  function toggleTheme() {
+    isDark = !isDark;
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute("data-theme", "github-dark");
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute("data-theme", "github-light");
+      localStorage.setItem('theme', 'light');
+    }
+  }
 
   onMount(async () => {
+    // Inicializar estado del tema
+    isDark = document.documentElement.classList.contains('dark');
+    
     // CmsApp.svelte - Carga de la configuración del CMS
     try {
       // Usamos una ruta más robusta para config.yml
@@ -161,6 +178,15 @@
         >
           <Icon icon="material-symbols:dashboard-outline-rounded" />
         </button>
+
+        <button
+          onclick={toggleTheme}
+          class="cms-btn-icon"
+          title={isDark ? "Modo Claro" : "Modo Oscuro"}
+        >
+          <Icon icon={isDark ? "lucide:sun" : "lucide:moon"} />
+        </button>
+
         <button
           onclick={handleLogout}
           class="cms-btn-icon btn-logout"
