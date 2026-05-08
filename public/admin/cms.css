@@ -136,7 +136,7 @@ body {
 }
 
 .markdown-content pre {
-  background: #1e1e1e !important;
+  background: var(--btn-regular-bg) !important;
   padding: 1rem;
   border-radius: var(--radius-lg);
   overflow-x: auto;
@@ -146,7 +146,7 @@ body {
 
 .markdown-content pre code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace, monospace;
-  color: #d4d4d4;
+  color: var(--text-primary);
   line-height: 1.5;
 }
 
@@ -207,43 +207,43 @@ body {
 }
 
 .custom-md blockquote.admonition.bdm-note {
-  border-left-color: var(--primary);
+  border-left-color: var(--admonitions-color-note, var(--primary));
 }
 
 .custom-md blockquote.admonition.bdm-tip {
-  border-left-color: #10b981;
+  border-left-color: var(--admonitions-color-tip, #10b981);
 }
 
 .custom-md blockquote.admonition.bdm-warning {
-  border-left-color: #f59e0b;
+  border-left-color: var(--admonitions-color-warning, #f59e0b);
 }
 
 .custom-md blockquote.admonition.bdm-important {
-  border-left-color: #ef4444;
+  border-left-color: var(--admonitions-color-important, #ef4444);
 }
 
 .custom-md blockquote.admonition.bdm-caution {
-  border-left-color: #a855f7;
+  border-left-color: var(--admonitions-color-caution, #a855f7);
 }
 
 .custom-md blockquote.admonition.bdm-note .bdm-title {
-  color: var(--primary);
+  color: var(--admonitions-color-note, var(--primary));
 }
 
 .custom-md blockquote.admonition.bdm-tip .bdm-title {
-  color: #10b981;
+  color: var(--admonitions-color-tip, #10b981);
 }
 
 .custom-md blockquote.admonition.bdm-warning .bdm-title {
-  color: #f59e0b;
+  color: var(--admonitions-color-warning, #f59e0b);
 }
 
 .custom-md blockquote.admonition.bdm-important .bdm-title {
-  color: #ef4444;
+  color: var(--admonitions-color-important, #ef4444);
 }
 
 .custom-md blockquote.admonition.bdm-caution .bdm-title {
-  color: #a855f7;
+  color: var(--admonitions-color-caution, #a855f7);
 }
 
 /* Music Card Preview (Sync with theme) */
@@ -312,7 +312,7 @@ body {
   height: 24px;
   border-radius: 50%;
   background: var(--primary);
-  color: white;
+  color: var(--text-on-primary);
   border: none;
   display: flex;
   align-items: center;
@@ -533,11 +533,11 @@ body {
 }
 
 .cms-tool-btn.tool-note {
-  color: var(--primary);
+  color: var(--admonitions-color-note, var(--primary));
 }
 
 .cms-tool-btn.tool-warning {
-  color: #f59e0b;
+  color: var(--admonitions-color-warning, #f59e0b);
 }
 
 .cms-split-view {
@@ -557,8 +557,8 @@ body {
 
 .cms-split-textarea {
   flex: 1;
-  background: #1e1e1e;
-  color: #d4d4d4;
+  background: var(--input-bg);
+  color: var(--text-primary);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace, monospace;
   font-size: 1rem;
   padding: 2rem;
@@ -603,7 +603,7 @@ body {
   cursor: pointer;
   transition: all 0.2s;
   background: var(--primary);
-  color: white;
+  color: var(--text-on-primary);
   border: none;
 }
 

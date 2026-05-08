@@ -217,7 +217,7 @@ export class TableOfContents extends HTMLElement {
 
         const isPost = this.isPostPage();
 
-        if (headings.length === 0 && !isPost) {
+        if (headings.length === 0) {
             if (!tocWrapper.classList.contains('toc-hide')) {
                 if (!isFloating) {
                     tocWrapper.style.maxHeight = tocWrapper.offsetHeight + 'px';
@@ -228,7 +228,7 @@ export class TableOfContents extends HTMLElement {
                     tocWrapper.classList.add('toc-hide');
                 }
             }
-            return true;
+            return false;
         }
 
         if (tocWrapper.classList.contains('toc-hide')) {

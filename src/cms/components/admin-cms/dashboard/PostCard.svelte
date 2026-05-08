@@ -191,13 +191,13 @@
   }
 
   .badge-published {
-    background: rgba(16, 185, 129, 0.1);
-    color: #10b981;
-    border: 1px solid rgba(16, 185, 129, 0.2);
+    background: oklch(from var(--admonitions-color-note, #10b981) l c h / 0.1);
+    color: var(--admonitions-color-note, #10b981);
+    border: 1px solid oklch(from var(--admonitions-color-note, #10b981) l c h / 0.2);
   }
 
   .badge-pinned {
-    color: #f59e0b;
+    color: var(--admonitions-color-warning, #f59e0b);
     font-size: 1.25rem;
     padding: 0;
   }

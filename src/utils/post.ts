@@ -56,12 +56,12 @@ export async function getSortedPosts() {
             
             const index = categoryPosts.findIndex(p => p.id === post.id);
             if (index > 0) {
-                post.data.prevSlug = categoryPosts[index - 1].id;
-                post.data.prevTitle = categoryPosts[index - 1].data.title;
+                post.data.nextSlug = categoryPosts[index - 1].id;
+                post.data.nextTitle = categoryPosts[index - 1].data.title;
             }
             if (index < categoryPosts.length - 1) {
-                post.data.nextSlug = categoryPosts[index + 1].id;
-                post.data.nextTitle = categoryPosts[index + 1].data.title;
+                post.data.prevSlug = categoryPosts[index + 1].id;
+                post.data.prevTitle = categoryPosts[index + 1].data.title;
             }
         } else {
             // Navegación global por defecto (descendente)
