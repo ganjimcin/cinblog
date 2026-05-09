@@ -35,6 +35,8 @@ collections:
       - { label: "Fijado (Pinned)", name: "pinned", widget: "boolean", default: false, required: false }
       - { label: "Borrador", name: "draft", widget: "boolean", default: false, required: false }
       - { label: "Autor", name: "author", widget: "string", required: false }
+      - { label: "IMDb ID", name: "imdbId", widget: "string", required: false, hint: "Ej: tt1234567" }
+      - { label: "Clasificación Edad", name: "ageRating", widget: "string", required: false, hint: "Ej: +13, PG-13" }
       - { label: "Cuerpo del Post", name: "body", widget: "markdown" }
       - { label: "Idioma", name: "lang", widget: "string", required: false, placeholder: "es" }
       - { label: "Comentarios Habilitados", name: "comment", widget: "boolean", default: true, required: false }

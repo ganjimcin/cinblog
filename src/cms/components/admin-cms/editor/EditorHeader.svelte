@@ -122,7 +122,7 @@
     align-items: center;
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 1100;
     box-shadow: 0 4px 12px rgba(0,0,0,0.03);
   }
 

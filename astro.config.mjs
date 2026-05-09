@@ -66,6 +66,8 @@ export default defineConfig({
                 "#right-sidebar",
                 "#middle-sidebar",
                 "#sidenotes-container",
+                "#navbar-wrapper",
+                "#banner-wrapper",
             ],
             cache: true,
             preload: false,

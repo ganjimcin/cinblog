@@ -211,6 +211,8 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
   let inNavbarInput = $state(false);
   let iconInput = $state("");
   let slugInput = $state("");
+  let imdbIdInput = $state("");
+  let ageRatingInput = $state("");
   let formData = $state({}); // Added missing formData state
 
   let filenameInput = $state("");
@@ -286,7 +288,9 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
         pinned: pinnedInput,
         comment: commentInput,
         inNavbar: inNavbarInput,
-        icon: iconInput
+        icon: iconInput,
+        imdbId: imdbIdInput,
+        ageRating: ageRatingInput
       },
       timestamp: Date.now()
     };
@@ -298,8 +302,9 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
     if (!saved) return;
     try {
       const draft = JSON.parse(saved);
+      // Evitar preguntar si el borrador es exactamente igual a lo que ya hay
       if (draft.content !== contentInput || draft.title !== titleInput) {
-        if (confirm("Se ha encontrado un borrador local sin guardar. ¿Deseas recuperarlo?")) {
+        if (confirm("Se ha encontrado un borrador local sin guardar de una sesión anterior. ¿Deseas recuperarlo?")) {
           titleInput = draft.title || "";
           contentInput = draft.content || "";
           if (draft.fm) {
@@ -317,7 +322,12 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
             commentInput = draft.fm.comment !== undefined ? draft.fm.comment : true;
             inNavbarInput = !!draft.fm.inNavbar;
             iconInput = draft.fm.icon || "";
+            imdbIdInput = draft.fm.imdbId || "";
+            ageRatingInput = draft.fm.ageRating || "";
           }
+        } else {
+          // Si el usuario dice que NO, lo borramos para no volver a preguntar
+          clearLocalDraft();
         }
       }
     } catch (e) { console.error(e); }
@@ -383,10 +393,10 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
     if (post && githubToken) {
       await loadPost();
     } else if (!post) {
-      // CARGA AUTOMÁTICA DE LA GUÍA PARA NUEVOS POSTS
-      contentInput = STYLE_GUIDE;
-      titleInput = "Guía Completa de Estilos CMS";
-      categoryInput = "Documentación";
+      // Dejar vacío para nuevos posts
+      contentInput = "";
+      titleInput = "";
+      categoryInput = "";
     }
     
     loadLocalDraft();
@@ -442,6 +452,8 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
         inNavbarInput = !!formData.inNavbar;
         iconInput = formData.icon || "";
         slugInput = formData.slug || "";
+        imdbIdInput = formData.imdbId || "";
+        ageRatingInput = formData.ageRating || "";
       }
       
       filenameInput = post.name;
@@ -502,6 +514,65 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
             </div>
           </div>
         </div>`;
+      }
+    );
+
+    // Soporte para tarjetas de película (:::movie{...})
+    processedMD = processedMD.replace(
+      /:::movie\{(.*?)\}/g,
+      (match, params) => {
+        const attrs = {};
+        params.split(',').forEach(p => {
+          const parts = p.split('=');
+          if (parts.length >= 2) {
+            const k = parts[0].trim();
+            const v = parts.slice(1).join('=').trim().replace(/^["']|["']$/g, '');
+            if (k) attrs[k] = v;
+          }
+        });
+        
+        // Limpiar URL de imagen de Wikimedia Commons si es necesario
+        let coverUrl = attrs.cover || '';
+        if (coverUrl.includes('Special:FilePath/')) {
+           // Ya es una ruta directa
+        } else if (coverUrl.includes('commons.wikimedia.org/wiki/')) {
+           const filename = coverUrl.split('/').pop();
+           coverUrl = `https://commons.wikimedia.org/wiki/Special:FilePath/${filename}`;
+        }
+        
+        const mainUrl = attrs.imdbId ? `https://www.imdb.com/title/${attrs.imdbId}` : '#';
+        
+        // Generar HTML y eliminar saltos de línea/espacios extra para que Markdown no se confunda
+        const html = `
+          <div class="card-movie-info">
+            <a href="${mainUrl}" target="_blank" class="card-movie-link" style="display: contents;">
+              <div class="movie-poster" style="background-image: url('${coverUrl}')">
+                <div class="movie-poster-overlay"></div>
+              </div>
+              <div class="movie-details">
+                <div class="movie-header">
+                  <div class="movie-title-row">
+                    <h3 class="movie-card-title">${attrs.title || 'Título'}</h3>
+                    <div class="movie-badges-col">
+                      ${attrs.age ? `<span class="movie-age-badge">${attrs.age}</span>` : ''}
+                      ${attrs.recAge ? `<span class="movie-rec-age-badge" title="Edad recomendada">⭐ ${attrs.recAge}</span>` : ''}
+                    </div>
+                  </div>
+                  <div class="movie-original-title">${attrs.originalTitle || attrs.title || ''}</div>
+                </div>
+                <div class="movie-footer-info">
+                   <div class="movie-footer-row">
+                     <div class="imdb-badge">
+                       <span class="imdb-logo">IMDb</span>
+                     </div>
+                   </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        `.replace(/\n\s*/g, ""); // LIMPIEZA TOTAL DE ESPACIOS Y SALTOS
+        
+        return `\n\n${html}\n\n`;
       }
     );
 
@@ -633,6 +704,8 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
       if (licenseUrlInput) finalFM.licenseUrl = licenseUrlInput.trim();
       if (sourceLinkInput) finalFM.sourceLink = sourceLinkInput.trim();
       if (iconInput) finalFM.icon = iconInput.trim();
+      if (imdbIdInput) finalFM.imdbId = imdbIdInput.trim();
+      if (ageRatingInput) finalFM.ageRating = ageRatingInput.trim();
       
       finalFM.draft = !!draftInput;
       finalFM.pinned = !!pinnedInput;
@@ -1080,6 +1153,10 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
         bind:comment={commentInput}
         bind:inNavbar={inNavbarInput}
         bind:icon={iconInput}
+        bind:imdbId={imdbIdInput}
+        bind:ageRating={ageRatingInput}
+        bind:title={titleInput}
+        bind:content={contentInput}
       />
     {/if}
   </main>
@@ -1124,6 +1201,197 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
     display: flex;
     position: relative;
     overflow: hidden;
+  }
+
+  :global(.card-movie-link) {
+    text-decoration: none !important;
+    color: inherit !important;
+  }
+
+  :global(.card-movie-link:hover .movie-poster) {
+    transform: scale(1.05);
+    border-color: var(--primary);
+  }
+
+  :global(.card-movie-link:hover .movie-details) {
+    filter: brightness(1.2);
+  }
+
+  :global(.card-movie-info) {
+    display: flex;
+    gap: 1.5rem;
+    background: rgba(var(--card-bg-rgb, 255, 255, 255), 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--line-divider);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    margin: 2.5rem 0;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.25);
+  }
+
+  :global(.movie-poster) {
+    width: 150px;
+    height: 220px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: var(--card-bg); /* Fondo de reserva */
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Icono cuando no hay imagen */
+  :global(.movie-poster:empty::before) {
+    content: "🎬";
+    font-size: 2.5rem;
+    opacity: 0.3;
+  }
+
+  :global(.movie-poster-overlay) {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent, rgba(0,0,0,0.1));
+  }
+
+  :global(.movie-details) {
+    flex: 1;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  :global(.movie-title-row) {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  :global(.movie-card-title) {
+    margin: 0 !important;
+    font-size: 1.6rem !important;
+    font-weight: 950 !important;
+    color: var(--text-primary) !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  :global(.movie-age-badge) {
+    background: var(--primary);
+    color: var(--text-on-primary);
+    padding: 0.25rem 0.6rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 850;
+    white-space: nowrap;
+  }
+
+  :global(.movie-rec-age-badge) {
+    background: #fbbf24;
+    color: #000;
+    padding: 0.25rem 0.6rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 850;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+  }
+
+  :global(.movie-badges-col) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    align-items: flex-end;
+  }
+
+  :global(.movie-original-title) {
+    font-size: 0.9rem;
+    opacity: 0.5;
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  :global(.imdb-badge) {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  :global(.movie-footer-row) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 0.8rem;
+  }
+
+  :global(.imdb-view-link) {
+    font-size: 0.75rem !important;
+    color: var(--primary) !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    opacity: 0.8;
+    transition: all 0.2s ease;
+  }
+
+  :global(.imdb-view-link:hover) {
+    opacity: 1;
+    text-decoration: underline !important;
+    transform: translateX(2px);
+  }
+
+  :global(.imdb-logo) {
+    background: #f5c518;
+    color: #000;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    font-weight: 950;
+  }
+
+  :global(.imdb-badge-link) {
+    text-decoration: none !important;
+    color: inherit !important;
+    transition: opacity 0.2s ease;
+  }
+
+  :global(.imdb-badge-link:hover) {
+    opacity: 0.8;
+  }
+
+  :global(.imdb-view-link) {
+    font-size: 0.65rem;
+    color: var(--primary);
+    font-weight: 700;
+    margin-left: 0.2rem;
+  }
+
+  :global(.movie-web-link) {
+    font-size: 0.7rem;
+    color: var(--primary);
+    opacity: 0.7;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  :global(.movie-web-link:hover) {
+    opacity: 1;
+    text-decoration: underline;
   }
 
   .cms-config-editor {

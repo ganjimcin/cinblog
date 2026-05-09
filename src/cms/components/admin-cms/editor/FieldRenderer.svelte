@@ -73,6 +73,32 @@
       isUploading = false;
     }
   }
+  // Lógica para añadir categorías personalizadas
+  let showAddOption = $state(false);
+  let newOptionValue = $state("");
+  let extraOptions = $state([]);
+
+  const currentOptions = $derived([
+    ...(field.options || []),
+    ...extraOptions
+  ]);
+
+  function confirmAddOption() {
+    const trimmed = newOptionValue.trim();
+    if (trimmed) {
+      // Evitar duplicados
+      const exists = currentOptions.some(opt => 
+        (typeof opt === 'string' ? opt : opt.value) === trimmed
+      );
+      
+      if (!exists) {
+        extraOptions = [...extraOptions, trimmed];
+      }
+      value = trimmed;
+      newOptionValue = "";
+      showAddOption = false;
+    }
+  }
 </script>
 
 {#if field.widget === 'object'}
@@ -152,14 +178,37 @@
 
 {:else if field.widget === 'select'}
   <div class="cms-field-item">
-    <label for={fieldId}>{field.label || field.name}</label>
-    <select id={fieldId} bind:value={value}>
-      {#each field.options as opt}
-        <option value={typeof opt === 'string' ? opt : opt.value}>
-          {typeof opt === 'string' ? opt : opt.label}
-        </option>
-      {/each}
-    </select>
+    <div class="cms-field-header">
+      <label for={fieldId}>{field.label || field.name}</label>
+      {#if field.name === 'category'}
+        <button class="cms-btn-mini-inline" onclick={() => showAddOption = !showAddOption} title="Añadir nueva categoría">
+          <Icon icon={showAddOption ? "material-symbols:close-rounded" : "material-symbols:add-rounded"} />
+        </button>
+      {/if}
+    </div>
+
+    {#if showAddOption}
+      <div class="cms-add-option-row">
+        <input 
+          type="text" 
+          bind:value={newOptionValue} 
+          placeholder="Nueva categoría..." 
+          onkeydown={(e) => e.key === 'Enter' && confirmAddOption()}
+          autofocus
+        />
+        <button class="cms-btn-mini success" onclick={confirmAddOption} title="Confirmar">
+          <Icon icon="material-symbols:check-rounded" />
+        </button>
+      </div>
+    {:else}
+      <select id={fieldId} bind:value={value}>
+        {#each currentOptions as opt}
+          <option value={typeof opt === 'string' ? opt : opt.value}>
+            {typeof opt === 'string' ? opt : opt.label}
+          </option>
+        {/each}
+      </select>
+    {/if}
   </div>
 
 {:else if field.widget === 'image' || field.widget === 'file'}
@@ -440,5 +489,46 @@
   .cms-remove-image-btn:hover {
     background: #ef4444;
     transform: scale(1.1);
+  }
+  .cms-btn-mini.success {
+    background: #10b981;
+  }
+
+  .cms-btn-mini-inline {
+    background: var(--primary);
+    color: var(--text-on-primary);
+    border: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.8rem;
+    opacity: 0.8;
+    transition: all 0.2s;
+  }
+  .cms-btn-mini-inline:hover { 
+    opacity: 1; 
+    transform: scale(1.1); 
+  }
+
+  .cms-add-option-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    animation: slideIn 0.2s ease-out;
+  }
+  
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .cms-add-option-row input {
+    flex: 1;
+    font-size: 0.85rem !important;
+    padding: 0.4rem 0.6rem !important;
   }
 </style>

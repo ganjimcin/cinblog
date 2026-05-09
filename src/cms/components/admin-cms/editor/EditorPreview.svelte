@@ -95,7 +95,7 @@
   .cms-preview-header-bar {
     background: var(--btn-regular-bg);
     border-bottom: 1px solid var(--line-divider);
-    padding: 0.75rem 2rem;
+    padding: 0.375rem 2rem;
     height: 7rem;
     min-height: 7rem;
     display: flex;

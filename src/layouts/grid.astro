@@ -120,7 +120,7 @@ const mainContentClass = hasRightSidebar ? "w-full col-span-1 row-start-1 row-en
     >
         <div
             id="navbar-wrapper"
-            class="pointer-events-auto sticky top-0 transition-all"
+            class="pointer-events-auto sticky top-0 transition-all transition-swup-fade"
         >
             <Navbar />
         </div>
@@ -145,7 +145,7 @@ const mainContentClass = hasRightSidebar ? "w-full col-span-1 row-start-1 row-en
     <Banner
         config={siteConfig.wallpaper}
         isHomePage={isHomePage}
-        class={siteConfig.wallpaper.mode === "banner" ? "" : "hidden"}
+        class={`${siteConfig.wallpaper.mode === "banner" ? "" : "hidden"} transition-swup-fade`}
     />
 
     <!-- Main content -->
@@ -227,7 +227,10 @@ const mainContentClass = hasRightSidebar ? "w-full col-span-1 row-start-1 row-en
                                 </div>
                             </>
                         ) : (
-                            <div id="right-sidebar" class="hidden"></div>
+                            <>
+                                <div id="right-sidebar" class="hidden"></div>
+                                <div id="sidenotes-container" class="hidden"></div>
+                            </>
                         )
                     }
                 </div>

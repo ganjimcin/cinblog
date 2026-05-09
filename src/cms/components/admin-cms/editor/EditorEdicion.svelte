@@ -300,6 +300,7 @@
     border: 1px solid var(--line-divider);
     border-right: none;
     border-radius: 1.5rem 0 0 1.5rem;
+    overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 20px rgba(0,0,0,0.02);
   }
@@ -366,13 +367,14 @@
   .cms-editor-toolbar-sticky {
     background: var(--btn-regular-bg);
     border-bottom: 1px solid var(--line-divider);
-    padding: 0.75rem 1rem 0.5rem 1rem; /* Aumentado padding superior */
+    padding: 0.375rem 1rem;
+    height: 7rem;
     min-height: 7rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     position: relative;
-    z-index: 1010;
+    z-index: 900;
   }
 
   .cms-toolbar-rows {
@@ -462,13 +464,20 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     /* Reseteo estilos de cms.css para integración total */
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     backdrop-filter: none !important;
     padding: 0 !important;
+  }
+
+  .cms-editor-toolbar::-webkit-scrollbar {
+    display: none;
   }
 
   .cms-toolbar-group {
