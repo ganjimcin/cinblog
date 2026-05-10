@@ -370,9 +370,8 @@
   .cms-editor-toolbar-sticky {
     background: var(--btn-regular-bg);
     border-bottom: 1px solid var(--line-divider);
-    padding: 0.4rem 0.75rem;
-    height: auto;
-    min-height: 4.5rem;
+    padding: 0.5rem 1rem;
+    height: 5.25rem;
     display: flex;
     align-items: center;
     position: relative;

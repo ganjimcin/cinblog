@@ -24,9 +24,9 @@
       <button class="btn-plain scale-animation" onclick={onCancel} title="Volver">
         <Icon icon="material-symbols:home-outline-rounded" size="xl" />
       </button>
-      <div class="flex flex-col ml-3">
+      <div class="filename-container">
         <span class="cms-editor-breadcrumb">Editor Blog</span>
-        <span class="font-bold">{filename || "Nueva Entrada"}</span>
+        <span class="header-filename">{filename || "Nueva Entrada"}</span>
       </div>
     </div>
 
@@ -147,6 +147,7 @@
     cursor: pointer;
     font-size: 0.85rem;
     font-weight: 700;
+    white-space: nowrap;
     transition: all 0.2s;
   }
 
@@ -162,6 +163,12 @@
 
   @media (max-width: 800px) {
     .cms-view-toggle span { display: none; }
+    .btn-regular span { display: none; }
+    .btn-regular { padding: 0.75rem !important; }
+    .cms-editor-breadcrumb { display: none; }
+    .cms-header-actions { gap: 0.5rem !important; }
+    .validation-status span { display: none; }
+    .validation-status { padding: 0.35rem !important; }
   }
 
   .active {
@@ -175,6 +182,14 @@
     justify-content: space-between;
     align-items: center;
     padding: 0;
+    gap: 1rem;
+  }
+
+  .cms-header-left {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    flex: 1 1 auto;
   }
 
   .btn-plain {
@@ -222,6 +237,7 @@
     color: var(--text-on-primary);
     font-weight: 750;
     font-size: 0.95rem;
+    white-space: nowrap;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     gap: 0.6rem;
@@ -273,10 +289,19 @@
     margin: 0 0.5rem;
   }
 
-  .ml-3 { margin-left: 0.75rem; }
-  .flex { display: flex; }
-  .flex-col { flex-direction: column; }
-  .font-bold { font-weight: 700; }
+  .filename-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.75rem;
+    min-width: 0;
+  }
+
+  .header-filename {
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   /* Estilos para Validación */
   .validation-status {
@@ -296,6 +321,7 @@
     color: #10b981;
     font-weight: 800;
     font-size: 0.85rem;
+    white-space: nowrap;
   }
 
   .status-invalid {
@@ -305,6 +331,7 @@
     color: #ef4444;
     font-weight: 800;
     font-size: 0.85rem;
+    white-space: nowrap;
     background: rgba(239, 68, 68, 0.1);
     padding: 0.35rem 0.6rem;
     border-radius: 0.5rem;

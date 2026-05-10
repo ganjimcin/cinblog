@@ -96,8 +96,7 @@
     background: var(--btn-regular-bg);
     border-bottom: 1px solid var(--line-divider);
     padding: 0.5rem 2rem;
-    height: auto;
-    min-height: 4.5rem;
+    height: 5.25rem;
     display: flex;
     align-items: center;
   }

@@ -1742,6 +1742,8 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
   }
   .cms-split-view.mode-preview :global(.cms-editor-preview-wrapper) {
     display: flex; /* Asegura que se vea */
+    border-radius: 1.5rem;
+    border-left: 1px solid var(--line-divider);
   }
 
   .cms-split-view.with-sidebar {
@@ -1751,6 +1753,15 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
   @media (max-width: 1100px) {
     .cms-split-view {
       grid-template-columns: 1fr;
+      gap: 1rem; /* Margen entre bloques cuando se separan */
+    }
+    .cms-split-view :global(.cms-editor-card) {
+      border-radius: 1.5rem;
+      border-right: 1px solid var(--line-divider);
+    }
+    .cms-split-view :global(.cms-editor-preview-wrapper) {
+      border-radius: 1.5rem;
+      border-left: 1px solid var(--line-divider);
     }
     .cms-split-view.with-sidebar {
       margin-right: 0;
