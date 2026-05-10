@@ -1,3 +1,5 @@
+import CryptoJS from "crypto-js";
+
 /**
  * Genera un identificador único basado en el hardware de audio.
  * Es invisible para el usuario y muy estable en el mismo dispositivo/navegador.

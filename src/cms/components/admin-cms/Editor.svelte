@@ -1,5 +1,6 @@
 <script>
   import { onMount, tick } from "svelte";
+  import jsyaml from "js-yaml";
   import { cmsFetch as ghFetch } from "./utils/api";
   import { parsePost, stringifyPost } from "./utils/parser";
   import { toastStore } from "./stores/toastStore";
@@ -469,16 +470,38 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
     
     // Pre-procesar Admonitions estilo Obsidian (> [!INFO])
     let processedMD = contentInput.replace(
-      /^>\s*\[!(NOTE|INFO|TODO|TIP|IMPORTANT|WARNING|CAUTION|FAILURE|DANGER|BUG|EXAMPLE|QUOTE)\]\s*(.*)?\n((?:>\s*.*\n?)*)/gm,
+      /^>\s*\[!(NOTE|INFO|TODO|TIP|IMPORTANT|WARNING|CAUTION|FAILURE|DANGER|BUG|EXAMPLE|QUOTE|SPOILER|SIDEBAR|NARRADOR|ABSTRACT|SUMMARY|TLDR|SUCCESS|CHECK|DONE|QUESTION|HELP|FAQ|ATTENTION|FAIL|MISSING|ERROR|CITE)\]\s*(.*)?\n((?:>\s*.*\n?)*)/gmi,
       (match, type, title, content) => {
         const typeLower = type.toLowerCase();
         const cleanContent = content.replace(/^>\s?/gm, "");
         const displayTitle = title || type.charAt(0) + type.slice(1).toLowerCase();
-        // Usar clases del tema: bdm-XXX
-        return `<blockquote class="admonition bdm-${typeLower}">
-          <div class="bdm-title">${displayTitle}</div>
-          <div class="bdm-content">${cleanContent}</div>
-        </blockquote>\n`;
+        
+        let html = `\n<div class="admonition bdm-${typeLower}">\n\n`;
+        if (typeLower !== 'narrador') {
+          html += `<div class="bdm-title">${displayTitle}</div>\n\n`;
+        }
+        html += cleanContent + `\n\n</div>\n`;
+        return html;
+      }
+    );
+
+    // Pre-procesar ::: (Directivas) antes de marked para evitar que los envuelva en <p>
+    processedMD = processedMD.replace(
+      /:::(note|warning|tip|important|caution|info|sidebar|narrador|spoiler|abstract|summary|tldr|todo|success|check|done|question|help|faq|attention|failure|fail|missing|danger|error|bug|example|quote|cite)\n?([\s\S]*?)\n?:::/gi,
+      (match, type, content) => {
+        const typeLower = type.toLowerCase();
+        const displayTitle = typeLower === 'narrador' ? '' : typeLower.toUpperCase();
+        
+        if (typeLower === 'spoiler') {
+          return `\n<details class="admonition bdm-spoiler">\n<summary class="bdm-title">SPOILER (Clic para revelar)</summary>\n<div class="bdm-content">\n\n${content}\n\n</div>\n</details>\n`;
+        }
+        
+        let html = `\n<div class="admonition bdm-${typeLower}">\n\n`;
+        if (displayTitle) {
+          html += `<div class="bdm-title">${displayTitle}</div>\n\n`;
+        }
+        html += content + `\n\n</div>\n`;
+        return html;
       }
     );
 
@@ -532,7 +555,7 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
         });
         
         // Limpiar URL de imagen de Wikimedia Commons si es necesario
-        let coverUrl = attrs.cover || '';
+        let coverUrl = attrs.url || attrs.cover || '';
         if (coverUrl.includes('Special:FilePath/')) {
            // Ya es una ruta directa
         } else if (coverUrl.includes('commons.wikimedia.org/wiki/')) {
@@ -540,42 +563,21 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
            coverUrl = `https://commons.wikimedia.org/wiki/Special:FilePath/${filename}`;
         }
         
-        const mainUrl = attrs.imdbId ? `https://www.imdb.com/title/${attrs.imdbId}` : '#';
+        // El link ahora es 'link', pero mantenemos 'url' como fallback si no hay 'link' y 'url' no parece una imagen
+        let mainUrl = attrs.link || '#';
+        if (mainUrl === '#' && attrs.url && !attrs.url.match(/\.(jpg|jpeg|png|webp|gif|svg)$/i)) {
+           mainUrl = attrs.url;
+        }
+        if (mainUrl === '#' && attrs.imdbId) {
+           mainUrl = `https://www.imdb.com/title/${attrs.imdbId}`;
+        }
         
         // Generar HTML y eliminar saltos de línea/espacios extra para que Markdown no se confunda
-        const html = `
-          <div class="card-movie-info">
-            <a href="${mainUrl}" target="_blank" class="card-movie-link" style="display: contents;">
-              <div class="movie-poster" style="background-image: url('${coverUrl}')">
-                <div class="movie-poster-overlay"></div>
-              </div>
-              <div class="movie-details">
-                <div class="movie-header">
-                  <div class="movie-title-row">
-                    <h3 class="movie-card-title">${attrs.title || 'Título'}</h3>
-                    <div class="movie-badges-col">
-                      ${attrs.age ? `<span class="movie-age-badge">${attrs.age}</span>` : ''}
-                      ${attrs.recAge ? `<span class="movie-rec-age-badge" title="Edad recomendada">⭐ ${attrs.recAge}</span>` : ''}
-                    </div>
-                  </div>
-                  <div class="movie-original-title">${attrs.originalTitle || attrs.title || ''}</div>
-                </div>
-                <div class="movie-footer-info">
-                   <div class="movie-footer-row">
-                     <div class="imdb-badge">
-                       <span class="imdb-logo">IMDb</span>
-                     </div>
-                   </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        `.replace(/\n\s*/g, ""); // LIMPIEZA TOTAL DE ESPACIOS Y SALTOS
-        
-        return `\n\n${html}\n\n`;
-      }
-    );
+        const html = `<div class="card-movie-info"><a href="${mainUrl}" target="_blank" class="card-movie-link" style="display: flex; width: 100%; height: 100%; text-decoration: none; color: inherit;"><div class="movie-poster" style="background-image: url('${coverUrl}')"><div class="movie-poster-overlay"></div></div><div class="movie-details"><div class="movie-header"><div class="movie-title-row"><h3 class="movie-card-title">${attrs.title || 'Título'}</h3><div class="movie-badges-col">${attrs.age ? `<span class="movie-age-badge">${attrs.age}</span>` : ''}${attrs.recAge ? `<span class="movie-rec-age-badge">⭐ ${attrs.recAge}</span>` : ''}</div></div><div class="movie-original-title">${attrs.originalTitle || attrs.title || ''}</div></div><div class="movie-footer-info"><div class="movie-footer-row"><div class="imdb-badge"><span class="imdb-logo">IMDb</span></div></div></div></div></a></div>`;
 
+        return `\n\n${html}\n\n`;
+        }
+        );
     // Soporte para tarjetas de GitHub (::github{repo="..."})
     processedMD = processedMD.replace(
       /::github\{(.*?)\}/g,
@@ -649,19 +651,7 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
     };
     window.marked.use({ renderer });
 
-    let rawHtml = window.marked.parse(processedMD);
-    
-    // Mantener compatibilidad con ::: si existiera
-    // Sincronizar Avisos (Admonitions) con el blog real
-    renderedHTML = rawHtml.replace(
-      /:::(note|warning|tip|important|caution|info)\n?([\s\S]*?)\n?:::/g,
-      (match, type, content) => {
-        return `<blockquote class="admonition bdm-${type}">
-          <span class="bdm-title">${type.toUpperCase()}</span>
-          <div class="admonition-content">${content}</div>
-        </blockquote>`;
-      }
-    );
+    renderedHTML = window.marked.parse(processedMD);
     
     setTimeout(buildScrollMap, 100);
   }
@@ -985,13 +975,16 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
           case "tip": snip = `\n> [!TIP] Tip\n> ${selText || "Consejo..."}\n`; break;
           case "warning": snip = `\n> [!WARNING] Aviso\n> ${selText || "Alerta..."}\n`; break;
           case "important": snip = `\n> [!IMPORTANT] Importante\n> ${selText || "Crítico..."}\n`; break;
+          case "narrador": snip = `\n:::narrador\n${selText || "Texto del narrador..."}\n:::\n`; break;
+          case "sidebar": snip = `\n:::sidebar\n${selText || "Contenido lateral..."}\n:::\n`; break;
           case "mermaid-flow": snip = `\n\`\`\`mermaid\ngraph TD\n    A[Inicio] --> B(Proceso)\n    B --> C{Decision}\n    C -->|Si| D[Fin]\n    C -->|No| B\n\`\`\`\n`; break;
           case "mermaid-seq": snip = `\n\`\`\`mermaid\nsequenceDiagram\n    Participante A->>Participante B: Mensaje\n    Participante B-->>Participante A: Respuesta\n\`\`\`\n`; break;
           case "mermaid-gantt": snip = `\n\`\`\`mermaid\ngantt\n    title Proyecto\n    section Fase 1\n    Tarea :a1, 2024-01-01, 30d\n\`\`\`\n`; break;
           case "music": snip = `\n:::music{title="Título", artist="Artista", cover="/assets/images/default.jpg", audio="/assets/music/song.mp3", lrc=""}\n`; break;
+          case "movie": snip = `\n:::movie{title="Título", originalTitle="Original", age="+7", recAge="+10", url="https://image-url.jpg", link="https://imdb.com/..."}\n`; break;
           case "video": snip = `\n<iframe width="100%" height="468" src="URL_EMBED" frameborder="0" allowfullscreen></iframe>\n`; break;
           case "math": snip = `\n$$\n${selText || "e = mc^2"}\n$$\n`; break;
-          case "spoiler": snip = `\n<details>\n<summary>Leer más...</summary>\n${selText || "Contenido oculto..."}\n</details>\n`; break;
+          case "spoiler": snip = `\n:::spoiler\n${selText || "Contenido oculto que se revela al hacer clic..."}\n:::\n`; break;
         }
         newFullText = fullText.substring(0, start) + snip + fullText.substring(end);
         newCursorStart = start;
@@ -1201,6 +1194,301 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
     display: flex;
     position: relative;
     overflow: hidden;
+  }
+
+  /* Estilos para corregir la vista previa de Admonitions y Narrador */
+  :global(.markdown-content .admonition) {
+    border-radius: 0.75rem;
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    position: relative;
+    border-left: 4px solid var(--primary);
+    background: color-mix(in srgb, var(--primary) 8%, transparent);
+    width: 100%;
+    overflow: visible;
+  }
+
+  /* Obsidian Color Palette for Admonitions */
+  :global(.markdown-content .bdm-note), :global(.markdown-content .bdm-info), :global(.markdown-content .bdm-todo), :global(.markdown-content .bdm-abstract), :global(.markdown-content .bdm-summary), :global(.markdown-content .bdm-tldr) { 
+    --adm-color: #0891b2; 
+    border-color: var(--adm-color) !important; 
+    background: color-mix(in srgb, var(--adm-color) 10%, transparent) !important;
+  }
+  :global(.markdown-content .bdm-tip), :global(.markdown-content .bdm-example), :global(.markdown-content .bdm-hint) { 
+    --adm-color: #10b981; 
+    border-color: var(--adm-color) !important; 
+    background: color-mix(in srgb, var(--adm-color) 10%, transparent) !important;
+  }
+  :global(.markdown-content .bdm-success), :global(.markdown-content .bdm-check), :global(.markdown-content .bdm-done) { 
+    --adm-color: #22c55e; 
+    border-color: var(--adm-color) !important; 
+    background: color-mix(in srgb, var(--adm-color) 10%, transparent) !important;
+  }
+  :global(.markdown-content .bdm-question), :global(.markdown-content .bdm-help), :global(.markdown-content .bdm-faq) { 
+    --adm-color: #f97316; 
+    border-color: var(--adm-color) !important; 
+    background: color-mix(in srgb, var(--adm-color) 10%, transparent) !important;
+  }
+  :global(.markdown-content .bdm-warning), :global(.markdown-content .bdm-caution), :global(.markdown-content .bdm-attention) { 
+    --adm-color: #f59e0b; 
+    border-color: var(--adm-color) !important; 
+    background: color-mix(in srgb, var(--adm-color) 10%, transparent) !important;
+  }
+  :global(.markdown-content .bdm-important), :global(.markdown-content .bdm-danger), :global(.markdown-content .bdm-error), :global(.markdown-content .bdm-bug), :global(.markdown-content .bdm-failure), :global(.markdown-content .bdm-fail), :global(.markdown-content .bdm-missing) { 
+    --adm-color: #ef4444; 
+    border-color: var(--adm-color) !important; 
+    background: color-mix(in srgb, var(--adm-color) 10%, transparent) !important;
+  }
+  :global(.markdown-content .bdm-quote), :global(.markdown-content .bdm-cite) { 
+    --adm-color: #94a3b8; 
+    border-color: var(--adm-color) !important; 
+    background: color-mix(in srgb, var(--adm-color) 10%, transparent) !important;
+  }
+  
+  :global(.markdown-content .admonition .bdm-title) {
+    color: var(--adm-color, var(--primary)) !important;
+  }
+  
+  :global(.markdown-content .bdm-spoiler) { 
+    border-left: 4px solid #4b5563 !important; 
+    background: rgba(0, 0, 0, 0.2) !important;
+    border-radius: 0.75rem;
+    color: var(--text-secondary) !important;
+    backdrop-filter: blur(2px);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0 !important;
+    overflow: hidden;
+  }
+  :global(.markdown-content .bdm-spoiler[open]) {
+    background: rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: none;
+  }
+  :global(.markdown-content .bdm-spoiler .bdm-title) {
+    color: #9ca3af !important;
+    font-size: 0.75rem !important;
+    padding: 1rem 1.25rem;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 850;
+    transition: color 0.2s;
+  }
+  :global(.markdown-content .bdm-spoiler .bdm-title::-webkit-details-marker) {
+    display: none;
+  }
+  :global(.markdown-content .bdm-spoiler .bdm-title::before) {
+    content: "";
+    display: inline-block;
+    width: 1.1rem;
+    height: 1.1rem;
+    background-color: currentColor;
+    mask-size: contain;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 17c.55 0 1-.45 1-1s-.45-1-1-1s-1 .45-1 1s.45 1 1 1zm6-5h-1V9c0-2.76-2.24-5-5-5S7 6.24 7 9v3H6c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-6c0-1.1-.9-2-2-2zM8.9 9c0-1.71 2.29-3.1 3.1-3.1s3.1 1.39 3.1 3.1v3H8.9V9zM18 20H6v-6h12v6z'/%3E%3C/svg%3E");
+    transition: transform 0.3s ease;
+  }
+  :global(.markdown-content .bdm-spoiler[open] .bdm-title::before) {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 17c.55 0 1-.45 1-1s-.45-1-1-1s-1 .45-1 1s.45 1 1 1zm6-5h-1V9c0-2.76-2.24-5-5-5S7 6.24 7 9v3H6c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-6c0-1.1-.9-2-2-2zm-6-6c1.66 0 3 1.34 3 3v3H9V9c0-1.66 1.34-3 3-3z'/%3E%3C/svg%3E");
+  }
+
+  :global(.card-movie-info) {
+    display: flex;
+    background: var(--card-bg);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    margin: 2.5rem 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid var(--line-divider);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    max-width: 800px;
+    padding: 0 !important; /* ELIMINAR TODO EL PADDING */
+  }
+
+  :global(.card-movie-link) {
+    display: flex !important;
+    width: 100%;
+    align-items: stretch !important;
+    text-decoration: none !important;
+    color: inherit !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  :global(.card-movie-info:hover) {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 45px rgba(0,0,0,0.15);
+    border-color: var(--primary);
+  }
+
+  :global(.movie-poster) {
+    width: 160px;
+    min-width: 160px;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--btn-regular-bg);
+    position: relative;
+    border-right: 1px solid var(--line-divider);
+    margin: 0 !important;
+    padding: 0 !important;
+    align-self: stretch;
+  }
+
+  :global(.movie-poster-overlay) {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent, rgba(0,0,0,0.1));
+  }
+
+  :global(.movie-details) {
+    flex: 1;
+    padding: 2.25rem 2.5rem; /* El padding solo aquí, dentro de los detalles */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.75rem;
+  }
+
+  :global(.movie-header) {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Más espacio entre Título y Título Original */
+  }
+
+  :global(.movie-title-row) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  :global(.movie-card-title) {
+    font-size: 1.85rem !important; /* Ligeramente más grande */
+    font-weight: 950 !important;
+    margin: 0 !important;
+    color: var(--text-primary);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  :global(.movie-badges-col) {
+    display: flex;
+    gap: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  :global(.movie-age-badge), :global(.movie-rec-age-badge) {
+    padding: 0.35rem 0.8rem;
+    border-radius: 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+
+  :global(.movie-age-badge) {
+    background: var(--btn-regular-bg);
+    color: var(--text-secondary);
+    border: 1.5px solid var(--line-divider); /* Borde más definido */
+  }
+
+  :global(.movie-rec-age-badge) {
+    background: color-mix(in srgb, var(--primary) 12%, transparent);
+    color: var(--primary);
+    border: 1.5px solid color-mix(in srgb, var(--primary) 25%, transparent);
+  }
+
+  :global(.movie-original-title) {
+    font-size: 1.05rem;
+    opacity: 0.4;
+    font-style: italic;
+    font-weight: 500;
+    margin-top: 0.2rem;
+  }
+
+  :global(.movie-footer-info) {
+    margin-top: 0.75rem; /* Más margen arriba del badge de IMDb */
+    padding-top: 1.25rem;
+    border-top: 1px dashed var(--line-divider); /* Línea discontinua para un toque más ligero */
+  }
+
+  :global(.imdb-badge) {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  @media (max-width: 600px) {
+    :global(.card-movie-info) {
+      flex-direction: column;
+    }
+    :global(.movie-poster) {
+      width: 100%;
+      height: 250px;
+      border-right: none;
+      border-bottom: 1px solid var(--line-divider);
+    }
+  }
+
+  :global(.markdown-content .bdm-sidebar) {
+    border-left: 2px solid var(--primary) !important;
+    background: var(--btn-regular-bg) !important;
+    font-size: 0.9rem !important;
+  }
+
+  :global(.markdown-content .bdm-narrador) {
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 2.5rem 0 2.5rem 2.5rem !important;
+    font-style: italic !important;
+    opacity: 1 !important;
+    width: auto !important;
+    display: block !important;
+    border-left: none !important;
+    color: var(--text-primary) !important;
+  }
+
+  :global(.font-adventures .bdm-narrador) {
+    margin: 2.5rem 4rem !important;
+    text-align: justify;
+  }
+
+  :global(.markdown-content .bdm-narrador::before),
+  :global(.markdown-content .bdm-narrador::after),
+  :global(.markdown-content .bdm-narrador .bdm-title) {
+    content: none !important;
+    display: none !important;
+  }
+
+  /* Corrección de colores en modo oscuro del editor */
+  :global(.dark .markdown-content) {
+    color: oklch(0.85 0.01 var(--hue)) !important;
+  }
+  :global(.dark .markdown-content :is(h1, h2, h3, h4, h5, h6, strong, b)) {
+    color: oklch(0.98 0.01 var(--hue)) !important;
+  }
+
+  :global(.markdown-content .admonition p) {
+    margin: 0.5rem 0;
+    white-space: normal !important;
+    overflow: visible !important;
+  }
+
+  :global(.markdown-content .bdm-title) {
+    font-weight: 850;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: inherit;
   }
 
   :global(.card-movie-link) {

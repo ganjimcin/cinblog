@@ -140,7 +140,7 @@
       <!-- Fila 1: Formato básico y Estructura -->
       <div class="cms-editor-toolbar">
          <div class="cms-toolbar-group cms-dropdown-container">
-           <button type="button" class="cms-dropdown-trigger" onclick={() => showHeadingMenu = !showHeadingMenu} data-tooltip="Encabezados (H1-H6)">
+           <button type="button" class="cms-dropdown-trigger" onclick={(e) => { e.stopPropagation(); showHeadingMenu = !showHeadingMenu; }} data-tooltip="Encabezados (H1-H6)">
              <Icon icon="material-symbols:title-rounded" />
              <Icon icon="material-symbols:arrow-drop-down-rounded" class="dropdown-arrow" />
            </button>
@@ -177,30 +177,32 @@
             <button type="button" onclick={clearFormat} data-tooltip="Limpiar Formato"><Icon icon="material-symbols:format-clear-rounded" /></button>
             <button type="button" onclick={onOpenShortcuts} data-tooltip="Ayuda (Atajos)"><Icon icon="material-symbols:help-outline-rounded" /></button>
          </div>
-
-         <input type="file" bind:this={imageInput} onchange={onImageUpload} style="display: none;" accept="image/*" />
-
       </div>
 
       <!-- Fila 2: Componentes Avanzados y Widgets -->
       <div class="cms-editor-toolbar second-row">
         <div class="cms-toolbar-group cms-dropdown-container">
-          <button type="button" class="cms-dropdown-trigger" onclick={() => showCalloutMenu = !showCalloutMenu} data-tooltip="Avisos (Admonitions)">
+          <button type="button" class="cms-dropdown-trigger" onclick={(e) => { e.stopPropagation(); showCalloutMenu = !showCalloutMenu; }} data-tooltip="Avisos (Admonitions)">
              <Icon icon="material-symbols:info-outline-rounded" />
              <Icon icon="material-symbols:arrow-drop-down-rounded" class="dropdown-arrow" />
           </button>
           {#if showCalloutMenu}
              <div class="cms-dropdown-menu" in:fade={{duration: 100}}>
                <button type="button" onclick={() => { onToolbar("note"); showCalloutMenu = false; }} class="tool-note"><Icon icon="material-symbols:info-outline-rounded" /> <span>Nota</span></button>
+               <button type="button" onclick={() => { onToolbar("info"); showCalloutMenu = false; }} class="tool-note"><Icon icon="material-symbols:info-rounded" /> <span>Info</span></button>
                <button type="button" onclick={() => { onToolbar("tip"); showCalloutMenu = false; }} class="tool-tip"><Icon icon="material-symbols:lightbulb-outline-rounded" /> <span>Tip</span></button>
                <button type="button" onclick={() => { onToolbar("warning"); showCalloutMenu = false; }} class="tool-warning"><Icon icon="material-symbols:warning-amber-rounded" /> <span>Aviso</span></button>
+               <button type="button" onclick={() => { onToolbar("caution"); showCalloutMenu = false; }} class="tool-warning"><Icon icon="material-symbols:error-rounded" /> <span>Caution</span></button>
                <button type="button" onclick={() => { onToolbar("important"); showCalloutMenu = false; }} class="tool-important"><Icon icon="material-symbols:error-outline-rounded" /> <span>Importante</span></button>
+               <button type="button" onclick={() => { onToolbar("narrador"); showCalloutMenu = false; }} class="tool-narrador"><Icon icon="material-symbols:record-voice-over-outline-rounded" /> <span>Narrador</span></button>
+               <button type="button" onclick={() => { onToolbar("sidebar"); showCalloutMenu = false; }} class="tool-sidebar"><Icon icon="material-symbols:side-navigation" /> <span>Sidebar</span></button>
+               <button type="button" onclick={() => { onToolbar("spoiler"); showCalloutMenu = false; }} class="tool-spoiler"><Icon icon="material-symbols:visibility-off-outline-rounded" /> <span>Spoiler</span></button>
              </div>
           {/if}
         </div>
         <div class="cms-toolbar-divider"></div>
         <div class="cms-toolbar-group cms-dropdown-container">
-          <button type="button" class="cms-dropdown-trigger" onclick={() => showDiagramMenu = !showDiagramMenu} data-tooltip="Diagramas y Matemáticas">
+          <button type="button" class="cms-dropdown-trigger" onclick={(e) => { e.stopPropagation(); showDiagramMenu = !showDiagramMenu; }} data-tooltip="Diagramas y Matemáticas">
              <Icon icon="material-symbols:account-tree-outline-rounded" />
              <Icon icon="material-symbols:arrow-drop-down-rounded" class="dropdown-arrow" />
           </button>
@@ -225,6 +227,7 @@
         </div>
       </div>
     </div>
+    <input type="file" bind:this={imageInput} onchange={onImageUpload} style="display: none;" accept="image/*" />
   </div>
 
   <div class="cms-writing-area">
@@ -367,12 +370,11 @@
   .cms-editor-toolbar-sticky {
     background: var(--btn-regular-bg);
     border-bottom: 1px solid var(--line-divider);
-    padding: 0.375rem 1rem;
-    height: 7rem;
-    min-height: 7rem;
+    padding: 0.4rem 0.75rem;
+    height: auto;
+    min-height: 4.5rem;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
     position: relative;
     z-index: 900;
   }
@@ -380,7 +382,7 @@
   .cms-toolbar-rows {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.3rem;
     width: 100%;
   }
 
@@ -463,12 +465,9 @@
   .cms-editor-toolbar {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    flex-wrap: nowrap !important;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    /* Reseteo estilos de cms.css para integración total */
+    gap: 0.15rem;
+    flex-wrap: wrap !important;
+    overflow: visible !important;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
@@ -482,27 +481,28 @@
 
   .cms-toolbar-group {
     display: flex;
-    gap: 0.35rem;
+    gap: 0.2rem;
+    position: relative;
   }
 
   .cms-editor-toolbar button {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 1.75rem;
+    height: 1.75rem;
     border: none;
     background: var(--card-bg);
     color: var(--text-primary);
     cursor: pointer;
-    border-radius: 0.5rem;
+    border-radius: 0.4rem;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    font-size: 1.25rem;
+    font-size: 1.05rem;
     font-weight: 900;
-    border: 1.5px solid var(--line-divider);
+    border: 1.2px solid var(--line-divider);
     pointer-events: auto;
     position: relative;
-    z-index: 2;
+    z-index: 5;
     box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   }
 
@@ -512,7 +512,7 @@
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-color: var(--primary);
-    z-index: 20;
+    z-index: 30;
   }
 
   .cms-editor-toolbar button :global(svg) {
@@ -523,18 +523,21 @@
   .tool-tip:hover { color: var(--admonitions-color-tip, #10b981) !important; }
   .tool-note:hover { color: var(--admonitions-color-note, var(--primary)) !important; }
   .tool-important:hover { color: var(--admonitions-color-important, #ef4444) !important; }
+  .tool-narrador:hover { color: var(--primary) !important; }
+  .tool-sidebar:hover { color: var(--primary) !important; }
+  .tool-spoiler:hover { color: #6b7280 !important; }
 
   .cms-toolbar-divider {
     width: 1px;
-    height: 1.25rem;
+    height: 1.15rem;
     background: var(--line-divider);
-    margin: 0 0.25rem;
+    margin: 0 0.15rem;
   }
 
   /* Dropdown Styles */
   .cms-dropdown-trigger {
-    width: 3.5rem !important;
-    gap: 0.1rem;
+    width: 3.25rem !important;
+    gap: 0 !important;
   }
   
   .cms-dropdown-container {

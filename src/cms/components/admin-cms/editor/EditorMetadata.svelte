@@ -51,6 +51,99 @@
   let manualAge = $state("");
   let manualRecAge = $state("");
   let manualCover = $state("");
+  let manualLink = $state("");
+  let setAsPostCover = $state(true);
+  let isFetchingPoster = $state(false);
+  let lastFetchedLink = $state("");
+
+  // Efecto para autocompletar carátula al pegar link de IMDb
+  $effect(() => {
+    const trimmedLink = manualLink?.trim();
+    if (trimmedLink && trimmedLink !== lastFetchedLink) {
+      const id = extractImdbId(trimmedLink);
+      if (id) {
+        lastFetchedLink = trimmedLink;
+        fetchPoster(id);
+      }
+    }
+  });
+
+  import { toastStore } from "../stores/toastStore";
+
+  async function fetchPoster(imdbId) {
+    if (!imdbId || !imdbId.startsWith("tt")) return;
+    isFetchingPoster = true;
+    console.log(`[IMDb] Iniciando búsqueda ultra-resiliente para: ${imdbId}`);
+    
+    const proxyGenerators = [
+      (u) => `https://corsproxy.io/?${encodeURIComponent(u)}`,
+      (u) => `https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,
+      (u) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`
+    ];
+
+    const targetUrl = `https://v3.sg.media-imdb.com/suggestion/${imdbId[0].toLowerCase()}/${imdbId}.json`;
+    let success = false;
+
+    for (const gen of proxyGenerators) {
+      if (success) break;
+      const currentProxyUrl = gen(targetUrl);
+      console.log(`[IMDb] Intentando proxy: ${currentProxyUrl.split('/')[2]}`);
+      
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 10000); // 10s por intento
+        
+        const res = await fetch(currentProxyUrl, { signal: controller.signal });
+        clearTimeout(timeout);
+
+        if (!res.ok) continue;
+
+        let contents;
+        if (currentProxyUrl.includes("allorigins")) {
+          const data = await res.json();
+          contents = data.contents;
+        } else {
+          contents = await res.text();
+        }
+
+        if (!contents) continue;
+        const json = JSON.parse(contents);
+        const movie = json.d?.[0];
+
+        if (movie) {
+          // Extraer imagen
+          let rawImg = movie.i;
+          let finalUrl = "";
+          if (typeof rawImg === 'string') finalUrl = rawImg;
+          else if (Array.isArray(rawImg)) finalUrl = rawImg[0];
+          else if (rawImg && typeof rawImg === 'object' && rawImg.imageUrl) finalUrl = rawImg.imageUrl;
+
+          if (finalUrl) {
+            // Alta resolución
+            if (finalUrl.includes("media-amazon.com") || finalUrl.includes("imdb.com")) {
+              finalUrl = finalUrl.replace(/\._V1_.*\.jpg$/, "._V1_QL75_UX500_CR0,0,500,741_.jpg");
+            }
+            manualCover = finalUrl;
+            console.log("[IMDb] ¡Éxito! Carátula obtenida.");
+            toastStore.success("Imagen de IMDb cargada");
+            success = true;
+          }
+
+          if (!manualTitle || manualTitle === "" || manualTitle === "Título") manualTitle = movie.l || "";
+          if (!manualOriginal || manualOriginal === "") manualOriginal = movie.l || "";
+        }
+      } catch (e) {
+        console.warn(`[IMDb] Fallo con proxy: ${e.message}`);
+      }
+    }
+
+    if (!success) {
+      toastStore.warning("IMDb no responde, intenta pegar la carátula manualmente.");
+    }
+    isFetchingPoster = false;
+  }
+
+  // searchByTitle eliminada por petición del usuario (solo link directo)
 
   const categoryOptions = $derived.by(() => {
     const baseOptions =
@@ -71,97 +164,12 @@
     }
   }
 
-  let isImporting = $state(false);
-
-  async function importFromImdb() {
-    if (!imdbId || !imdbId.trim().startsWith("tt")) {
-      alert("Introduce un ID de IMDb válido (ej: tt1234567)");
-      return;
-    }
-
-    isImporting = true;
-    try {
-      const cleanId = imdbId.trim();
-      
-      // 1. Obtener datos de Wikidata (Directo, sin proxy para máxima velocidad)
-      const query = `
-        SELECT ?itemLabel ?itemDescription ?image ?originalTitle ?ageLabel WHERE {
-          ?item wdt:P345 "${cleanId}".
-          OPTIONAL { ?item wdt:P18 ?image. }
-          OPTIONAL { ?item wdt:P1476 ?originalTitle. }
-          OPTIONAL { 
-            { ?item p:P2879 [ ps:P2879 ?ageItem; pq:P17 wd:Q29 ]. ?ageItem rdfs:label ?ageLabel. FILTER(LANG(?ageLabel) = "es") }
-            UNION 
-            { ?item wdt:P2879 ?ageItem. ?ageItem rdfs:label ?ageLabel. FILTER(LANG(?ageLabel) = "es" || LANG(?ageLabel) = "en") }
-            UNION
-            { ?item wdt:P1657 ?ageItem. ?ageItem rdfs:label ?ageLabel. FILTER(LANG(?ageLabel) = "en") }
-          }
-          SERVICE wikibase:label { bd:serviceParam wikibase:language "es,en". }
-        }
-        LIMIT 5
-      `;
-      
-      const wikidataUrl = `https://query.wikidata.org/sparql?query=${encodeURIComponent(query)}&format=json`;
-      const wikiResp = await fetch(wikidataUrl);
-      const wikiData = await wikiResp.json();
-      const wikiRes = wikiData.results.bindings[0] || {};
-
-      // 2. Intentar obtener el PÓSTER REAL (vía Proxy)
-      let imdbPoster = "";
-      try {
-        const suggestUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://v3.sg.media-imdb.com/suggestion/x/${cleanId}.json`)}`;
-        const suggestResp = await fetch(suggestUrl);
-        const suggestData = await suggestResp.json();
-        const imdbSuggest = JSON.parse(suggestData.contents);
-        if (imdbSuggest.d?.[0]?.i?.[0]) imdbPoster = imdbSuggest.d[0].i[0];
-      } catch (e) {
-        console.warn("Fallo al obtener póster de IMDb, usando fallback de Wikidata");
-        if (wikiRes.image?.value) {
-           imdbPoster = wikiRes.image.value.replace("http://", "https://");
-        }
-      }
-
-      // 3. Tabla de conversión de edades
-      const ageMap = {
-        'G': 'Apta (EE.UU.)',
-        'PG': '+7 (EE.UU.)',
-        'PG-13': '+12 (EE.UU.)',
-        'R': '+18 (EE.UU.)',
-        'NC-17': '+18 (EE.UU.)',
-        'TV-MA': '+18 (EE.UU.)',
-        'TV-14': '+14 (EE.UU.)',
-        'TV-PG': '+7 (EE.UU.)'
-      };
-
-      let rawAge = "";
-      for (const r of wikiData.results.bindings) {
-        if (r.ageLabel?.value) { rawAge = r.ageLabel.value; break; }
-      }
-
-      description = wikiRes.itemDescription?.value || "";
-      ageRating = ageMap[rawAge] || rawAge || "";
-      
-      const movieTitle = wikiRes.itemLabel?.value || "Sin Título";
-      const original = wikiRes.originalTitle?.value || movieTitle;
-
-      // Sincronizar con campos manuales
-      manualTitle = movieTitle;
-      manualOriginal = original;
-      manualAge = ageRating;
-      manualRecAge = ""; // Limpiar por defecto al importar nuevo
-      manualCover = imdbPoster;
-      
-      const movieCard = `:::movie{title="${manualTitle}",originalTitle="${manualOriginal}",age="${manualAge}",recAge="${manualRecAge}",cover="${manualCover}",imdbId="${cleanId}"}\n\n`;
-      
-      if (!content.includes(':::movie')) {
-        content = movieCard + content;
-      }
-      console.log("IMDb/Wikidata Import Success");
-    } catch (err) {
-      alert("Error al importar: " + err.message);
-    } finally {
-      isImporting = false;
-    }
+  function extractImdbId(val) {
+    if (!val) return "";
+    const trimmed = val.trim();
+    if (/^tt\d+$/.test(trimmed)) return trimmed;
+    const match = trimmed.match(/title\/(tt\d+)/);
+    return match ? match[1] : "";
   }
 </script>
 
@@ -218,31 +226,7 @@
       </div>
 
       {#if category === "Anim-Acción"}
-        <div class="cms-sidebar-section imdb-section" in:fade>
-          <div class="cms-sidebar-label-row">
-            <label for="cms-meta-imdb">IMDb ID</label>
-            <button
-              class="cms-btn-mini-inline 🪄"
-              onclick={importFromImdb}
-              disabled={isImporting}
-              title="Importar datos de IMDb"
-            >
-              <Icon
-                icon={isImporting
-                  ? "svg-spinners:ring-resize"
-                  : "material-symbols:magic-button-outline-rounded"}
-              />
-            </button>
-          </div>
-          <input
-            type="text"
-            id="cms-meta-imdb"
-            bind:value={imdbId}
-            placeholder="tt1234567"
-          />
-        </div>
-
-          <div class="cms-manual-card-fields">
+          <div class="cms-manual-card-fields" in:fade>
              <div class="cms-sidebar-label-row">
                <label for="m-title">Título Ficha</label>
              </div>
@@ -254,9 +238,9 @@
              <input type="text" id="m-orig" bind:value={manualOriginal} placeholder="Original title" />
 
              <div class="cms-sidebar-label-row mt-2">
-               <label for="m-age">Edad Oficial</label>
+               <label for="m-age">Clasificación</label>
              </div>
-             <input type="text" id="m-age" bind:value={manualAge} placeholder="Ej: +7" />
+             <input type="text" id="m-age" bind:value={manualAge} placeholder="Ej: +7, PG-13" />
 
              <div class="cms-sidebar-label-row mt-2">
                <label for="m-rec-age">Edad Recomendada</label>
@@ -264,15 +248,42 @@
              <input type="text" id="m-rec-age" bind:value={manualRecAge} placeholder="Ej: +10" />
 
              <div class="cms-sidebar-label-row mt-2">
-               <label for="m-cover">URL Carátula</label>
+               <label for="m-cover">URL (Imagen)</label>
+               {#if isFetchingPoster}
+                 <Icon icon="svg-spinners:ring-resize" style="font-size: 0.8rem; color: var(--primary);" />
+               {/if}
              </div>
-             <input type="text" id="m-cover" bind:value={manualCover} placeholder="https://..." />
+             <input type="text" id="m-cover" bind:value={manualCover} placeholder="https://... (Poster)" />
+
+             {#if manualCover}
+               <div class="manual-cover-preview" in:fade>
+                 <img src={manualCover} alt="Preview" />
+                 <button class="remove-cover-btn" onclick={() => manualCover = ""} title="Quitar imagen" type="button">
+                    <Icon icon="material-symbols:close-rounded" />
+                 </button>
+               </div>
+             {/if}
+
+             <div class="cms-sidebar-label-row mt-2">
+               <label for="m-link">Link (Página/IMDb)</label>
+             </div>
+             <input type="text" id="m-link" bind:value={manualLink} placeholder="https://www.imdb.com/..." />
+
+             <label class="cms-checkbox-label mt-3">
+               <input type="checkbox" bind:checked={setAsPostCover} />
+               <span>Usar como portada del post</span>
+             </label>
 
              <button 
                class="cms-btn-manual-insert mt-3"
                onclick={() => {
-                 const card = `:::movie{title="${manualTitle}",originalTitle="${manualOriginal}",age="${manualAge}",recAge="${manualRecAge}",cover="${manualCover}",imdbId="${imdbId}"}\n\n`;
+                 const id = extractImdbId(manualLink);
+                 const card = `:::movie{title="${manualTitle}",originalTitle="${manualOriginal}",age="${manualAge}",recAge="${manualRecAge}",url="${manualCover}",link="${manualLink}",imdbId="${id}"}\n\n`;
                  content = card + content;
+                 if (setAsPostCover && manualCover) {
+                   cover = manualCover;
+                   coverInContent = true;
+                 }
                }}
                type="button"
              >
@@ -648,5 +659,45 @@
 
   .cms-btn-manual-insert:active {
     transform: translateY(0);
+  }
+
+  .manual-cover-preview {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2/3;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    margin-top: 0.5rem;
+    border: 1px solid var(--line-divider);
+    background: var(--input-bg);
+  }
+
+  .manual-cover-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .remove-cover-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    color: white;
+    border: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .remove-cover-btn:hover {
+    background: #ef4444;
+    transform: scale(1.1);
   }
 </style>

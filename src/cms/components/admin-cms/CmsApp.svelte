@@ -1,5 +1,7 @@
 <script>
   import { onMount } from "svelte";
+  import jsyaml from "js-yaml";
+  import CryptoJS from "crypto-js";
   import Icon from "../common/Icon.svelte";
   import Login from "./Login.svelte";
   import Dashboard from "./Dashboard.svelte";

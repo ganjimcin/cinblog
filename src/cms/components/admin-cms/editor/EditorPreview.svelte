@@ -95,9 +95,9 @@
   .cms-preview-header-bar {
     background: var(--btn-regular-bg);
     border-bottom: 1px solid var(--line-divider);
-    padding: 0.375rem 2rem;
-    height: 7rem;
-    min-height: 7rem;
+    padding: 0.5rem 2rem;
+    height: auto;
+    min-height: 4.5rem;
     display: flex;
     align-items: center;
   }
