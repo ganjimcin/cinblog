@@ -2,6 +2,13 @@
 
 /* 导入动过渡样式 */
 @import './transition.css' layer(base);
+@import './navbar.css';
+@import './banner.css';
+@import './fancybox.css';
+@import './musicplayer.css';
+@import './expressive-code.css';
+@import './markdown.css';
+@import './grid.css';
 
 @plugin '@tailwindcss/typography';
 

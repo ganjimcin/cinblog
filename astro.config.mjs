@@ -27,10 +27,11 @@ import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badg
 import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition.mjs";
 import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.mjs";
 import { MusicCardComponent } from "./src/plugins/rehype-component-music-card.mjs";
+import { MovieCardComponent } from "./src/plugins/rehype-component-movie-card.mjs";
 import { rehypeMermaid } from "./src/plugins/rehype-mermaid.mjs";
 import { rehypeLazyLoadMedia } from "./src/plugins/rehype-lazy-load-media.mjs";
 import { rehypeImageSize } from "./src/plugins/rehype-image-size.mjs";
-import remarkDirectiveRehype from "remark-directive-rehype";
+import { parseDirectiveNode as remarkDirectiveRehype } from "./src/plugins/remark-directive-rehype.js";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkMermaid } from "./src/plugins/remark-mermaid.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
@@ -183,6 +184,7 @@ export default defineConfig({
                     components: {
                         github: GithubCardComponent,
                         music: MusicCardComponent,
+                        movie: MovieCardComponent,
                         note: (x, y) => AdmonitionComponent(x, y, "note"),
                         tip: (x, y) => AdmonitionComponent(x, y, "tip"),
                         important: (x, y) => AdmonitionComponent(x, y, "important"),

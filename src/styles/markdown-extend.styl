@@ -3,11 +3,26 @@
     position: relative !important
 
     blockquote.admonition
+        margin: 1.5rem 0
+        padding: 1.25rem
+        border-radius: var(--radius-large)
+        background: var(--btn-regular-bg)
+        border: none
+        position: relative
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03)
+        border-left: 4px solid var(--primary)
+
+        &:before
+            display: none !important
+
         .bdm-title
             display: flex
             align-items: center
-            margin-bottom: -.9rem
-            font-weight: bold
+            margin-bottom: 0.5rem
+            font-weight: 800
+            text-transform: uppercase
+            font-size: 0.85rem
+            letter-spacing: 0.05em
 
             &:before
                 content: ' '
@@ -534,7 +549,104 @@ a.card-github.fetch-error
                 text-align: right
                 font-variant-numeric: tabular-nums
 
-    @media (max-width: 480px)
+.card-movie
+    background: var(--license-block-bg)
+    border-radius: var(--radius-large)
+    overflow: hidden
+    margin: 1.5rem 0
+    transition: all 0.3s ease
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05)
+    border: 1px solid var(--line-divider)
+    
+    &:hover
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1)
+        transform: translateY(-2px)
+
+    .card-movie-info
+        display: flex
+        
+    .movie-poster
+        width: 140px
+        min-width: 140px
+        height: 200px
+        background-size: cover
+        background-position: center
+        background-color: var(--btn-regular-bg)
+        position: relative
+        
+        .movie-poster-overlay
+            position: absolute
+            inset: 0
+            background: linear-gradient(to right, rgba(0,0,0,0.1), transparent)
+
+    .movie-details
+        flex: 1
+        padding: 1.5rem
+        display: flex
+        flex-direction: column
+        justify-content: center
+        
+    .movie-header
+        margin-bottom: 0.5rem
+        
+    .movie-title-row
+        display: flex
+        align-items: flex-start
+        justify-content: space-between
+        gap: 1rem
+        margin-bottom: 0.25rem
+        
+    .movie-card-title
+        font-size: 1.4rem
+        font-weight: 900
+        margin: 0
+        color: var(--tw-prose-headings)
+        line-height: 1.2
+        
+    .movie-badges-col
+        display: flex
+        gap: 0.4rem
+        flex-shrink: 0
+        margin-top: 0.2rem
+        
+    .movie-age-badge, .movie-rec-age-badge
+        font-size: 0.65rem
+        font-weight: 800
+        padding: 0.15rem 0.45rem
+        border-radius: 0.4rem
+        text-transform: uppercase
+        white-space: nowrap
+        
+    .movie-age-badge
+        background: var(--primary)
+        color: white
+        
+    .movie-rec-age-badge
+        background: var(--btn-regular-bg)
+        color: var(--tw-prose-body)
+        border: 1px solid var(--line-divider)
+
+    .movie-original-title
+        font-size: 0.85rem
+        opacity: 0.6
+        font-style: italic
+        color: var(--tw-prose-body)
+        margin-top: 0.25rem
+
+
+@media (max-width: 640px)
+    .card-movie
+        .movie-poster
+            width: 100px
+            min-width: 100px
+            height: 150px
+        .movie-card-title
+            font-size: 1.1rem
+        .movie-details
+            padding: 1rem
+
+@media (max-width: 480px)
+    .card-music
         height: auto
         flex-direction: column
         align-items: stretch

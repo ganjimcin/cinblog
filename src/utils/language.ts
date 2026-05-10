@@ -199,7 +199,7 @@ export function initTranslateService(): void {
         // 延迟一小段时间执行，确保 DOM 完全就绪
         setTimeout(() => {
             translate.execute();
-        }, 10);
+        }, 100);
     } else if (translate.to === translate.language.getLocal()) {
         // 如果目标语言就是源语言，确保处于未翻译状态
         // 有时插件可能会残留之前的翻译状态

@@ -11,6 +11,7 @@ import { h } from "hastscript";
  * @returns {import('mdast').Parent} The created admonition component.
  */
 export function AdmonitionComponent(properties, children, type) {
+    console.log(`[AdmonitionComponent]: Rendering type "${type}"`, { props: properties, childrenCount: children?.length });
     if (!Array.isArray(children) || children.length === 0)
         return h(
             "div",
