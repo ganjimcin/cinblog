@@ -159,13 +159,15 @@ const isPerformanceMode = config.banner?.waves?.performanceMode;
                             xlink:href="#gentle-wave"
                             x="48"
                             y="7"
-                            class="fill-(--page-bg)"
+                            style="fill: var(--page-bg)"
+                            class=""
                         ></use>
                         <use
                             xlink:href="#gentle-wave"
                             x="48"
                             y="5"
-                            class="opacity-75 fill-(--page-bg)"
+                            style="fill: var(--page-bg)"
+                            class="opacity-75"
                         ></use>
                     ) : (
                         // 正常模式：渲染四个波浪层
@@ -174,25 +176,29 @@ const isPerformanceMode = config.banner?.waves?.performanceMode;
                                 xlink:href="#gentle-wave"
                                 x="48"
                                 y="0"
-                                class="opacity-25 fill-(--page-bg)"
+                                style="fill: var(--page-bg)"
+                                class="opacity-25"
                             ></use>
                             <use
                                 xlink:href="#gentle-wave"
                                 x="48"
                                 y="3"
-                                class="opacity-50 fill-(--page-bg)"
+                                style="fill: var(--page-bg)"
+                                class="opacity-50"
                             ></use>
                             <use
                                 xlink:href="#gentle-wave"
                                 x="48"
                                 y="5"
-                                class="opacity-75 fill-(--page-bg)"
+                                style="fill: var(--page-bg)"
+                                class="opacity-75"
                             ></use>
                             <use
                                 xlink:href="#gentle-wave"
                                 x="48"
                                 y="7"
-                                class="fill-(--page-bg)"
+                                style="fill: var(--page-bg)"
+                                class=""
                             ></use>
                         </>
                     )}

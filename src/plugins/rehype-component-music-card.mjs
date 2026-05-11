@@ -15,6 +15,7 @@ import { h } from "hastscript";
  * @returns {import('mdast').Parent} The created Music Card component.
  */
 export function MusicCardComponent(properties, children) {
+    console.log(`[MusicCardComponent]: Rendering music card "${properties.title}"`, { props: properties, childrenCount: children?.length });
     // Helper to resolve paths
     const resolvePath = (path) => {
         if (!path) return "";

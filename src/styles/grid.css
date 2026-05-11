@@ -32,8 +32,8 @@
         /* 确保在移动端使用单列布局 */
         grid-template-columns: 1fr !important;
         /* 确保左右padding对称 */
-        padding-left: 2rem !important;
-        padding-right: 2rem !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
     }
     /* 确保移动端主内容区域居中且全宽 */
     .mobile-both-sidebar main {
@@ -53,8 +53,8 @@
         /* 确保在移动端使用单列布局 */
         grid-template-columns: 1fr !important;
         /* 确保左右padding对称 */
-        padding-left: 0.75rem !important;
-        padding-right: 0.75rem !important;
+        padding-left: 0.4rem !important;
+        padding-right: 0.4rem !important;
     }
     /* 确保移动端主内容区域居中且全宽 */
     .mobile-both-sidebar main {

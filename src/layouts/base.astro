@@ -318,11 +318,8 @@ import { widgetManager } from "@utils/widget";
 import { pathsEqual, url } from "@utils/url";
 import { initWallpaperMode } from "@utils/wallpaper";
 import { initTheme } from "@utils/theme";
-import { initHue } from "@utils/hue";
 import { initMarkdownActions } from "@/utils/markdown";
 import { initFancybox, cleanupFancybox } from "@utils/fancybox";
-import { loadAndInitTranslate, stopTranslateListener, startTranslateListener } from "@utils/language";
-import { setupParticleEffects } from "@/utils/particle";
 
 
 // 初始化Swup
@@ -479,7 +476,6 @@ const setup = () => {
         }
 
         // 停止翻译监听以防止导航期间的冗余请求
-        stopTranslateListener();
     });
     window.swup.hooks.on("content:replace", () => {
         // Sync grid classes and sidebar visibility
@@ -525,9 +521,6 @@ const setup = () => {
         initFancybox();
         
         // 重新启动翻译监听并处理新内容
-        startTranslateListener();
-        
-        // Re-init intervals if needed (handled by the scripts themselves usually)
     },
     { before: true },
     )
@@ -592,9 +585,6 @@ window.onresize = () => {
 // Initialize theme
 initTheme();
 
-// Initialize hue
-initHue();
-
 // Initialize wallpaper mode
 initWallpaperMode();
 
@@ -602,9 +592,6 @@ initWallpaperMode();
 initMarkdownActions();
 
 
-
-// Initialize particle effects
-setupParticleEffects();
 
 // Remove is-loading class and trigger initial-animation after page load
 if (typeof window !== 'undefined') {
@@ -636,11 +623,6 @@ if (typeof window !== 'undefined') {
             // 这样所有 onload-animation-up 元素会开始它们的动画
             document.documentElement.classList.remove('is-loading');
             document.documentElement.classList.add('show-initial-animation');
-            
-            // Initialize translate.js after a short delay to avoid hydration issues
-            setTimeout(() => {
-                loadAndInitTranslate();
-            }, 500);
             
             // 3. 所有动画完成后清理类名
             setTimeout(() => {

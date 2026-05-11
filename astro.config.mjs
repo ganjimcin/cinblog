@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
+import { h } from "hastscript";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import svelte, { vitePreprocess } from "@astrojs/svelte";
 import tailwindcss from "@tailwindcss/vite";
@@ -14,7 +15,6 @@ import rehypeSlug from "rehype-slug";
 import rehypeKatex from "rehype-katex";
 import rehypeComponents from "rehype-components"; /* Render the custom directive content */
 import remarkDirective from "remark-directive"; /* Handle directives */
-import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
 import yamlPlugin from "@rollup/plugin-yaml";
@@ -28,6 +28,7 @@ import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition.m
 import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.mjs";
 import { MusicCardComponent } from "./src/plugins/rehype-component-music-card.mjs";
 import { MovieCardComponent } from "./src/plugins/rehype-component-movie-card.mjs";
+import { LinkCardComponent } from "./src/plugins/rehype-component-link-card.mjs";
 import { rehypeMermaid } from "./src/plugins/rehype-mermaid.mjs";
 import { rehypeLazyLoadMedia } from "./src/plugins/rehype-lazy-load-media.mjs";
 import { rehypeImageSize } from "./src/plugins/rehype-image-size.mjs";
@@ -144,20 +145,33 @@ export default defineConfig({
     ],
     markdown: {
         remarkPlugins: [
-            [remarkGithubAdmonitionsToDirectives, {
-                mapping: {
-                    'NOTE': 'note',
-                    'TIP': 'tip',
-                    'IMPORTANT': 'important',
-                    'WARNING': 'warning',
-                    'CAUTION': 'caution',
-                }
-            }],
-            remarkFixQuotes,
+            remarkReadingTime,
             remarkDirective,
+            () => (tree) => {
+                tree.children.forEach(node => {
+                    if (node.type === 'blockquote') {
+                        const firstChild = node.children[0];
+                        if (firstChild?.type === 'paragraph') {
+                            const textNode = firstChild.children[0];
+                            if (textNode?.type === 'text') {
+                                const match = textNode.value.match(/^\[!(\w+)\]/);
+                                if (match) {
+                                    const type = match[1].toLowerCase();
+                                    node.type = 'containerDirective';
+                                    node.name = type;
+                                    textNode.value = textNode.value.replace(/^\[!(\w+)\]\s*/, '');
+                                    if (textNode.value === '' && firstChild.children.length === 1) {
+                                        node.children.shift();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            },
+            remarkFixQuotes,
             remarkDirectiveRehype,
             remarkMath,
-            remarkReadingTime,
             remarkFeatureDetection,
             remarkExcerpt,
             remarkSectionize,
@@ -196,34 +210,21 @@ export default defineConfig({
                         github: GithubCardComponent,
                         music: MusicCardComponent,
                         movie: MovieCardComponent,
+                        link: LinkCardComponent,
+                        // Mapeos de Callouts
                         note: (x, y) => AdmonitionComponent(x, y, "note"),
-                        info: (x, y) => AdmonitionComponent(x, y, "note"),
-                        todo: (x, y) => AdmonitionComponent(x, y, "note"),
-                        abstract: (x, y) => AdmonitionComponent(x, y, "note"),
-                        tldr: (x, y) => AdmonitionComponent(x, y, "note"),
+                        info: (x, y) => AdmonitionComponent(x, y, "info"),
+                        todo: (x, y) => AdmonitionComponent(x, y, "todo"),
                         tip: (x, y) => AdmonitionComponent(x, y, "tip"),
-                        hint: (x, y) => AdmonitionComponent(x, y, "tip"),
-                        example: (x, y) => AdmonitionComponent(x, y, "tip"),
-                        success: (x, y) => AdmonitionComponent(x, y, "tip"),
-                        check: (x, y) => AdmonitionComponent(x, y, "tip"),
-                        done: (x, y) => AdmonitionComponent(x, y, "tip"),
+                        success: (x, y) => AdmonitionComponent(x, y, "success"),
+                        warning: (x, y) => AdmonitionComponent(x, y, "warning"),
+                        caution: (x, y) => AdmonitionComponent(x, y, "caution"),
                         important: (x, y) => AdmonitionComponent(x, y, "important"),
                         danger: (x, y) => AdmonitionComponent(x, y, "important"),
                         error: (x, y) => AdmonitionComponent(x, y, "important"),
-                        bug: (x, y) => AdmonitionComponent(x, y, "important"),
-                        failure: (x, y) => AdmonitionComponent(x, y, "important"),
-                        fail: (x, y) => AdmonitionComponent(x, y, "important"),
-                        missing: (x, y) => AdmonitionComponent(x, y, "important"),
-                        caution: (x, y) => AdmonitionComponent(x, y, "caution"),
-                        warning: (x, y) => AdmonitionComponent(x, y, "warning"),
-                        attention: (x, y) => AdmonitionComponent(x, y, "warning"),
-                        question: (x, y) => AdmonitionComponent(x, y, "warning"),
-                        help: (x, y) => AdmonitionComponent(x, y, "warning"),
-                        faq: (x, y) => AdmonitionComponent(x, y, "warning"),
-                        sidebar: (x, y) => AdmonitionComponent(x, y, "sidebar"),
                         narrador: (x, y) => AdmonitionComponent(x, y, "narrador"),
-                        spoiler: (x, y) => AdmonitionComponent(x, y, "spoiler"),
                         indent: (x, y) => AdmonitionComponent(x, y, "indent"),
+                        spoiler: (x, y) => AdmonitionComponent(x, y, "spoiler"),
                     },
                 },
             ],

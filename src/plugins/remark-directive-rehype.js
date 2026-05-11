@@ -49,7 +49,8 @@ export function parseDirectiveNode() {
                     let attrStr = match.groups.attrs;
                     if (attrStr.endsWith('}')) attrStr = attrStr.slice(0, -1);
                     
-                    const attrRegex = /([a-zA-Z0-9_-]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^ \s{}]+))/g;
+                    // Regex mejorado: permite comas opcionales entre atributos
+                    const attrRegex = /([a-zA-Z0-9_-]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^ \s{},]+))/g;
                     let attrMatch;
                     while ((attrMatch = attrRegex.exec(attrStr)) !== null) {
                         const key = attrMatch[1];

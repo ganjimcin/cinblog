@@ -15,6 +15,7 @@ import { h } from "hastscript";
  * @returns {import('mdast').Parent} The created Movie Card component.
  */
 export function MovieCardComponent(properties) {
+    console.log(`[MovieCardComponent]: Rendering movie card "${properties.title}"`, { props: properties });
     // Helper to clean quotes
     const cleanValue = (val) => {
         if (typeof val !== 'string') return val;

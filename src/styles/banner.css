@@ -406,6 +406,8 @@ html.is-wallpaper-transitioning body {
     contain: none;
     /* 精确对齐 */
     margin-bottom: -1px;
+    /* 设置颜色供 fill-current 继承 */
+    color: var(--page-bg);
 }
 
 /* 统一波浪动画 */
@@ -443,7 +445,7 @@ html.is-wallpaper-transitioning body {
     display: block;
     /* 确保水波纹完整显示 */
     overflow: visible;
-    z-index: 5;
+    z-index: 30;
     /* 硬件加速，确保与背景同步渲染 */
     transform: translateZ(0);
     will-change: transform;
@@ -455,6 +457,7 @@ html.is-wallpaper-transitioning body {
 /* 波浪填充色主题切换 */
 #header-waves .waves use {
     /* 确保填充色与页面背景同步更新 */
+    fill: var(--page-bg) !important;
     will-change: fill;
 }
 
@@ -473,7 +476,7 @@ html.is-wallpaper-transitioning body {
     #header-waves {
         /* 确保水波纹容器不被裁剪 */
         overflow: visible;
-        z-index: 5;
+        z-index: 30;
     }
 
     #header-waves .waves {

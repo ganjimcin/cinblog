@@ -3,20 +3,6 @@ site:
   title: El jardin de una pedagoga
   subtitle: LiLi
   lang: es
-  translate:
-    enable: true
-    service: client.edge
-    showSelectTag: false
-    autoDiscriminate: true
-    ignoreClasses:
-      - ignore
-      - banner-title
-      - banner-subtitle
-    ignoreTags:
-      - script
-      - style
-      - code
-      - pre
   timeZone: 8
   font:
     titles:
@@ -156,26 +142,6 @@ post:
     enable: false
 footer:
   enable: false
-particle:
-  enable: false
-  particleNum: 12
-  limitTimes: -1
-  size:
-    min: 0.3
-    max: 0.9
-  opacity:
-    min: 0.3
-    max: 0.9
-  speed:
-    horizontal:
-      min: -0.9
-      max: 0.9
-    vertical:
-      min: 0.15
-      max: 0.3
-    rotation: 0.12
-    fadeSpeed: 0.12
-  zIndex: 100
 musicPlayer:
   enable: true
   local:

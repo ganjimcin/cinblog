@@ -211,8 +211,8 @@
     #navbar > div {
         border-radius: 0.3rem !important;
         margin: 0 !important;
-        padding-left: 0.6rem !important;
-        padding-right: 0.6rem !important;
+        padding-left: 0.4rem !important;
+        padding-right: 0.4rem !important;
         max-width: none !important;
         width: 100% !important;
     }
@@ -227,11 +227,13 @@
         padding: 0 !important;
     }
 
-    /* home button */
+    /* home button - allow it to be flexible but capped */
     #navbar > div > a:first-child {
-        width: 7.2rem !important;
+        width: auto !important;
+        max-width: 55% !important;
         height: 2.4rem !important;
-        padding: 0 !important;
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
     }
 }
 
@@ -247,11 +249,13 @@
         padding: 0 !important;
     }
 
-    /* home button */
+    /* home button - more flexible */
     #navbar > div > a:first-child {
-        width: 6.3rem !important;
+        width: auto !important;
+        max-width: 50% !important;
         height: 2.1rem !important;
-        padding: 0 !important;
+        padding-left: 0.4rem !important;
+        padding-right: 0.4rem !important;
     }
 }
 
