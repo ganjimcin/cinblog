@@ -591,22 +591,31 @@ a.card-github.fetch-error
                 font-variant-numeric: tabular-nums
 
 .card-movie
-    background: var(--license-block-bg)
+    width: 100%
     border-radius: var(--radius-large)
     overflow: hidden
     margin: 1rem 0
-    transition: all 0.3s ease
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05)
-    border: 1px solid var(--line-divider)
+    transition: all 0.3s ease-out
+    -webkit-backface-visibility: hidden
+    backface-visibility: hidden
     
     &:hover
-        box-shadow: 0 8px 25px rgba(0,0,0,0.1)
         transform: translateY(-2px)
 
-    .card-movie-info
+    .card-movie-link
         display: flex
-        margin: 0
-        padding: 0
+        text-decoration: none
+        color: inherit
+        width: 100%
+        background: var(--license-block-bg)
+        border: 1px solid var(--line-divider)
+        border-radius: var(--radius-large)
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05)
+        transition: all 0.3s ease-out
+
+        &:hover
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1)
+            border-color: var(--primary)
         
     .movie-poster
         width: 120px

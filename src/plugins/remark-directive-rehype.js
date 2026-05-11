@@ -2,7 +2,6 @@ import { visit } from "unist-util-visit";
 import { h } from "hastscript";
 
 export function parseDirectiveNode() {
-    console.log('[Plugin Initialized]: remark-directive-rehype (Robust Mode + Logs)');
     return (tree) => {
         if (!tree) return;
         
@@ -20,8 +19,6 @@ export function parseDirectiveNode() {
             const firstChild = node.children[0];
             if (firstChild.type !== "text" || !firstChild.value.trim().startsWith(":::")) return;
 
-            console.log(`[Directive Probe]: Found paragraph starting with ::: in line: "${firstChild.value.substring(0, 30)}..."`);
-
             // Reconstruir texto completo
             let fullText = "";
             for (const child of node.children) {
@@ -37,8 +34,6 @@ export function parseDirectiveNode() {
             const match = cleanLine.match(/^:::\s*(?<name>[a-zA-Z0-9_-]+)(?:\{(?<attrs>.*)\})?\s*(?<content>.*)$/s);
             
             if (match) {
-                console.log(`[Rescue Attempt]: Detected directive "${match.groups.name}"`);
-                
                 const directiveNode = {
                     type: "leafDirective",
                     name: match.groups.name,
@@ -61,7 +56,6 @@ export function parseDirectiveNode() {
                         const val = attrMatch[2] || attrMatch[3] || attrMatch[4];
                         directiveNode.attributes[key] = val;
                     }
-                    console.log(`[Rescue Attrs]:`, directiveNode.attributes);
                 }
                 
                 directiveNode.data.hProperties = directiveNode.attributes;
@@ -86,9 +80,6 @@ export function parseDirectiveNode() {
                 if (!node.data) node.data = {};
                 node.data.hName = node.name;
                 node.data.hProperties = node.attributes || {};
-                console.log(`[Standard Directive Found]: Name: "${node.name}", Type: "${node.type}", Attributes:`, JSON.stringify(node.attributes));
-            } else if (node.type === "text" && node.value.includes(":::")) {
-                console.log(`[Missed Directive?]: Found text node with ::: but not parsed as directive: "${node.value.substring(0, 100)}..."`);
             }
         });
     };
