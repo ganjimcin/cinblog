@@ -1444,13 +1444,24 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
     border: none !important;
     background: transparent !important;
     padding: 0 !important;
-    margin: 2.5rem 0 2.5rem 2.5rem !important;
+    margin: 2rem 0 2rem 4rem !important;
     font-style: italic !important;
     opacity: 1 !important;
     width: auto !important;
     display: block !important;
     border-left: none !important;
-    color: var(--text-primary) !important;
+    color: inherit !important;
+    font-family: inherit !important;
+    font-size: 1rem !important;
+  }
+
+  :global(.markdown-content .bdm-indent) {
+    display: block !important;
+    margin-left: 3rem !important;
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    color: inherit !important;
   }
 
   :global(.font-adventures .bdm-narrador) {

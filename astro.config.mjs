@@ -36,6 +36,7 @@ import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkMermaid } from "./src/plugins/remark-mermaid.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 import { remarkFeatureDetection } from "./src/plugins/remark-feature-detection.js";
+import { remarkFixQuotes } from "./src/plugins/remark-fix-quotes.mjs";
 
 // Leer la configuración directamente para evitar problemas de carga de módulos en la fase de config
 const twilightConfig = yaml.load(fs.readFileSync("./src/twilight.config.yaml", "utf8"));
@@ -143,6 +144,16 @@ export default defineConfig({
     ],
     markdown: {
         remarkPlugins: [
+            [remarkGithubAdmonitionsToDirectives, {
+                mapping: {
+                    'NOTE': 'note',
+                    'TIP': 'tip',
+                    'IMPORTANT': 'important',
+                    'WARNING': 'warning',
+                    'CAUTION': 'caution',
+                }
+            }],
+            remarkFixQuotes,
             remarkDirective,
             remarkDirectiveRehype,
             remarkMath,
@@ -186,12 +197,33 @@ export default defineConfig({
                         music: MusicCardComponent,
                         movie: MovieCardComponent,
                         note: (x, y) => AdmonitionComponent(x, y, "note"),
+                        info: (x, y) => AdmonitionComponent(x, y, "note"),
+                        todo: (x, y) => AdmonitionComponent(x, y, "note"),
+                        abstract: (x, y) => AdmonitionComponent(x, y, "note"),
+                        tldr: (x, y) => AdmonitionComponent(x, y, "note"),
                         tip: (x, y) => AdmonitionComponent(x, y, "tip"),
+                        hint: (x, y) => AdmonitionComponent(x, y, "tip"),
+                        example: (x, y) => AdmonitionComponent(x, y, "tip"),
+                        success: (x, y) => AdmonitionComponent(x, y, "tip"),
+                        check: (x, y) => AdmonitionComponent(x, y, "tip"),
+                        done: (x, y) => AdmonitionComponent(x, y, "tip"),
                         important: (x, y) => AdmonitionComponent(x, y, "important"),
+                        danger: (x, y) => AdmonitionComponent(x, y, "important"),
+                        error: (x, y) => AdmonitionComponent(x, y, "important"),
+                        bug: (x, y) => AdmonitionComponent(x, y, "important"),
+                        failure: (x, y) => AdmonitionComponent(x, y, "important"),
+                        fail: (x, y) => AdmonitionComponent(x, y, "important"),
+                        missing: (x, y) => AdmonitionComponent(x, y, "important"),
                         caution: (x, y) => AdmonitionComponent(x, y, "caution"),
                         warning: (x, y) => AdmonitionComponent(x, y, "warning"),
+                        attention: (x, y) => AdmonitionComponent(x, y, "warning"),
+                        question: (x, y) => AdmonitionComponent(x, y, "warning"),
+                        help: (x, y) => AdmonitionComponent(x, y, "warning"),
+                        faq: (x, y) => AdmonitionComponent(x, y, "warning"),
                         sidebar: (x, y) => AdmonitionComponent(x, y, "sidebar"),
                         narrador: (x, y) => AdmonitionComponent(x, y, "narrador"),
+                        spoiler: (x, y) => AdmonitionComponent(x, y, "spoiler"),
+                        indent: (x, y) => AdmonitionComponent(x, y, "indent"),
                     },
                 },
             ],

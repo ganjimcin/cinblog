@@ -50,7 +50,9 @@ La película también es un curso intensivo de **Comunicación No Verbal**. Aunu
 
 Y si os gusta aprovechar el visionado para charlar de todo un poco, Hoppers nos regala ganchos geniales. 
 
-:::narrador Por ejemplo, es la excusa perfecta para hablar del respeto por los **Parques Naturales**; explicarles por qué existen esos refugios de vida e incluso buscar uno cerquita de casa para ir a explorarlo el próximo finde. También nos permite asomarnos a la realidad de la **Cadena Alimenticia**; sin dramas, pero con esa naturalidad de entender que cada animal tiene su lugar en el equilibrio del mundo. También nos sirve para curiosear sobre las **Normas**; ¿por qué los humanos tenemos reglas y los animales también parecen tener las suyas? O incluso para ubicarles en el mapa del mundo real hablando de la **Universidad**; hablándole en qué etapa están ellos ahora y qué mundos se abren después. **Política**; porque, aunque nos parezca un tema 'de mayores', es precioso explicarles qué es y cómo las decisiones que tomamos los adultos acaban influyendo en la vida de los más indefensos, como los amigos castores de Mabel.":::
+:::narrador
+Por ejemplo, es la excusa perfecta para hablar del respeto por los **Parques Naturales**; explicarles por qué existen esos refugios de vida e incluso buscar uno cerquita de casa para ir a explorarlo el próximo finde. También nos permite asomarnos a la realidad de la **Cadena Alimenticia**; sin dramas, pero con esa naturalidad de entender que cada animal tiene su lugar en el equilibrio del mundo. También nos sirve para curiosear sobre las **Normas**; ¿por qué los humanos tenemos reglas y los animales también parecen tener las suyas? O incluso para ubicarles en el mapa del mundo real hablando de la **Universidad**; hablándole en qué etapa están ellos ahora y qué mundos se abren después. **Política**; porque, aunque nos parezca un tema 'de mayores', es precioso explicarles qué es y cómo las decisiones que tomamos los adultos acaban influyendo en la vida de los más indefensos, como los amigos castores de Mabel.
+:::
 
 Al final, disfrutar de este cine siendo "padres/madres frikis" nos da una ventaja increíble: hablamos el mismo idioma que ellos. Así que, la próxima vez que te sientes en el sofá, recuerda que no solo estás viendo una peli; estás guiando, educando, y sobre todo, creando vínculos con tu pequeña.
 
@@ -85,7 +87,9 @@ Cada miembro de la familia elige un animal (o una criatura fantástica, ¡vale t
 
 Les enseñamos el **autoconcepto** y la **identidad** a través de aquello que nos hace especiales es algo que llevamos dentro y que no depende de lo que tenemos o de cómo nos vemos.
 
-:::narrador Recuerda: no necesitas la frase perfecta ni el momento ideal. A veces, la mejor pedagogía ocurre entre un puñado de palomitas y la mejor compañía. **¡A disfrutar!**:::
+:::narrador
+Recuerda: no necesitas la frase perfecta ni el momento ideal. A veces, la mejor pedagogía ocurre entre un puñado de palomitas y la mejor compañía. **¡A disfrutar!**
+:::
 
 
 **¡Luces, cámara, Ani-acción!**

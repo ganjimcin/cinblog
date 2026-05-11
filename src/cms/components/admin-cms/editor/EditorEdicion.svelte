@@ -157,6 +157,7 @@
            <button type="button" onclick={() => onToolbar("bold")} data-tooltip="Negrita (Ctrl+B)"><Icon icon="material-symbols:format-bold-rounded" /></button>
            <button type="button" onclick={() => onToolbar("italic")} data-tooltip="Cursiva (Ctrl+I)"><Icon icon="material-symbols:format-italic-rounded" /></button>
            <button type="button" onclick={() => onToolbar("strike")} data-tooltip="Tachado (Ctrl+Shift+X)"><Icon icon="material-symbols:strikethrough-s-rounded" /></button>
+           <button type="button" onclick={() => onToolbar("indent")} data-tooltip="Identar Bloque"><Icon icon="material-symbols:format-indent-increase-rounded" /></button>
          </div>
          <div class="cms-toolbar-divider"></div>
          <div class="cms-toolbar-group">

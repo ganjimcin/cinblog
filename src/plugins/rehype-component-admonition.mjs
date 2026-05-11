@@ -27,6 +27,31 @@ export function AdmonitionComponent(properties, children, type) {
         label.tagName = "div"; // Change the tag <p> to <div>
     }
 
+    // Safety: Remove trailing ":::" from the last child if it's text
+    if (children.length > 0) {
+        const lastChild = children[children.length - 1];
+        if (lastChild.type === "text" && lastChild.value.trim().endsWith(":::")) {
+            lastChild.value = lastChild.value.trim().slice(0, -3).trim();
+        } else if (lastChild.children?.length > 0) {
+            // Also check nested last child (e.g. inside a <p>)
+            const lastNested = lastChild.children[lastChild.children.length - 1];
+            if (lastNested.type === "text" && lastNested.value.trim().endsWith(":::")) {
+                lastNested.value = lastNested.value.trim().slice(0, -3).trim();
+            }
+        }
+    }
+
+    if (type === "spoiler") {
+        return h("details", { class: "admonition bdm-spoiler" }, [
+            h("summary", { class: "bdm-title" }, label ? label : "SPOILER (Clic para revelar)"),
+            h("div", { class: "bdm-content" }, children),
+        ]);
+    }
+
+    if (type === "indent") {
+        return h("div", { class: "admonition bdm-indent" }, children);
+    }
+
     return h("blockquote", { class: `admonition bdm-${type}` }, [
         h("span", { class: "bdm-title" }, label ? label : type.toUpperCase()),
         ...children,
