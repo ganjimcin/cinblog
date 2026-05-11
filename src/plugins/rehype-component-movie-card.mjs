@@ -34,28 +34,25 @@ export function MovieCardComponent(properties) {
         linkUrl = `https://www.imdb.com/title/${imdbId}`;
     }
 
-    // Retornamos directamente el <a> como raíz para evitar DIVs redundantes
-    return h("a", { 
-        href: linkUrl, 
-        target: "_blank", 
-        class: "card-movie no-styling" 
-    }, [
-        h("div", { 
-            class: "movie-poster", 
-            style: coverUrl ? `background-image: url('${coverUrl}')` : "" 
-        }, [
-            h("div", { class: "movie-poster-overlay" })
-        ]),
-        h("div", { class: "movie-details" }, [
-            h("div", { class: "movie-header" }, [
-                h("div", { class: "movie-title-row" }, [
-                    h("h3", { class: "movie-card-title" }, title),
-                    h("div", { class: "movie-badges-col" }, [
-                        age ? h("span", { class: "movie-age-badge" }, age) : null,
-                        recAge ? h("span", { class: "movie-rec-age-badge", title: "Edad recomendada" }, `⭐ ${recAge}`) : null,
-                    ].filter(Boolean))
-                ]),
-                h("div", { class: "movie-original-title" }, originalTitle)
+    return h("div", { class: "card-movie" }, [
+        h("a", { href: linkUrl, target: "_blank", class: "card-movie-link no-styling" }, [
+            h("div", { 
+                class: "movie-poster", 
+                style: coverUrl ? `background-image: url('${coverUrl}')` : "" 
+            }, [
+                h("div", { class: "movie-poster-overlay" })
+            ]),
+            h("div", { class: "movie-details" }, [
+                h("div", { class: "movie-header" }, [
+                    h("div", { class: "movie-title-row" }, [
+                        h("h3", { class: "movie-card-title" }, title),
+                        h("div", { class: "movie-badges-col" }, [
+                            age ? h("span", { class: "movie-age-badge" }, age) : null,
+                            recAge ? h("span", { class: "movie-rec-age-badge", title: "Edad recomendada" }, `⭐ ${recAge}`) : null,
+                        ].filter(Boolean))
+                    ]),
+                    h("div", { class: "movie-original-title" }, originalTitle)
+                ])
             ])
         ])
     ]);
