@@ -1,6 +1,11 @@
 ---
 title: Bienvenidos a mi jardín.
 category: Raíces
+coverInContent: false
+draft: false
+pinned: false
+comment: true
+inNavbar: false
 ---
 
 # About Me

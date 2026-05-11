@@ -6,13 +6,16 @@ site:
   timeZone: 8
   font:
     titles:
-      src: https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=block
+      src: >-
+        https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=block
       family: Libre Baskerville
     content:
-      src: https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&display=block
+      src: >-
+        https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&display=block
       family: Barlow
     adventures:
-      src: https://fonts.googleapis.com/css2?family=Domine:wght@400;700&display=block
+      src: >-
+        https://fonts.googleapis.com/css2?family=Domine:wght@400;700&display=block
       family: Domine
   themeColor:
     hue: 45
@@ -95,7 +98,6 @@ sidebar:
           mode: include
           paths:
             - ^/posts/
-
       - type: directory
         position: sticky
       - type: categories
@@ -108,7 +110,6 @@ sidebar:
         responsive:
           collapseThreshold: 20
     right: []
-
 profile:
   avatar: /assets/uploads/1776886053142-el-jardin-de-una-pedagoga.webp
   name: Lili Grow
@@ -131,7 +132,7 @@ announcement:
 post:
   showLastModified: true
   bookCategories:
-    - "Las aventuras de Xoshö y Mocho"
+    - Las aventuras de Xoshö y Mocho
   expressiveCode:
     theme: github-dark
   license:
@@ -149,22 +150,23 @@ musicPlayer:
       - id: 1
         title: El Jardín de una Pedagoga
         artist: Lili Grow con ayuda de AI
-        cover: ''
+        cover: /assets/uploads/1778529515538-atardecer-en-mi-jardin.webp
         url: /assets/uploads/1776885621776-Un dia en Tokio.opus
         lrc: ''
         duration: '149'
       - title: Café en Shibuya
         artist: Lili Grow con ayuda de IA
-        cover: ''
+        cover: /assets/uploads/1778529515538-atardecer-en-mi-jardin.webp
         url: /assets/music/1776888290878-cafe-en-shibuya.opus
         lrc: ''
         duration: '181'
       - title: Veranos en Kioto
         artist: Lili Grow con ayuda de IA
-        cover: ''
+        cover: /assets/uploads/1778529515538-atardecer-en-mi-jardin.webp
         url: /assets/music/1776888527595-suenos-de-verano.opus
         lrc: ''
         duration: '158'
   autoplay: true
   fab:
     type: image
+    image: /assets/uploads/1778529515538-atardecer-en-mi-jardin.webp
