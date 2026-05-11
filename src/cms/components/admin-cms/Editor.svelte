@@ -980,8 +980,8 @@ Sigue escribiendo y disfruta de la experiencia fluida de edición.`
           case "mermaid-flow": snip = `\n\`\`\`mermaid\ngraph TD\n    A[Inicio] --> B(Proceso)\n    B --> C{Decision}\n    C -->|Si| D[Fin]\n    C -->|No| B\n\`\`\`\n`; break;
           case "mermaid-seq": snip = `\n\`\`\`mermaid\nsequenceDiagram\n    Participante A->>Participante B: Mensaje\n    Participante B-->>Participante A: Respuesta\n\`\`\`\n`; break;
           case "mermaid-gantt": snip = `\n\`\`\`mermaid\ngantt\n    title Proyecto\n    section Fase 1\n    Tarea :a1, 2024-01-01, 30d\n\`\`\`\n`; break;
-          case "music": snip = `\n:::music{title="Título", artist="Artista", cover="/assets/images/default.jpg", audio="/assets/music/song.mp3", lrc=""}\n`; break;
-          case "movie": snip = `\n:::movie{title="Título", originalTitle="Original", age="+7", recAge="+10", url="https://image-url.jpg", link="https://imdb.com/..."}\n`; break;
+          case "music": snip = `\n::music{title="Título" artist="Artista" cover="/assets/images/default.jpg" audio="/assets/music/song.mp3" lrc=""}\n`; break;
+          case "movie": snip = `\n::movie{title="Título" originalTitle="Original" age="+7" recAge="+10" url="https://image-url.jpg" link="https://imdb.com/..."}\n`; break;
           case "video": snip = `\n<iframe width="100%" height="468" src="URL_EMBED" frameborder="0" allowfullscreen></iframe>\n`; break;
           case "math": snip = `\n$$\n${selText || "e = mc^2"}\n$$\n`; break;
           case "spoiler": snip = `\n:::spoiler\n${selText || "Contenido oculto que se revela al hacer clic..."}\n:::\n`; break;

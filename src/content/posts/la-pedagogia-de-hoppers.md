@@ -13,7 +13,7 @@ comment: true
 inNavbar: false
 ---
 
-:::movie{title="Hoppers",originalTitle="Hoppers",age="+7 (EE.UU.)",recAge="",cover="https://www.imdb.com/es-es/title/tt26443616/mediaviewer/rm4125007874/?ref_=tt_ov_i",imdbId="tt26443616"}
+::movie{title="Hoppers",originalTitle="Hoppers",age="+7 (EE.UU.)",recAge="",cover="https://www.imdb.com/es-es/title/tt26443616/mediaviewer/rm4125007874/?ref_=tt_ov_i",imdbId="tt26443616"}
 
 **¡Ojo por aquí!** He intentado no soltar **spoilers**, pero como quería daros una guía de verdad, puede que algún detalle se me haya escapado. Si no queréis saber nada de nada, ¡Guárdalo para los créditos!
 
