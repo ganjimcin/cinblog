@@ -8,16 +8,29 @@ import { visit } from "unist-util-visit";
 export function remarkFixQuotes() {
     return (tree) => {
         visit(tree, "text", (node) => {
-            // Only process if it looks like a directive with attributes
-            if (node.value.includes(":::") && node.value.includes("{") && node.value.includes("}")) {
-                // 1. Normalize curly quotes
-                node.value = node.value.replace(/[“”]/g, '"');
-                
-                // 2. Normalize commas in attributes (remark-directive expects spaces)
-                // We find the content inside { } and replace commas with spaces
-                node.value = node.value.replace(/\{([^{}]+)\}/g, (match, attrs) => {
-                    return '{' + attrs.replace(/,/g, ' ') + '}';
+            // Normalizar comillas y caracteres raros en TODO el post para evitar errores de red/renderizado
+            if (node.value) {
+                // 1. Normalizar comillas inteligentes (todos los tipos)
+                node.value = node.value.replace(/[“”‘’"']/g, (m) => {
+                    if (['“', '”', '"'].includes(m)) return '"';
+                    if (['‘', '’', "'"].includes(m)) return "'";
+                    return m;
                 });
+
+                // 2. Corregir caracteres de encoding rotos comunes (si aparecen)
+                // Ej:  o secuencias UTF-8 mal interpretadas
+                node.value = node.value.replace(/\uFFFD/g, (m) => {
+                    // Intentar adivinar por contexto si es una tilde o signo
+                    return ''; // Por ahora eliminamos el carácter nulo
+                });
+
+                // 3. Normalizar atributos de directivas específicamente (dentro de { })
+                if (node.value.includes(":::") && node.value.includes("{")) {
+                    node.value = node.value.replace(/\{([^{}]+)\}/g, (match, attrs) => {
+                        // Dentro de los atributos, comas -> espacios para que remark-directive no falle
+                        return '{' + attrs.replace(/,/g, ' ') + '}';
+                    });
+                }
             }
         });
     };
