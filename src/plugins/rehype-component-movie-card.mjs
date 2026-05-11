@@ -15,12 +15,15 @@ import { h } from "hastscript";
  * @returns {import('mdast').Parent} The created Movie Card component.
  */
 export function MovieCardComponent(properties) {
-    console.log('[MovieCardComponent]: Processing with props:', JSON.stringify(properties));
+    console.log('--- [MovieCardComponent START] ---');
+    console.log('Full properties received:', JSON.stringify(properties, null, 2));
     
     // Helper to clean quotes (including curly ones)
     const cleanValue = (val) => {
         if (typeof val !== 'string') return val;
-        return val.replace(/^[“”"']+|[“”"']+$/g, "").trim();
+        const cleaned = val.replace(/^[“”"']+|[“”"']+$/g, "").trim();
+        if (val !== cleaned) console.log(`[MovieCardComponent]: Cleaned "${val}" -> "${cleaned}"`);
+        return cleaned;
     };
 
     const title = cleanValue(properties.title) || "Título";
@@ -30,9 +33,11 @@ export function MovieCardComponent(properties) {
     const imdbId = cleanValue(properties.imdbId) || "";
     
     let coverUrl = cleanValue(properties.cover || properties.url) || "";
+    console.log(`[MovieCardComponent]: Final Title: "${title}", Cover: "${coverUrl}"`);
+    
     // Handle specific transformations if needed
     if (coverUrl.includes("Special:FilePath/")) {
-        // Already processed or specific format
+        console.log(`[MovieCardComponent]: Wiki FilePath detected in cover`);
     }
 
     let linkUrl = properties.url || "#";
@@ -40,7 +45,7 @@ export function MovieCardComponent(properties) {
         linkUrl = `https://www.imdb.com/title/${imdbId}`;
     }
 
-    return h("div", { class: "card-movie" }, [
+    const result = h("div", { class: "card-movie" }, [
         h("div", { class: "card-movie-info" }, [
             h("a", { href: linkUrl, target: "_blank", class: "card-movie-link", style: "display: contents;" }, [
                 h("div", { 
@@ -64,4 +69,7 @@ export function MovieCardComponent(properties) {
             ])
         ])
     ]);
+
+    console.log('--- [MovieCardComponent END] ---');
+    return result;
 }
