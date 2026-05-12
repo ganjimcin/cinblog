@@ -34,5 +34,4 @@ Cuando hablo con mis familias siempre les digo que la protección empieza por en
 
 Debemos respetar esos espacios si queremos que en la adolescencia sepan respetarse a sí mismos y a los demás. **Saber decir "no" a un contacto que les incomoda es la herramienta de prevención más potente que existe.**
 
-Esto son solo ejemplos; cada familia es única y existen distintas maneras de hablar el tema, pero hay que hacerlo desde pequeños. Sé que dar este paso da vértigo porque nadie nos enseñó a nosotros. Pero romper el tabú no es criticar cómo nos criaron, es decidir cómo queremos que ellos vivan: con **menos miedo y más herramientas.** Al final, se trata de que nuestro hogar sea coherente: *si somos el refugio donde pueden llorar todo lo que necesiten, seamos también el mapa donde puedan encontrar todas sus respuestas.
-*
+Esto son solo ejemplos; cada familia es única y existen distintas maneras de hablar el tema, pero hay que hacerlo desde pequeños. Sé que dar este paso da vértigo porque nadie nos enseñó a nosotros. Pero romper el tabú no es criticar cómo nos criaron, es decidir cómo queremos que ellos vivan: con **menos miedo y más herramientas.** Al final, se trata de que nuestro hogar sea coherente: *si somos el refugio donde pueden llorar todo lo que necesiten, seamos también el mapa donde puedan encontrar todas sus respuestas.*
