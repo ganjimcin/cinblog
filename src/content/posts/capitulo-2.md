@@ -10,6 +10,11 @@ draft: false
 pinned: false
 comment: true
 inNavbar: false
+tags:
+  - Cuento
+  - Aventura
+  - Xoshö
+  - Mocho
 ---
 
 Mocho se quedó inmóvil frente a la entrada del bosque. Sentía miedo en la barriga. Aunque no era su primera aventurera, nunca había ido a la Zona Norte. Allí donde los árboles eran tan altos que parecían tocar el cielo, mucho más altos que cualquier edificio del pueblo. Parecían gigantes de madera vigilando el camino.
