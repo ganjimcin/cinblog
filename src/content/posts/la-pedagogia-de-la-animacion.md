@@ -11,6 +11,11 @@ draft: false
 pinned: false
 comment: true
 inNavbar: false
+tags:
+  - Cine
+  - Animación
+  - Pixar
+  - Pantallas
 ---
 
 Hoy en día, el mantra que escuchamos por todas partes es "Pantalla Cero". Y sí, existen estudios que nos alertan de los riesgos, pero hay otra parte de la pedagogía de la que se habla menos: la que demuestra que el impacto de la pantalla cambia radicalmente cuando hay una guía a su lado.
