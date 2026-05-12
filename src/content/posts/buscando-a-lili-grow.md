@@ -9,6 +9,8 @@ pinned: false
 comment: true
 inNavbar: false
 description: 'El principio del cambio: siendo fiel a mi pedagogía y a mi persona.'
+tags:
+  - Lili Grow
 ---
 
 ## El principio del cambio: siendo fiel a mi pedagogía y  a mi persona.
