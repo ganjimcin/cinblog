@@ -20,7 +20,7 @@ Aclaremos conceptos: en esta pedagogía, mi pedagogía, la pedagogía que tratam
 
 El tabú no nace de repente en la adolescencia; lo sembramos los adultos cada vez que decidimos que hay partes del cuerpo que no se pueden nombrar por su nombre real o no dándole la intimidad que necesitan nuestras personitas... 
 
-Esto es una **Red Flash** de mi pedagogía. Surge aquí un problema bidireccional de falta de comunicación y de sentimientos de negación de crecimiento: mientras pensamos que son seres pequeñitos que debemos “proteger” constantemente —y ojo, que no somos Baymax (de esto hablaremos en otro post)—, esas mismas personitas ya están buscando información en redes porque en casa no se habla de sexo con naturalidad.
+Esto es una **Red Flag** de mi pedagogía. Surge aquí un problema bidireccional de falta de comunicación y de sentimientos de negación de crecimiento: mientras pensamos que son seres pequeñitos que debemos “proteger” constantemente —y ojo, que no somos Baymax (de esto hablaremos en otro post)—, esas mismas personitas ya están buscando información en redes porque en casa no se habla de sexo con naturalidad.
 
 
 Hoy en día vivimos en la era de la información y lo tienen todo a su alcance; por eso, igual que le enseñamos con naturalidad dónde está la rodilla, deberíamos enseñarles palabras como vulva, pene o tetas. Al usar motes como "colita" o "totete", les decimos de forma invisible que esas partes son raras o "graciosas", cuando en realidad, darles el vocabulario correcto es darles el poder de protegerse.
