@@ -12,8 +12,8 @@ pinned: false
 comment: true
 inNavbar: false
 tags:
-  - sexo
-  - intimidad
+  - Sexo
+  - Intimidad
 ---
 
 Muchas familias se echan las manos a la cabeza cuando les digo que **hablar de sexo se hace desde el pañal**. 
