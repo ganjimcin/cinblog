@@ -40,7 +40,7 @@ inNavbar: false
 
 ## *Hoppers*
 
-Si eres de los míos y te emociona el cine de animación, sabrás que las películas nos aportan mucho más que un ratito de diversión. Cuando las miras con "gafas de pedagoga", descubres que son herramientas maravillosas para conectar con nuestras personitas, la guiar en nuestras charlas, o para enseñar en nuestras aulas. Hoy quiero hablaros de *Hoppers*, porque me ha parecido una propuesta interesante para trabajar algo que a veces nos cuesta poner en palabras.
+Si eres de las mías y te emociona el cine de animación, sabrás que las películas nos aportan mucho más que un ratito de diversión. Cuando las miras con "gafas de pedagoga", descubres que son herramientas maravillosas para conectar con nuestras personitas, la guiar en nuestras charlas, o para enseñar en nuestras aulas. Hoy quiero hablaros de *Hoppers*, porque me ha parecido una propuesta interesante para trabajar algo que a veces nos cuesta poner en palabras.
 
 Lo que más me ha vibrado de esta historia es cómo trata la **Identidad y la Esencia**. Para nosotros puede parecer un juego de ciencia ficción eso de "cambiar de cuerpo", pero para las personitas es la oportunidad de entender que su valor no está en su físico ni en su apariencia. Es precioso poder decirles: "Aunque ella sea un castor, sigue siendo ella". Con esto reforzamos que no dejamos de ser. Todo lo que tenemos tangible, (ropa móvil, dinero…) no nos hace, solo son máscaras de nuestro yo. Por eso podemos enseñarles que mucho más allá quien seamos físicamente, niña castor, lo que somos esta más escondido está en nuestro interior.
 
