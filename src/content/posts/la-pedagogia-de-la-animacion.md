@@ -14,7 +14,6 @@ inNavbar: false
 tags:
   - Cine
   - Animación
-  - Pixar
   - Pantallas
 ---
 
