@@ -9,6 +9,11 @@ draft: false
 pinned: false
 comment: true
 inNavbar: false
+tags:
+  - Cuento
+  - Aventura
+  - Xoshö
+  - Mocho
 ---
 
 Mocho caminaba decidida. Sus pasos eran tan rápidos que parecía que sus pies no tocaban el suelo, pero a la vez tan fuertes que marcaban el camino con un ¡pum, pum! Parecía una gigante. Xoshö, que iba un poco más atrás, no podía dejar de mirarla. Le encantaba la seguridad de Mocho; parecía no tener miedo a nada, ni siquiera a las sombras largas del bosque.
