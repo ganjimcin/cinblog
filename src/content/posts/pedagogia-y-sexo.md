@@ -1,5 +1,5 @@
 ---
-title: Pedagogía y SEXO.
+title: Tenemos que hablar...
 category: Raíces
 published: '2026-05-12'
 description: >-
