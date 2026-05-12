@@ -11,9 +11,12 @@ inNavbar: false
 description: >-
   Las aventuras más grandes empiezan con un beso a mamá y una mochila llena de
   tesoros.
+tags:
+  - Cuento
+  - Aventura
+  - Xoshö
+  - Mocho
 ---
-
-
 
 Un día, Mocho cuando se levanto de la cama, vio que hacia un sol espléndido y decidió irse de aventuras. Para ello cogió su mochila de las aventuras. Era superchula, de color marrón y tenía muchas chapitas, parches bordados y algunos muñecos colgados de las hebillas. Se puso su ropa favorita, un peto vaquero, una camiseta negra y, todo ello, combinado con unas zapatillas de color negro. El pelo se lo dejó suelto, porque le encantaba que el aire lo moviera. 
 
