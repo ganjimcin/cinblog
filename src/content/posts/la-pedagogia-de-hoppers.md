@@ -11,6 +11,10 @@ draft: false
 pinned: false
 comment: true
 inNavbar: false
+tags:
+  - Cine
+  - Animación
+  - Pixar
 ---
 
 :::movie{title="Hoppers",originalTitle="Hoppers",age="+7 (EE.UU.)",recAge="",cover="https://www.imdb.com/es-es/title/tt26443616/mediaviewer/rm4125007874/?ref_=tt_ov_i",imdbId="tt26443616"}
