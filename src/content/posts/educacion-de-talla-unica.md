@@ -11,7 +11,7 @@ comment: true
 inNavbar: false
 tags:
   - Pedagogía
-  - educación
+  - Educación
 ---
 
 A menudo me preguntáis: "¿Qué tengo que hacer cuando mi hijo tiene miedo?", “¿Cómo le quito las pantallas?” o “¿Qué hago para que estudie más?”. La respuesta pedagógica honesta es: Depende.
