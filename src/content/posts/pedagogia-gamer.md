@@ -11,9 +11,10 @@ draft: false
 pinned: false
 comment: true
 inNavbar: false
+category: Press Start
 ---
 
-Antes de ser madre, me soltaron el típico spoiler de terror: "Cuando tengas una personita, dejarás de jugar a los videojuegos". Y yo me quedé... ¡¿What the fuck?! **¿Renunciar a ti mismo es el requisito para ser buen padre? **
+Antes de ser madre, me soltaron el típico spoiler de terror: "Cuando tengas una personita, dejarás de jugar a los videojuegos". Y yo me quedé... ¡¿What the fuck?! **¿Renunciar a ti mismo es el requisito para ser buen padre?**
 
 ¿Mi vida cambió radicalmente? sí. ¿Mi faceta profesional dio un vuelco? también. Pero un día, botando sobre mi pelota de pilates con mi personita en brazos, algo hizo click en mi sistema. Comprendí que no tenía por qué renunciar a mi esencia. Sorry, but I’m a geek. Mi lado oscuro salió a la luz y, ¿sabéis qué? Es precisamente ese lado el que mejor conecta con los menores con los que trabajo. Aquí nace la **Pedagogía Aplicada, la Pedagogía Gamer**. Porque jugar no es perder el tiempo; es la forma más pura de aprender, de conectar y de transmitir un mensaje que se queda grabado a fuego. 
 
