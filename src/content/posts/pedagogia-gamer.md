@@ -24,7 +24,7 @@ En esta sección no buscaremos juegos "educativos" que ya te dicen para qué sir
 Próximamente, desarrollaremos nuevos posts exclusivos:
 
 - **Minecraft**: ¿Cómo explicar el paso de nómada a sedentario? 
-- **The Sims**: Etapas de la vida, necesidades y economía. ¿Quieres enseñarles dónde las partes de la casa? Y si se sabes algo de ingles…  
+- **The Sims**: Etapas de la vida, necesidades y economía. ¿Quieres enseñarles las partes de la casa? Y si sabes algo de ingles…  
 - **Overcooked**: Aquí vamos a sudar de verdad. Hablaremos de frustración y trabajo en equipo.
 
 Sabias que: jugar guiados no es solo divertido, es saludable:
