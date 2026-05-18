@@ -31,7 +31,7 @@ Xoshö se quedó quieto como una estatua viendo cómo Mocho se alejaba. En ese m
 
 —¡Mocho! —gritó con todas sus fuerzas—. ¡Detente! ¡No des ni un paso más!
 
-Xoshö estaba tan lejos que, por más que estiró su brazo, no pudo agarrarla. Y de pronto... ¡Zas! Mocho desapareció. Parecía que el suelo se la había comido, pero todos sabemos que el suelo no se come a nadie. Lo que había pasado es que Mocho, por ir tan rápido como un rayo, no vio el peligro. Sus zapatillas pisaron un musgo más resbaladizo que el jabón y cayó por un precipicio.
+Xoshö estaba tan lejos que, por más que estiró su brazo, no pudo agarrarla. Y de pronto... ¡Zas! Mocho desapareció. Parecía que el suelo se la había comido, pero todos sabemos que el suelo no se come a nadie. Lo que había pasado es que Mocho, por ir tan rápido como un rayo, no vio el peligro. Sus zapatillas pisaron un musgo más resbaladizo que el jabón y cayó por un barranco.
 
 Xoshö salió corriendo. Su corazón latía tan fuerte que parecía un tambor intentando escapar de su pecho: ¡pum-pum, pum-pum, pum-pum! Estaba muy asustado. No veía a su amiga. ¿Pero cómo podía llamarla "amiga" si apenas la conocía? No importaba. Él sentía que su corazón ya la quería.
 
