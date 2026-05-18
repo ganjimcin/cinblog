@@ -44,4 +44,4 @@ Xoshö, sin dudarlo ni un segundo, estiró su mano y, con mucho cuidado, ayudó 
 
 —Gracias, Xoshö —le susurró—. Sé que sola no lo habría conseguido. Gracias por estar ahí.
 
-Y allí estaban los dos, bajo los árboles gigantes: Mocho, que siempre quería hacerlo todo sola, y Xoshö, que tenía muchos amiguitos y amiguitas, pero que acababa de encontrar a su primer amiga de verdad. Eran tan diferentes que parecían el sol y la luna, pero encajaban como dos piezas de un puzle mágico. No hacía falta hablar pero los dos sabían que ahora caminarían juntos hasta el Prado de las Aceitunas Rosas.
+Y allí estaban los dos, bajo los árboles gigantes: Mocho, que siempre quería hacerlo todo sola, y Xoshö, que tenía muchos amiguitos y amiguitas, pero que acababa de encontrar a su primera amiga de verdad. Eran tan diferentes que parecían el sol y la luna, pero encajaban como dos piezas de un puzle mágico. No hacía falta hablar pero los dos sabían que ahora caminarían juntos hasta el Prado de las Aceitunas Rosas.
