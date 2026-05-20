@@ -1,5 +1,5 @@
 ---
-title: Capítulo 5.
+title: Capítulo 5
 category: Las aventuras de Xoshö y Mocho
 published: '2026-05-20'
 description: Capítulo 5. El refugio.
