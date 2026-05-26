@@ -26,7 +26,7 @@ Primero hare una explicación rápida de los PNJ (Personajes No Jugadores) o NPC
 De poner los PNJ hostiles en nuestras vidas o en la vida de nuestras personitas ya se encarga la sociedad solita: el colegio, las redes sociales, las etiquetas, los juicios, o las zancadillas de la propia vida… que **configuran el juego en nivel "hardcore"**. Así es, solo una vida para jugar este increíble juego. Por eso, hoy os quiero hablar de los PNJ aliados, y si, lo has acertado, nuestro verdadero rol. 
 
 
->[!narrador] s
+>[!narrador]
 > **Pongamos un ejemplo**: cuando jugamos en familia a un single-player (juego de un solo jugador), solemos jugar una vida y pasamos el mando. Cuando tu tienes el mando, tu eres el jugador en ese momento, y aunque los demás te digan donde tienes que ir, al final, las decisiones las tomas tú. Tú decides si escuchar a los demás o ignorarlos y hacer lo que tu creas conveniente.
 
 Pues de eso va la vida. Para que lo entendamos mejor, nuestra vida está dividida en dos roles fundamentales: 
