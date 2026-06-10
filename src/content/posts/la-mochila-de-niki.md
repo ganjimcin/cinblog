@@ -8,7 +8,7 @@ tags:
   - Animación
   - Ghibli
   - Pantallas
-coverInContent: true
+coverInContent: false
 slug: la-mochila-de-niki
 draft: false
 pinned: false
@@ -18,10 +18,7 @@ cover: >-
   https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRz9j966c94obj7rJOCPWnUBGCDGBWukh4EUg&s
 ---
 
-
 :::movie{title="Niki: La aprendiz de bruja",originalTitle="Majo no takkyûbin",age="0",recAge="0",url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRz9j966c94obj7rJOCPWnUBGCDGBWukh4EUg&s",link="https://www.imdb.com/title/tt0097814/",imdbId="tt0097814"}
-
-
 
 **¡Ojo por aquí!** He intentado no soltar **spoilers**, pero como quería daros una guía de verdad, puede que algún detalle se me haya escapado. Si no queréis saber nada de nada, ¡Guárdalo para los créditos!
 
