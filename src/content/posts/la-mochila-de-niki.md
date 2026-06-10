@@ -10,7 +10,7 @@ tags:
   - Pantallas
 coverInContent: false
 slug: la-mochila-de-niki
-draft: true
+draft: false
 pinned: false
 comment: true
 inNavbar: false
