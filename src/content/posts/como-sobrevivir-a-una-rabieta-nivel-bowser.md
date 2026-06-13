@@ -3,8 +3,9 @@ title: Cómo sobrevivir a una rabieta nivel Bowser.
 category: Raíces
 published: '2026-06-13'
 description: >-
-  Hoy os traigo una post muy entretenido donde de explico como pasarte una de
-  las míticas pantallas de mundo de ser Mario y Luigi, digo de Mamá y/o Papá.
+  Hoy os traigo un post muy entretenido, donde te explico como pasarte una de
+  las míticas pantallas del mundo de  Mario y Luigi, digo, del mundo de Mamá y/o
+  Papá.
 tags:
   - Crianza
   - Rabieta
