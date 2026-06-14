@@ -1,5 +1,5 @@
 ---
-title: La vida a través del Mincraft
+title: La vida a través de Mincraft
 category: Press Start
 published: '2026-06-14'
 description: >-
